@@ -276,7 +276,7 @@ export function ServiceDetailPage({
   return (
     <main>
       {/* Hero Banner */}
-      <section className="relative h-80 md:h-[28rem] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url('${data.image}')` }}
@@ -308,7 +308,7 @@ export function ServiceDetailPage({
 
       {/* Detailed Description */}
       <section className="bg-white py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
           <FadeIn>
             <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
               <div>
@@ -335,7 +335,7 @@ export function ServiceDetailPage({
 
       {/* Ce que nous offrons */}
       <section className="bg-slate-50 py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
           <FadeIn>
             <div className="text-center mb-12">
               <h2 className="text-2xl md:text-3xl font-bold text-sapphire">
@@ -369,7 +369,7 @@ export function ServiceDetailPage({
 
       {/* Nos réalisations */}
       <section className="bg-white py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
           <FadeIn>
             <div className="text-center mb-12">
               <h2 className="text-2xl md:text-3xl font-bold text-sapphire">

@@ -191,3 +191,52 @@ Stage Summary:
 - Menu toujours visible sur fond sombre (bg-sapphire-dark/85)
 - Navigation: Accueil -> clic service -> page détaillée (vraie page, pas modale)
 - Lint propre, tout vérifié avec Agent Browser
+
+---
+Task ID: 8
+Agent: redesign-agent
+Task: Redesign full site inspired by Roofstick design
+
+Work Log:
+- Redesigned hero.tsx: split-screen, full-bleed image, glass-morphism form card
+- Redesigned stats-bar.tsx: full-width, larger numbers, cleaner layout
+- Redesigned services.tsx: larger cards, 4-col grid, hover effects, badges
+- Redesigned departments.tsx: glass-morphism, 3-col grid, alternating bg
+- Redesigned mission.tsx: 2-col layout, larger headings
+- Redesigned advantages.tsx: 2-col grid with thumbnails
+- Updated navbar: transparent→white on scroll, sapphire text
+- Updated all page components: max-w-[1440px]
+- Added alternating white/slate-50 backgrounds
+
+Stage Summary:
+- Full-width hero with split-screen layout
+- Wider site (1440px max vs 1280px before)
+- Clean professional navbar
+- Larger cards with better shadows
+- Alternating section backgrounds
+
+---
+Task ID: 8
+Agent: redesign-agent
+Task: Redesign complet inspiré du site Roofstick
+
+Work Log:
+- Analysé le design Roofstick via VLM (hero split, full-width, cartes larges)
+- Généré hero-wide.png (1344x768) image cinématique bureau moderne
+- Redessiné hero.tsx: split-screen, image plein format, formulaire glass-morphism à droite
+- Redessiné navbar: transparent→blanc au scroll, texte sapphire, liens centrés
+- Redessiné stats-bar: pleine largeur, grands chiffres dorés, séparateurs
+- Redessiné services: cartes h-52, badges numérotés 01-08, shadow-xl, 4 colonnes
+- Redessiné departments: glass-morphism, 3 colonnes, bg alterné slate-50
+- Redessiné mission: 2 colonnes, titres plus grands, cartes avec ombres
+- Redessiné advantages: grille 2 colonnes, thumbnails, cartes larges
+- Tous les conteneurs passés de max-w-7xl à max-w-[1440px]
+- Sections alternées blanc/slate-50
+
+Stage Summary:
+- Site élargi à 1440px (vs 1280px avant)
+- Hero plein écran split-screen avec formulaire devis intégré
+- Navbar épurée, transparent puis blanche
+- Cartes services avec badges numérotés et overlay "En savoir plus"
+- Design professionnel inspiré Roofstick adapté au thème sapphire/or
+- Lint propre, tout vérifié Agent Browser

@@ -93,23 +93,23 @@ function Navbar({
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-sapphire-dark/98 backdrop-blur-md shadow-lg shadow-black/20"
-          : "bg-sapphire-dark/85 backdrop-blur-sm"
+          ? "bg-white/98 backdrop-blur-md shadow-sm shadow-black/5"
+          : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <button
             onClick={() => navigate("accueil")}
             className="flex items-center gap-2"
           >
-            <div className="w-9 h-9 rounded-lg bg-gold/20 flex items-center justify-center border border-gold/30">
+            <div className="w-9 h-9 rounded-lg bg-sapphire/10 flex items-center justify-center border border-sapphire/20">
               <Gem className="w-4 h-4 text-gold" />
             </div>
             <span className="text-lg font-bold tracking-tight">
-              <span className="text-white">SAPHIR</span>{" "}
-              <span className="text-gradient-gold">COM</span>
+              <span className="text-sapphire-dark">SAPHIR</span>{" "}
+              <span className="text-gold">COM</span>
             </span>
           </button>
 
@@ -119,10 +119,10 @@ function Navbar({
               <button
                 key={page.id}
                 onClick={() => navigate(page.id)}
-                className={`px-3 py-2 text-sm font-semibold rounded-lg transition-all duration-200 ${
+                className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
                   currentPage === page.id
-                    ? "text-gold bg-gold/10"
-                    : "text-white hover:text-gold hover:bg-white/10"
+                    ? "text-gold"
+                    : "text-sapphire-dark hover:text-gold"
                 }`}
               >
                 {page.label}
@@ -137,7 +137,7 @@ function Navbar({
                 variant="outline"
                 size="sm"
                 onClick={onBackToDashboard}
-                className="text-gold border-gold/40 hover:bg-gold/10 hover:text-gold text-xs font-semibold"
+                className="border-sapphire/20 text-sapphire-dark hover:bg-sapphire/5 hover:text-sapphire-dark text-xs font-semibold"
               >
                 Dashboard
               </Button>
@@ -145,7 +145,7 @@ function Navbar({
 
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden p-2 text-white hover:text-gold transition-colors"
+              className="md:hidden p-2 text-sapphire-dark hover:text-gold transition-colors"
               aria-label="Menu"
             >
               {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -155,16 +155,16 @@ function Navbar({
 
         {/* Mobile Menu */}
         {mobileOpen && (
-          <div className="md:hidden pb-4 border-t border-white/10">
+          <div className="md:hidden pb-4 border-t border-slate-200">
             <div className="flex flex-col gap-1 pt-3">
               {PAGES.map((page) => (
                 <button
                   key={page.id}
                   onClick={() => navigate(page.id)}
-                  className={`px-4 py-3 text-sm font-semibold rounded-lg text-left transition-colors ${
+                  className={`px-4 py-3 text-sm font-medium rounded-lg text-left transition-colors ${
                     currentPage === page.id
-                      ? "text-gold bg-gold/15"
-                      : "text-white hover:text-gold hover:bg-white/10"
+                      ? "text-gold bg-gold/10"
+                      : "text-sapphire-dark hover:text-gold hover:bg-slate-50"
                   }`}
                 >
                   {page.label}
@@ -188,7 +188,7 @@ function SiteFooter({
 }) {
   return (
     <footer className="bg-sapphire-dark text-white/70">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">

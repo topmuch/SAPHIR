@@ -6,35 +6,35 @@ import { ADVANTAGES } from "./data";
 
 export function Advantages() {
   return (
-    <section id="avantages" className="bg-gradient-to-b from-slate-50 to-white py-20 md:py-28">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <FadeIn className="text-center mb-14 md:mb-18">
+    <section id="avantages" className="bg-slate-50/80 py-20 md:py-28 w-full">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+        <FadeIn className="text-center mb-14 md:mb-16">
           <Badge
             variant="outline"
             className="border-gold/30 text-gold-dark bg-gold/5 text-xs mb-4"
           >
             Pourquoi nous choisir
           </Badge>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-sapphire leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-sapphire leading-tight">
             L'excellence au service
             <br className="hidden sm:block" />{" "}
             <span className="text-gradient-gold">de votre marque</span>
           </h2>
         </FadeIn>
 
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-5xl mx-auto">
+        <StaggerContainer className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {ADVANTAGES.map((adv) => (
             <StaggerItem key={adv.title}>
-              <div className="flex gap-5 p-6 rounded-2xl bg-white border border-sapphire/8 hover:border-gold/30 hover:shadow-lg hover:shadow-sapphire/5 transition-all duration-300 group overflow-hidden">
-                <div className="shrink-0 w-20 h-20 rounded-2xl overflow-hidden">
+              <div className="flex gap-6 p-6 rounded-2xl bg-white border border-slate-100 hover:border-gold/30 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-sapphire/10 transition-all duration-300 group overflow-hidden">
+                <div className="shrink-0 w-28 h-28 rounded-xl overflow-hidden">
                   <img
                     src={adv.image}
                     alt={adv.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
-                <div>
-                  <h3 className="font-semibold text-sapphire mb-1 text-base">
+                <div className="flex flex-col justify-center">
+                  <h3 className="font-semibold text-sapphire mb-2 text-lg">
                     {adv.title}
                   </h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">

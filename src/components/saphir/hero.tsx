@@ -1,123 +1,154 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Gem, ChevronDown, ArrowRight } from "lucide-react";
+import { ChevronDown, ArrowRight, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { SERVICES } from "./data";
 
 export function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-[90vh] flex items-center overflow-hidden"
     >
+      {/* Full-bleed background image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/hero-bg.png')" }}
+        style={{ backgroundImage: "url('/hero-wide.png')" }}
       />
-      <div className="absolute inset-0 bg-sapphire-dark/70" />
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-white to-transparent" />
 
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(5)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 rounded-full bg-gold/40 animate-float"
-            style={{
-              left: `${15 + i * 18}%`,
-              top: `${20 + (i % 3) * 25}%`,
-              animationDelay: `${i * 1.2}s`,
-              animationDuration: `${5 + i}s`,
-            }}
-          />
-        ))}
-      </div>
+      {/* Dark gradient overlay on left side for text readability */}
+      <div className="absolute inset-0 bg-gradient-to-r from-sapphire-dark/90 via-sapphire-dark/50 to-transparent" />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center pt-20">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-          <Badge
-            variant="outline"
-            className="border-gold/40 text-gold bg-gold/10 text-xs sm:text-sm px-4 py-1.5 mb-6"
+      <div className="relative z-10 w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        {/* LEFT SIDE: Text content */}
+        <div className="text-left">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <Gem className="w-3.5 h-3.5 mr-1.5" />
-            Agence de communication 360°
-          </Badge>
-        </motion.div>
-
-        <motion.h1
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.15, ease: "easeOut" }}
-        >
-          <span className="text-white">SAPHIR</span>{" "}
-          <span className="text-gradient-gold">COM</span>
-        </motion.h1>
-
-        <motion.p
-          className="mt-4 text-lg sm:text-xl md:text-2xl text-white/80 font-light max-w-2xl mx-auto"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-        >
-          Votre partenaire en communication 360°
-        </motion.p>
-
-        <motion.p
-          className="mt-4 text-sm sm:text-base text-white/60 max-w-xl mx-auto leading-relaxed"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.45, ease: "easeOut" }}
-        >
-          Valorisez votre image, développez votre marque ! SAPHIR COM
-          accompagne les entreprises dans la conception et la mise en œuvre de
-          stratégies de communication innovantes et performantes.
-        </motion.p>
-
-        <motion.div
-          className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
-        >
-          <a href="#services">
-            <Button
-              size="lg"
-              className="bg-gold hover:bg-gold-light text-sapphire-dark font-semibold px-8 text-base shadow-lg shadow-gold/20"
-            >
-              Découvrir nos services
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
-          </a>
-          <a href="#contact">
-            <Button
-              size="lg"
+            <Badge
               variant="outline"
-              className="border-white/30 text-white hover:bg-white/10 hover:text-white font-semibold px-8 text-base"
+              className="border-gold/40 text-gold bg-gold/10 text-xs sm:text-sm px-4 py-1.5 mb-6"
             >
-              Contactez-nous
-            </Button>
-          </a>
-        </motion.div>
+              Agence de communication 360°
+            </Badge>
+          </motion.div>
 
-        <motion.div
-          className="mt-16 md:mt-24"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
-        >
-          <a
-            href="#services"
-            className="inline-block text-white/40 hover:text-gold transition-colors"
+          <motion.h1
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-bold leading-[1.15] text-white"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.15, ease: "easeOut" }}
           >
-            <ChevronDown className="w-6 h-6 animate-bounce" />
-          </a>
+            Votre partenaire en
+            <br />
+            <span className="text-gradient-gold">communication 360°</span>
+          </motion.h1>
+
+          <motion.p
+            className="mt-6 text-base sm:text-lg text-white/70 font-light max-w-lg leading-relaxed"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+          >
+            Valorisez votre image, développez votre marque ! SAPHIR COM
+            accompagne les entreprises dans la conception et la mise en œuvre de
+            stratégies de communication innovantes et performantes.
+          </motion.p>
+
+          <motion.div
+            className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.45, ease: "easeOut" }}
+          >
+            <a href="#services">
+              <Button
+                size="lg"
+                className="bg-gold hover:bg-gold-light text-sapphire-dark font-semibold px-8 text-base shadow-lg shadow-gold/20"
+              >
+                Découvrir nos services
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </a>
+            <a href="#contact">
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-white/30 text-white hover:bg-white/10 hover:text-white font-semibold px-8 text-base"
+              >
+                Contactez-nous
+              </Button>
+            </a>
+          </motion.div>
+        </div>
+
+        {/* RIGHT SIDE: Floating glass-morphism card with mini-form */}
+        <motion.div
+          className="w-full max-w-md lg:max-w-lg mx-auto lg:ml-auto"
+          initial={{ opacity: 0, y: 40, x: 20 }}
+          animate={{ opacity: 1, y: 0, x: 0 }}
+          transition={{ duration: 0.9, delay: 0.5, ease: "easeOut" }}
+        >
+          <div className="rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 p-6 sm:p-8 shadow-2xl">
+            <h3 className="text-white font-bold text-xl mb-1">
+              Demandez un devis
+            </h3>
+            <p className="text-white/60 text-sm mb-6">
+              Obtenez une réponse sous 24h
+            </p>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+              }}
+              className="space-y-4"
+            >
+              <Input
+                placeholder="Votre nom"
+                className="bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:border-gold/50"
+              />
+              <Input
+                type="email"
+                placeholder="Votre email"
+                className="bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:border-gold/50"
+              />
+              <Textarea
+                placeholder="Décrivez votre projet..."
+                rows={4}
+                className="bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:border-gold/50 resize-none"
+              />
+              <Button
+                type="submit"
+                className="w-full bg-gold hover:bg-gold-light text-sapphire-dark font-semibold shadow-lg shadow-gold/25"
+              >
+                Envoyer la demande
+                <Send className="w-4 h-4 ml-2" />
+              </Button>
+            </form>
+          </div>
         </motion.div>
       </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2, duration: 0.8 }}
+      >
+        <a
+          href="#services"
+          className="inline-flex flex-col items-center text-white/40 hover:text-gold transition-colors"
+        >
+          <span className="text-xs mb-1 tracking-wider uppercase">Scroll</span>
+          <ChevronDown className="w-5 h-5 animate-bounce" />
+        </a>
+      </motion.div>
     </section>
   );
 }

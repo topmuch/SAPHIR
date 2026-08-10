@@ -18,10 +18,10 @@ export function CTASection() {
       <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-gold/5 blur-3xl" />
       <div className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-gold/5 blur-3xl" />
 
-      <div className="relative max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <div className="relative max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <FadeIn>
           <Gem className="w-12 h-12 text-gold mx-auto mb-6" />
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
             SAPHIR COM
           </h2>
           <p className="mt-4 text-xl md:text-2xl text-white/70 font-light">

@@ -23,45 +23,52 @@ interface ServicesProps {
 
 export function Services({ onServiceClick }: ServicesProps) {
   return (
-    <section id="services" className="bg-white py-20 md:py-28">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <FadeIn className="text-center mb-14 md:mb-18">
+    <section id="services" className="bg-white py-20 md:py-28 w-full">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+        <FadeIn className="text-center mb-14 md:mb-16">
           <Badge
             variant="outline"
             className="border-gold/30 text-gold-dark bg-gold/5 text-xs mb-4"
           >
             Nos services
           </Badge>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-sapphire leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-sapphire leading-tight">
             Des solutions complètes pour
             <br className="hidden sm:block" />{" "}
             <span className="text-gradient-gold">votre communication</span>
           </h2>
-          <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
+          <p className="mt-4 text-muted-foreground max-w-2xl mx-auto text-lg">
             De la stratégie à la création, nous couvrons l&rsquo;ensemble de vos
             besoins en communication pour propulser votre marque.
           </p>
         </FadeIn>
 
-        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {SERVICES.map((service) => (
+        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {SERVICES.map((service, index) => (
             <StaggerItem key={service.title}>
               <Card
-                className="group h-full border-sapphire/8 hover:border-gold/40 hover:shadow-xl hover:shadow-sapphire/10 transition-all duration-300 bg-white overflow-hidden cursor-pointer"
+                className="group h-full border-slate-100 hover:border-gold/40 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-gold/10 transition-all duration-300 bg-white overflow-hidden cursor-pointer"
                 onClick={() => {
                   const slug = SERVICE_SLUGS[service.title];
                   if (slug && onServiceClick) onServiceClick(slug);
                 }}
               >
-                <div className="h-40 overflow-hidden relative">
+                <div className="h-52 overflow-hidden relative rounded-t-xl">
                   <img
                     src={service.image}
                     alt={service.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-sapphire-dark/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-end p-3">
-                    <span className="text-white text-xs font-medium flex items-center gap-1">
-                      En savoir plus <ArrowRight className="w-3 h-3" />
+                  {/* Badge number */}
+                  <div className="absolute top-3 left-3">
+                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm text-sapphire font-bold text-xs">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+                  {/* Hover overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-sapphire-dark/70 via-sapphire-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-5">
+                    <span className="text-white text-sm font-medium flex items-center gap-1.5">
+                      En savoir plus <ArrowRight className="w-3.5 h-3.5" />
                     </span>
                   </div>
                 </div>

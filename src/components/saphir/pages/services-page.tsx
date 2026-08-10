@@ -81,7 +81,7 @@ export function ServicesPage({ onServiceClick }: ServicesPageProps) {
 
       {/* Services List */}
       <section className="bg-white py-20 md:py-28">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
           <div className="space-y-16 md:space-y-24">
             {SERVICES.map((service, index) => {
               const isEven = index % 2 === 0;

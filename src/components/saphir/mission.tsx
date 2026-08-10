@@ -7,8 +7,8 @@ import { MISSION_PILLARS } from "./data";
 
 export function Mission() {
   return (
-    <section id="mission" className="bg-white py-20 md:py-28">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="mission" className="bg-white py-20 md:py-28 w-full">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <FadeIn direction="right">
             <Badge
@@ -17,12 +17,12 @@ export function Mission() {
             >
               Notre mission
             </Badge>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-sapphire leading-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-sapphire leading-tight">
               Créer des campagnes
               <br />
               <span className="text-gradient-gold">efficaces</span>
             </h2>
-            <p className="mt-5 text-muted-foreground leading-relaxed">
+            <p className="mt-6 text-muted-foreground leading-relaxed text-lg">
               Nous créons des campagnes de communication efficaces qui
               allient créativité, marketing, expérience client et performance.
               Notre approche globale garantit des résultats mesurables tout en
@@ -32,23 +32,23 @@ export function Mission() {
           </FadeIn>
 
           <FadeIn direction="left" delay={0.2}>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-6">
               {MISSION_PILLARS.map((pillar) => (
                 <motion.div
                   key={pillar.label}
                   whileHover={{ y: -4 }}
                   transition={{ duration: 0.2 }}
-                  className="rounded-2xl bg-gradient-to-br from-sapphire/5 to-sapphire/10 overflow-hidden border border-sapphire/8 hover:border-gold/30 transition-colors"
+                  className="rounded-xl bg-white overflow-hidden shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-sapphire/10 border border-slate-100 hover:border-gold/30 transition-colors"
                 >
-                  <div className="h-28 overflow-hidden">
+                  <div className="h-36 overflow-hidden">
                     <img
                       src={pillar.image}
                       alt={pillar.label}
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <div className="p-4 text-center">
-                    <h3 className="font-semibold text-sapphire text-sm md:text-base">
+                  <div className="p-5 text-center">
+                    <h3 className="font-semibold text-sapphire text-base">
                       {pillar.label}
                     </h3>
                   </div>
