@@ -38,14 +38,20 @@ export function Mission() {
                   key={pillar.label}
                   whileHover={{ y: -4 }}
                   transition={{ duration: 0.2 }}
-                  className="rounded-2xl bg-gradient-to-br from-sapphire/5 to-sapphire/10 p-6 text-center border border-sapphire/8 hover:border-gold/30 transition-colors"
+                  className="rounded-2xl bg-gradient-to-br from-sapphire/5 to-sapphire/10 overflow-hidden border border-sapphire/8 hover:border-gold/30 transition-colors"
                 >
-                  <div className="w-14 h-14 rounded-2xl bg-sapphire/10 flex items-center justify-center mx-auto mb-4">
-                    <pillar.icon className="w-7 h-7 text-sapphire" />
+                  <div className="h-28 overflow-hidden">
+                    <img
+                      src={pillar.image}
+                      alt={pillar.label}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
-                  <h3 className="font-semibold text-sapphire text-sm md:text-base">
-                    {pillar.label}
-                  </h3>
+                  <div className="p-4 text-center">
+                    <h3 className="font-semibold text-sapphire text-sm md:text-base">
+                      {pillar.label}
+                    </h3>
+                  </div>
                 </motion.div>
               ))}
             </div>

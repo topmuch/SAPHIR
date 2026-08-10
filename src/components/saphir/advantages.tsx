@@ -25,9 +25,13 @@ export function Advantages() {
         <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-5xl mx-auto">
           {ADVANTAGES.map((adv) => (
             <StaggerItem key={adv.title}>
-              <div className="flex gap-5 p-6 rounded-2xl bg-white border border-sapphire/8 hover:border-gold/30 hover:shadow-lg hover:shadow-sapphire/5 transition-all duration-300 group">
-                <div className="shrink-0 w-14 h-14 rounded-2xl bg-sapphire/5 flex items-center justify-center group-hover:bg-sapphire/10 transition-colors">
-                  <adv.icon className="w-7 h-7 text-sapphire" />
+              <div className="flex gap-5 p-6 rounded-2xl bg-white border border-sapphire/8 hover:border-gold/30 hover:shadow-lg hover:shadow-sapphire/5 transition-all duration-300 group overflow-hidden">
+                <div className="shrink-0 w-20 h-20 rounded-2xl overflow-hidden">
+                  <img
+                    src={adv.image}
+                    alt={adv.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
                 <div>
                   <h3 className="font-semibold text-sapphire mb-1 text-base">

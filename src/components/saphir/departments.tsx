@@ -39,13 +39,19 @@ export function Departments() {
         <StaggerContainer className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
           {DEPARTMENTS.map((dept) => (
             <StaggerItem key={dept.name}>
-              <div className="glass-card-dark rounded-2xl p-6 md:p-8 text-center group hover:border-gold/40 transition-all duration-300 hover:bg-white/10">
-                <div className="w-14 h-14 rounded-2xl bg-gold/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-gold/20 transition-colors">
-                  <dept.icon className="w-7 h-7 text-gold" />
+              <div className="glass-card-dark rounded-2xl overflow-hidden group hover:border-gold/40 transition-all duration-300 hover:bg-white/10">
+                <div className="h-32 overflow-hidden">
+                  <img
+                    src={dept.image}
+                    alt={dept.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
-                <h3 className="font-semibold text-white text-sm md:text-base">
-                  {dept.name}
-                </h3>
+                <div className="p-5 text-center">
+                  <h3 className="font-semibold text-white text-sm md:text-base">
+                    {dept.name}
+                  </h3>
+                </div>
               </div>
             </StaggerItem>
           ))}

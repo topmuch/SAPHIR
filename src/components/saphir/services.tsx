@@ -30,11 +30,15 @@ export function Services() {
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {SERVICES.map((service) => (
             <StaggerItem key={service.title}>
-              <Card className="group h-full border-sapphire/8 hover:border-gold/30 hover:shadow-lg hover:shadow-sapphire/5 transition-all duration-300 bg-white">
-                <CardContent className="p-6">
-                  <div className="w-12 h-12 rounded-xl bg-sapphire/5 flex items-center justify-center mb-4 group-hover:bg-sapphire/10 transition-colors">
-                    <service.icon className="w-6 h-6 text-sapphire" />
-                  </div>
+              <Card className="group h-full border-sapphire/8 hover:border-gold/30 hover:shadow-lg hover:shadow-sapphire/5 transition-all duration-300 bg-white overflow-hidden">
+                <div className="h-40 overflow-hidden">
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <CardContent className="p-5">
                   <h3 className="font-semibold text-sapphire text-base mb-2 leading-snug">
                     {service.title}
                   </h3>
