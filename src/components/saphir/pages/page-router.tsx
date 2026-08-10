@@ -22,6 +22,7 @@ import { BlogPage } from "./blog-page";
 import { CarrieresPage } from "./carrieres-page";
 import { FaqPage } from "./faq-page";
 import { ContactPage } from "./contact-page";
+import { ServiceDetailPage } from "./service-detail-page";
 
 const PAGES = [
   { id: "accueil", label: "Accueil" },
@@ -31,6 +32,17 @@ const PAGES = [
   { id: "carrieres", label: "Carrières" },
   { id: "faq", label: "FAQ" },
   { id: "contact", label: "Contact" },
+];
+
+const SERVICE_SLUGS = [
+  "branding",
+  "corporate",
+  "marketing360",
+  "graphic",
+  "production",
+  "digital",
+  "web",
+  "evenementiel",
 ];
 
 const FOOTER_SERVICES = [
@@ -81,8 +93,8 @@ function Navbar({
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-sapphire-dark/95 backdrop-blur-md shadow-lg"
-          : "bg-transparent"
+          ? "bg-sapphire-dark/98 backdrop-blur-md shadow-lg shadow-black/20"
+          : "bg-sapphire-dark/85 backdrop-blur-sm"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -92,7 +104,7 @@ function Navbar({
             onClick={() => navigate("accueil")}
             className="flex items-center gap-2"
           >
-            <div className="w-8 h-8 rounded-lg bg-gold/20 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-lg bg-gold/20 flex items-center justify-center border border-gold/30">
               <Gem className="w-4 h-4 text-gold" />
             </div>
             <span className="text-lg font-bold tracking-tight">
@@ -107,10 +119,10 @@ function Navbar({
               <button
                 key={page.id}
                 onClick={() => navigate(page.id)}
-                className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+                className={`px-3 py-2 text-sm font-semibold rounded-lg transition-all duration-200 ${
                   currentPage === page.id
-                    ? "text-gold"
-                    : "text-white/80 hover:text-gold hover:bg-white/5"
+                    ? "text-gold bg-gold/10"
+                    : "text-white hover:text-gold hover:bg-white/10"
                 }`}
               >
                 {page.label}
@@ -125,7 +137,7 @@ function Navbar({
                 variant="outline"
                 size="sm"
                 onClick={onBackToDashboard}
-                className="text-gold border-gold/30 hover:bg-gold/10 hover:text-gold text-xs"
+                className="text-gold border-gold/40 hover:bg-gold/10 hover:text-gold text-xs font-semibold"
               >
                 Dashboard
               </Button>
@@ -133,10 +145,10 @@ function Navbar({
 
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden p-2 text-white/80 hover:text-gold transition-colors"
+              className="md:hidden p-2 text-white hover:text-gold transition-colors"
               aria-label="Menu"
             >
-              {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
@@ -149,10 +161,10 @@ function Navbar({
                 <button
                   key={page.id}
                   onClick={() => navigate(page.id)}
-                  className={`px-4 py-2.5 text-sm font-medium rounded-lg text-left transition-colors ${
+                  className={`px-4 py-3 text-sm font-semibold rounded-lg text-left transition-colors ${
                     currentPage === page.id
-                      ? "text-gold bg-gold/10"
-                      : "text-white/80 hover:text-gold hover:bg-white/5"
+                      ? "text-gold bg-gold/15"
+                      : "text-white hover:text-gold hover:bg-white/10"
                   }`}
                 >
                   {page.label}
@@ -193,7 +205,7 @@ function SiteFooter({
               </span>
             </button>
             <p className="text-sm leading-relaxed text-white/50">
-              L'agence qui réinvente la relation entre les marques et leurs
+              L&rsquo;agence qui réinvente la relation entre les marques et leurs
               clients. Communication 360° innovante et performante.
             </p>
           </div>
@@ -286,14 +298,30 @@ export function SiteRouter({
     window.scrollTo(0, 0);
   }, []);
 
+  const handleServiceClick = useCallback(
+    (slug: string) => {
+      setCurrentPage(`service-${slug}`);
+      window.scrollTo(0, 0);
+    },
+    []
+  );
+
   const renderPage = () => {
+    // Service detail pages
+    if (currentPage.startsWith("service-")) {
+      const slug = currentPage.replace("service-", "");
+      if (SERVICE_SLUGS.includes(slug)) {
+        return <ServiceDetailPage serviceSlug={slug} onNavigate={navigate} />;
+      }
+    }
+
     switch (currentPage) {
       case "accueil":
         return (
           <>
             <Hero />
             <StatsBar />
-            <Services />
+            <Services onServiceClick={handleServiceClick} />
             <Departments />
             <Mission />
             <Advantages />
@@ -304,7 +332,7 @@ export function SiteRouter({
       case "a-propos":
         return <AProposPage />;
       case "services":
-        return <ServicesPage />;
+        return <ServicesPage onServiceClick={handleServiceClick} />;
       case "blog":
         return <BlogPage />;
       case "carrieres":

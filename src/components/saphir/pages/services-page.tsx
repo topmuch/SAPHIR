@@ -6,57 +6,69 @@ import { FadeIn } from "@/components/saphir/animations";
 
 const SERVICES = [
   {
+    slug: "branding",
     title: "Branding & Identité visuelle",
     image: "/images/service-branding.png",
     desc: "Nous créons des identités de marque uniques et mémorables. Du logo à la charte graphique complète, nous construisons une image de marque forte et cohérente qui reflète l'essence de votre entreprise et résonne avec votre audience cible.",
   },
   {
+    slug: "corporate",
     title: "Communication corporate",
     image: "/images/service-corporate.png",
     desc: "Stratégies de communication interne et externe sur mesure. Nous élaborons des plans de communication corporate qui renforcent votre image institutionnelle et fédèrent vos collaborateurs autour d'une vision commune.",
   },
   {
+    slug: "marketing360",
     title: "Communication globale & Marketing 360°",
     image: "/images/service-marketing360.png",
     desc: "Approche intégrée couvrant tous les canaux et points de contact. Notre marketing 360° garantit une présence cohérente et impactante sur l'ensemble du parcours client, du premier contact à la fidélisation.",
   },
   {
+    slug: "graphic",
     title: "Création graphique et audiovisuelle",
     image: "/images/service-graphic.png",
     desc: "Design graphique professionnel et productions audiovisuelles de haute qualité. Nos créateurs transforment vos idées en visuels percutants et contenus multimédias qui captent l'attention de votre audience.",
   },
   {
+    slug: "production",
     title: "Production de films & supports",
     image: "/images/service-production.png",
     desc: "Films, spots radio et supports print percutants. De la conception au montage, nous produisons des contenus qui racontent votre histoire de manière authentique et engageante.",
   },
   {
+    slug: "digital",
     title: "Communication digitale & Réseaux sociaux",
     image: "/images/service-digital.png",
     desc: "Gestion des réseaux sociaux et stratégies de contenu digital. Nous maximisons votre visibilité en ligne avec des campagnes créatives et des contenus optimisés pour chaque plateforme.",
   },
   {
+    slug: "web",
     title: "Création de sites web & Référencement",
     image: "/images/service-web.png",
     desc: "Sites web performants optimisés SEO pour une visibilité maximale. Nous concevons des expériences numériques qui convertissent vos visiteurs en clients fidèles.",
   },
   {
+    slug: "evenementiel",
     title: "Relations publiques & Événements",
     image: "/images/service-evenementiel.png",
     desc: "Organisation événements et relations publiques pour renforcer votre notoriété. Nous créons des moments mémorables qui génèrent du buzz et des retombées médiatiques positives.",
   },
 ];
 
-export function ServicesPage() {
+interface ServicesPageProps {
+  onServiceClick?: (slug: string) => void;
+}
+
+export function ServicesPage({ onServiceClick }: ServicesPageProps) {
   return (
     <main>
       {/* Hero */}
       <section className="relative h-80 md:h-96 flex items-center justify-center overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/images/about-hero.png')" }}
+          style={{ backgroundImage: "url('/images/service-marketing360.png')" }}
         />
-        <div className="absolute inset-0 bg-sapphire-dark/80" />
+        <div className="absolute inset-0 bg-sapphire-dark/85" />
         <div className="relative z-10 text-center px-4">
           <h1 className="text-4xl md:text-6xl font-bold text-white">
             Nos <span className="text-gradient-gold">Services</span>
@@ -77,11 +89,20 @@ export function ServicesPage() {
                 <FadeIn key={service.title}>
                   <div className="grid md:grid-cols-2 gap-8 items-center">
                     <div className={isEven ? "" : "md:order-2"}>
-                      <div className="relative rounded-xl overflow-hidden h-64 md:h-80 bg-slate-100">
-                        <div
-                          className="absolute inset-0 bg-cover bg-center"
-                          style={{ backgroundImage: `url('${service.image}')` }}
+                      <div
+                        className="relative rounded-xl overflow-hidden h-64 md:h-80 bg-slate-100 cursor-pointer group"
+                        onClick={() => onServiceClick?.(service.slug)}
+                      >
+                        <img
+                          src={service.image}
+                          alt={service.title}
+                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
+                        <div className="absolute inset-0 bg-sapphire-dark/0 group-hover:bg-sapphire-dark/40 transition-all duration-300 flex items-center justify-center">
+                          <span className="text-white font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-2">
+                            Voir en détail <ArrowRight className="w-4 h-4" />
+                          </span>
+                        </div>
                       </div>
                     </div>
                     <div className={isEven ? "" : "md:order-1"}>
@@ -94,6 +115,14 @@ export function ServicesPage() {
                       <p className="text-muted-foreground leading-relaxed mb-6">
                         {service.desc}
                       </p>
+                      <Button
+                        variant="outline"
+                        className="border-sapphire/20 text-sapphire hover:bg-sapphire hover:text-white"
+                        onClick={() => onServiceClick?.(service.slug)}
+                      >
+                        Découvrir ce service
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </Button>
                     </div>
                   </div>
                 </FadeIn>

@@ -145,3 +145,49 @@ Stage Summary:
 - Footer avec liens cliquables vers chaque page
 - Bouton Dashboard accessible depuis toutes les pages
 - Le site vitrine s'affiche maintenant par défaut à l'ouverture
+---
+Task ID: 3
+Agent: service-pages-creator
+Task: Create 8 service detail pages in single component
+
+Work Log:
+- Created /home/z/my-project/src/components/saphir/pages/service-detail-page.tsx
+- Contains detailed content for all 8 services (branding, corporate, marketing360, graphic, production, digital, web, evenementiel)
+- Uses service slug to render appropriate content via SERVICE_DETAILS record and SERVICES array
+- Hero banner with service image background, dark overlay, gold-accented title
+- 2-col description section (text left, image right)
+- "Ce que nous offrons" features grid with CheckCircle2 icons
+- "Nos réalisations" section with 3 project cards per service
+- CTA section with "Demander un devis" button navigating to contact page
+- Uses FadeIn, StaggerContainer, StaggerItem animations
+- All text in French, sapphire/gold theme, mobile-first responsive
+- Imports SERVICES from @/components/saphir/data for image and title
+- Lint passes clean
+
+Stage Summary:
+- ServiceDetailPage component created with full content for all 8 services
+- Component accepts serviceSlug prop to render service-specific content
+- 5 sections: Hero, Description, Features, Projects, CTA
+- Graceful fallback for unknown slugs with back navigation
+
+---
+Task ID: 7
+Agent: Main
+Task: Régénérer images, corriger menu, créer 8 pages de services
+
+Work Log:
+- Corrigé la visibilité du menu: bg-transparent -> bg-sapphire-dark/85 (fond sombre permanent)
+- Menu text: text-white/80 -> text-white (plus visible), font-semibold
+- Généré 8 images AI avec personnes noires pour chaque catégorie de service
+- Créé service-detail-page.tsx: page complète pour chaque service (hero, description, features, projets, CTA)
+- Mis à jour services.tsx: cartes cliquables avec overlay "En savoir plus" au hover
+- Mis à jour services-page.tsx: chaque service cliquable avec bouton "Découvrir ce service"
+- Mis à jour page-router.tsx: routing service-{slug} pour les 8 pages de détail
+- Corrigé bugs syntaxe (template literals, \n artifacts)
+
+Stage Summary:
+- 8 images générées: branding, corporate, marketing360, graphic, production, digital, web, evenementiel
+- 8 pages de détail créées dans un seul composant ServiceDetailPage
+- Menu toujours visible sur fond sombre (bg-sapphire-dark/85)
+- Navigation: Accueil -> clic service -> page détaillée (vraie page, pas modale)
+- Lint propre, tout vérifié avec Agent Browser
