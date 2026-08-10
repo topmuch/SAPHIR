@@ -20,7 +20,7 @@ const VIEW_TITLES: Record<string, string> = {
 
 export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [activeView, setActiveView] = useState("dashboard");
+  const [activeView, setActiveView] = useState("site_web");
 
   const isSiteWeb = activeView === "site_web";
 

@@ -126,3 +126,22 @@ Stage Summary:
 - Mobile-responsive hamburger menu
 - Footer links (À propos, Carrières, Blog, FAQ) navigate to actual pages
 - Lint passes clean, no compilation errors
+---
+Task ID: 6
+Agent: Main
+Task: Vérification finale - menu sur le Hero + toutes les pages
+
+Work Log:
+- Changé la vue par défaut de 'dashboard' à 'site_web' dans page.tsx
+- Vérifié avec Agent Browser que le menu de navigation est bien présent sur le Hero
+- Testé la navigation vers chaque page : Accueil, À propos, Services, Blog, Carrières, FAQ, Contact
+- Vérifié le bouton Dashboard pour revenir au tableau de bord
+- Toutes les pages se chargent correctement avec contenu complet
+
+Stage Summary:
+- 7 pages fonctionnelles : Accueil, À propos, Services, Blog, Carrières, FAQ, Contact
+- Menu de navigation fixé en haut du Hero (transparent → solide au scroll)
+- Navigation entre toutes les pages opérationnelle
+- Footer avec liens cliquables vers chaque page
+- Bouton Dashboard accessible depuis toutes les pages
+- Le site vitrine s'affiche maintenant par défaut à l'ouverture
