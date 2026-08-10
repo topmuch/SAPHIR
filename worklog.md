@@ -77,3 +77,22 @@ Stage Summary:
 - 12 mock projects with realistic Moroccan business data
 - Responsive: sidebar collapses on mobile, table scrolls horizontally
 - All navigation client-side via useState view switching
+
+---
+Task ID: 4
+Agent: Main
+Task: Integrate showcase site into dashboard as 'Site web' view
+
+Work Log:
+- Created SiteVitrineView component wrapping all original saphir showcase components
+- Added floating 'Dashboard' back button (LayoutDashboard icon, fixed top-right, z-60)
+- Added 'Site web' nav item (Globe icon) to dashboard sidebar with separator
+- Updated page.tsx with dual-mode rendering: full-width showcase vs dashboard layout
+- Fixed lint error (JSX comment syntax)
+
+Stage Summary:
+- Both showcase and dashboard now accessible from single page
+- Clicking 'Site web' in sidebar hides dashboard chrome and shows full showcase
+- Floating 'Dashboard' button in top-right of showcase returns to dashboard view
+- All 6 views: Tableau de bord, Projets, Clients, Équipe, Paramètres, Site web
+- Lint passes clean, 52KB rendered HTML, no errors

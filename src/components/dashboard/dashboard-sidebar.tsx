@@ -9,6 +9,7 @@ import {
   X,
   Gem,
   HelpCircle,
+  Globe,
 } from 'lucide-react';
 
 export interface DashboardSidebarProps {
@@ -26,6 +27,8 @@ const navItems = [
   { id: 'parametres', label: 'Paramètres', icon: Settings },
 ] as const;
 
+const showcaseItem = { id: 'site_web', label: 'Site web', icon: Globe };
+
 export function DashboardSidebar({
   isOpen,
   onClose,
@@ -36,6 +39,8 @@ export function DashboardSidebar({
     onViewChange(viewId);
     onClose();
   };
+
+  const isSiteWeb = activeView === 'site_web';
 
   return (
     <>
@@ -109,6 +114,29 @@ export function DashboardSidebar({
               </button>
             );
           })}
+
+          {/* Separator before Site Web */}
+          <div className="my-3 h-px bg-white/10" />
+
+          {/* Site Web showcase link */}
+          <button
+            onClick={() => handleNavClick(showcaseItem.id)}
+            className={
+              'flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ' +
+              (isSiteWeb
+                ? 'bg-gold/10 text-gold'
+                : 'text-white/60 hover:bg-white/5 hover:text-white')
+            }
+          >
+            <showcaseItem.icon className={
+              'h-5 w-5 shrink-0' +
+              (isSiteWeb ? ' text-gold' : '')
+            } />
+            {showcaseItem.label}
+            {isSiteWeb && (
+              <span className="ml-auto h-1.5 w-1.5 rounded-full bg-gold" />
+            )}
+          </button>
         </nav>
 
         {/* Divider */}

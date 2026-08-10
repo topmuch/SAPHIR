@@ -8,18 +8,21 @@ import { ProjectsView } from "@/components/dashboard/projects-view";
 import { ClientsView } from "@/components/dashboard/clients-view";
 import { TeamView } from "@/components/dashboard/team-view";
 import { SettingsView } from "@/components/dashboard/settings-view";
+import { SiteVitrineView } from "@/components/dashboard/site-vitrine-view";
 
 const VIEW_TITLES: Record<string, string> = {
   dashboard: "Tableau de bord",
   projets: "Projets",
   clients: "Clients",
-  equipe: "Équipe",
-  parametres: "Paramètres",
+  equipe: "\u00c9quipe",
+  parametres: "Param\u00e8tres",
 };
 
 export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [activeView, setActiveView] = useState("dashboard");
+
+  const isSiteWeb = activeView === "site_web";
 
   const handleViewChange = useCallback((view: string) => {
     setActiveView(view);
@@ -29,21 +32,16 @@ export default function Home() {
     setSidebarOpen((prev) => !prev);
   }, []);
 
-  const renderView = () => {
-    switch (activeView) {
-      case "projets":
-        return <ProjectsView />;
-      case "clients":
-        return <ClientsView />;
-      case "equipe":
-        return <TeamView />;
-      case "parametres":
-        return <SettingsView />;
-      default:
-        return <OverviewView />;
-    }
-  };
+  // Full-width showcase mode
+  if (isSiteWeb) {
+    return (
+      <SiteVitrineView
+        onBackToDashboard={() => setActiveView("dashboard")}
+      />
+    );
+  }
 
+  // Dashboard mode
   return (
     <div className="min-h-screen bg-slate-50/80">
       <DashboardSidebar
@@ -58,7 +56,13 @@ export default function Home() {
           onMenuToggle={toggleSidebar}
           title={VIEW_TITLES[activeView] || "Tableau de bord"}
         />
-        <main className="flex-1 p-4 md:p-6 lg:p-8">{renderView()}</main>
+        <main className="flex-1 p-4 md:p-6 lg:p-8">
+          {activeView === "projets" && <ProjectsView />}
+          {activeView === "clients" && <ClientsView />}
+          {activeView === "equipe" && <TeamView />}
+          {activeView === "parametres" && <SettingsView />}
+          {(activeView === "dashboard" || !VIEW_TITLES[activeView]) && <OverviewView />}
+        </main>
       </div>
     </div>
   );
