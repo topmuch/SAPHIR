@@ -80,7 +80,7 @@ export function ServicesPage({ onServiceClick }: ServicesPageProps) {
       </section>
 
       {/* Services List */}
-      <section className="bg-white py-20 md:py-28">
+      <section className="bg-white dark:bg-sapphire-dark py-20 md:py-28">
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
           <div className="space-y-16 md:space-y-24">
             {SERVICES.map((service, index) => {
@@ -106,10 +106,10 @@ export function ServicesPage({ onServiceClick }: ServicesPageProps) {
                       </div>
                     </div>
                     <div className={isEven ? "" : "md:order-1"}>
-                      <div className="inline-block px-3 py-1 rounded-full bg-gold/10 text-gold-dark text-xs font-medium mb-4">
+                      <div className="inline-block px-3 py-1 rounded-full bg-gold/10 text-gold-dark dark:text-gold-light text-xs font-medium mb-4">
                         Service {String(index + 1).padStart(2, "0")}
                       </div>
-                      <h2 className="text-2xl md:text-3xl font-bold text-sapphire mb-4 leading-tight">
+                      <h2 className="text-2xl md:text-3xl font-bold text-sapphire dark:text-white mb-4 leading-tight">
                         {service.title}
                       </h2>
                       <p className="text-muted-foreground leading-relaxed mb-6">
@@ -117,7 +117,7 @@ export function ServicesPage({ onServiceClick }: ServicesPageProps) {
                       </p>
                       <Button
                         variant="outline"
-                        className="border-sapphire/20 text-sapphire hover:bg-sapphire hover:text-white"
+                        className="border-sapphire/20 text-sapphire dark:text-gold-light dark:border-gold/30 hover:bg-sapphire hover:text-white dark:hover:bg-gold dark:hover:text-sapphire-dark"
                         onClick={() => onServiceClick?.(service.slug)}
                       >
                         Découvrir ce service

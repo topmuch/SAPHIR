@@ -289,3 +289,25 @@ Work Log:
 Stage Summary:
 - Corrections (formulaires fonctionnels + onglet Messages du dashboard + API messages) poussées sur GitHub, branche main, commit par-dessus 27bf408 (fast-forward, historique préservé, tag v1 intact).
 - Serveur dev local inchangé et toujours fonctionnel (HTTP 200).
+
+---
+Task ID: 11
+Agent: Main agent (Super Z)
+Task: Ajouter un bouton de bascule mode sombre/clair et mettre les fonds des KPI en multicolore jaune et bleu (demande utilisateur).
+
+Work Log:
+- Créé `src/components/theme-toggle.tsx` : bouton Sun/Moon avec useSyncExternalStore + MutationObserver sur la classe `dark` de <html> (pattern lint-compatible, sans warning d'hydratation), persistance localStorage (clé "theme").
+- `layout.tsx` : script inline anti-flash exécuté avant le premier rendu (lit localStorage, fallback prefers-color-scheme).
+- `globals.css` : palette `.dark` réalignée sur la marque — fond bleu nuit #071228, cartes #0C1E42, primary or #C9A84C, bordures translucides, charts or/bleus.
+- KPI multicolores jaune/bleu : `overview.tsx` (4 cartes KPI en dégradés alternés saphir et or avec textes/taux adaptés par variante) + `messages-view.tsx` (4 cartes stats même traitement).
+- Toggle ajouté dans 2 endroits : navbar publique du page-router (variant adaptatif selon scrolled : clair sur nav transparente, sombre sur nav blanche) + header du dashboard. Import aussi câblé dans navbar.tsx (dialogs).
+- Dashboard dark-safe : remplacement des couleurs codées en dur par des tokens (bg-background/card/muted, text-foreground/muted-foreground, border-border/input) dans dashboard-header, admin/page, login-screen, team-view, messages-view (filtres, recherche, liste, détail, dialog), dashboard-data (STATUS_COLORS).
+- Site public dark-safe : variantes `dark:` ajoutées sur toutes les sections et pages (services, mission, advantages, departments, contact-section, contact-form, cta, footer déjà sombre, page-router + pages a-propos/services/service-detail/contact/faq/carrieres/blog) — sections blanches → sapphire-dark, sections slate-50 → sapphire, cartes → white/5, titres text-sapphire → white, icônes/accents → gold-light, badges gold-dark → gold-light.
+- Vérifications navigateur (agent-browser) : toggle accueil ✓ (classe .dark appliquée + localStorage), toggle dashboard ✓ (aller-retour sombre/clair), 0 erreur console sur chargement frais, POST /api/messages toujours OK puis base nettoyée.
+- Vérifications visuelles (VLM sur captures) : KPI dashboard sombre = fonds alternés bleu/or ✓ thème cohérent ✓ ; KPI dashboard clair = alternance bleu/or ✓ fond blanc propre ✓ ; accueil sombre = cohérent sans zone blanche ✓ ; onglet Messages sombre = stats alternées bleu/or ✓ lisible ✓.
+- ESLint propre après refactor du toggle (useSyncExternalStore).
+
+Stage Summary:
+- Bouton mode sombre/clair opérationnel sur tout le site (navbar publique + dashboard), préférence persistée, anti-flash, thème sombre aux couleurs de la marque (bleu nuit + or).
+- KPI du dashboard et stats Messages en fonds multicolores alternés jaune (or) et bleu (saphir).
+- 26 fichiers modifiés + 1 nouveau composant. Prêt pour commit/push GitHub.

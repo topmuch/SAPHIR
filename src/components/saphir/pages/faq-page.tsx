@@ -72,10 +72,10 @@ export function FaqPage() {
       </section>
 
       {/* FAQ Accordion */}
-      <section className="bg-white py-20 md:py-28">
+      <section className="bg-white dark:bg-sapphire-dark py-20 md:py-28">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <FadeIn className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold text-sapphire">
+            <h2 className="text-3xl md:text-4xl font-bold text-sapphire dark:text-white">
               Vos questions, nos <span className="text-gradient-gold">réponses</span>
             </h2>
             <p className="mt-4 text-muted-foreground">
@@ -90,7 +90,7 @@ export function FaqPage() {
                   value={`faq-${index}`}
                   className="border-sapphire/10 rounded-xl px-6 data-[state=open]:shadow-md data-[state=open]:shadow-sapphire/5 data-[state=open]:border-gold/20 transition-all"
                 >
-                  <AccordionTrigger className="text-left text-sapphire font-medium hover:text-gold-dark hover:no-underline py-5">
+                  <AccordionTrigger className="text-left text-sapphire dark:text-white font-medium hover:text-gold-dark dark:hover:text-gold-light hover:no-underline py-5">
                     {item.question}
                   </AccordionTrigger>
                   <AccordionContent className="text-muted-foreground leading-relaxed pb-5">

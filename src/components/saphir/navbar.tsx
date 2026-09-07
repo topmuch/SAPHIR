@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Gem, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
 import {
   Dialog,
   DialogContent,
@@ -57,6 +58,8 @@ export function Navbar() {
                 {link.label}
               </a>
             ))}
+            {/* Bascule mode clair / sombre */}
+            <ThemeToggle variant="onDark" className="mx-2" />
             <Dialog>
               <DialogTrigger asChild>
                 <Button className="ml-3 bg-gold hover:bg-gold-light text-sapphire-dark font-semibold text-sm">
@@ -65,7 +68,7 @@ export function Navbar() {
               </DialogTrigger>
               <DialogContent className="sm:max-w-md">
                 <DialogHeader>
-                  <DialogTitle className="text-sapphire flex items-center gap-2">
+                  <DialogTitle className="text-sapphire dark:text-gold-light flex items-center gap-2">
                     <Gem className="w-5 h-5 text-gold" /> Contactez-nous
                   </DialogTitle>
                 </DialogHeader>
@@ -74,13 +77,16 @@ export function Navbar() {
             </Dialog>
           </div>
 
-          <button
-            className="md:hidden text-white p-2"
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label={mobileOpen ? "Fermer le menu" : "Ouvrir le menu"}
-          >
-            {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          <div className="md:hidden flex items-center gap-1">
+            <ThemeToggle variant="onDark" />
+            <button
+              className="md:hidden text-white p-2"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label={mobileOpen ? "Fermer le menu" : "Ouvrir le menu"}
+            >
+              {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
       </div>
 

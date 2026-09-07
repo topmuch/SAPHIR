@@ -378,10 +378,10 @@ export const STATUS_LABELS: Record<ProjectStatus, string> = {
 };
 
 export const STATUS_COLORS: Record<ProjectStatus, string> = {
-  en_cours: "bg-emerald-100 text-emerald-700",
-  termine: "bg-slate-100 text-slate-600",
-  en_attente: "bg-amber-100 text-amber-700",
-  pause: "bg-rose-100 text-rose-600",
+  en_cours: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300",
+  termine: "bg-slate-100 text-slate-600 dark:bg-white/10 dark:text-white/70",
+  en_attente: "bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300",
+  pause: "bg-rose-100 text-rose-600 dark:bg-rose-500/15 dark:text-rose-300",
 };
 
 export const TIER_LABELS: Record<ClientTier, string> = {

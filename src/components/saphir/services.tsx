@@ -23,16 +23,16 @@ interface ServicesProps {
 
 export function Services({ onServiceClick }: ServicesProps) {
   return (
-    <section id="services" className="bg-white py-20 md:py-28 w-full">
+    <section id="services" className="bg-white dark:bg-sapphire-dark py-20 md:py-28 w-full">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         <FadeIn className="text-center mb-14 md:mb-16">
           <Badge
             variant="outline"
-            className="border-gold/30 text-gold-dark bg-gold/5 text-xs mb-4"
+            className="border-gold/30 text-gold-dark dark:text-gold-light bg-gold/5 text-xs mb-4"
           >
             Nos services
           </Badge>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-sapphire leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-sapphire dark:text-white leading-tight">
             Des solutions complètes pour
             <br className="hidden sm:block" />{" "}
             <span className="text-gradient-gold">votre communication</span>
@@ -47,7 +47,7 @@ export function Services({ onServiceClick }: ServicesProps) {
           {SERVICES.map((service, index) => (
             <StaggerItem key={service.title}>
               <Card
-                className="group h-full border-slate-100 hover:border-gold/40 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-gold/10 transition-all duration-300 bg-white overflow-hidden cursor-pointer"
+                className="group h-full border-slate-100 dark:border-white/10 hover:border-gold/40 shadow-xl shadow-slate-200/50 dark:shadow-black/30 hover:shadow-2xl hover:shadow-gold/10 transition-all duration-300 bg-white dark:bg-white/5 overflow-hidden cursor-pointer"
                 onClick={() => {
                   const slug = SERVICE_SLUGS[service.title];
                   if (slug && onServiceClick) onServiceClick(slug);
@@ -74,7 +74,7 @@ export function Services({ onServiceClick }: ServicesProps) {
                   </div>
                 </div>
                 <CardContent className="p-5">
-                  <h3 className="font-semibold text-sapphire text-base mb-2 leading-snug">
+                  <h3 className="font-semibold text-sapphire dark:text-white text-base mb-2 leading-snug">
                     {service.title}
                   </h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">

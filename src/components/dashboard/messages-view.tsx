@@ -233,36 +233,57 @@ export function MessagesView({ onUnreadChange }: { onUnreadChange?: (n: number) 
     }
   };
 
+  // Variantes multicolores jaune (or) / bleu (saphir) alternées
+  const STAT_VARIANTS = {
+    blue: {
+      card: "bg-gradient-to-br from-sapphire via-sapphire-light to-sapphire border-0 text-white",
+      iconBox: "bg-white/15",
+      icon: "text-gold",
+      value: "text-white",
+      label: "text-white/75",
+    },
+    gold: {
+      card: "bg-gradient-to-br from-gold via-gold-light to-gold border-0 text-sapphire-dark",
+      iconBox: "bg-sapphire/10",
+      icon: "text-sapphire",
+      value: "text-sapphire-dark",
+      label: "text-sapphire-dark/75",
+    },
+  } as const;
+
   const statCards = [
-    { label: "Total messages", value: stats?.total ?? 0, icon: Inbox, color: "text-sapphire", bg: "bg-sapphire/10" },
-    { label: "Non lus", value: stats?.unread ?? 0, icon: MailOpen, color: "text-red-600", bg: "bg-red-50" },
-    { label: "Demandes de devis", value: stats?.devis ?? 0, icon: FileText, color: "text-gold-dark", bg: "bg-gold/10" },
-    { label: "Messages contact", value: stats?.contact ?? 0, icon: MessageSquare, color: "text-green-700", bg: "bg-green-50" },
+    { label: "Total messages", value: stats?.total ?? 0, icon: Inbox, variant: "blue" as const },
+    { label: "Non lus", value: stats?.unread ?? 0, icon: MailOpen, variant: "gold" as const },
+    { label: "Demandes de devis", value: stats?.devis ?? 0, icon: FileText, variant: "blue" as const },
+    { label: "Messages contact", value: stats?.contact ?? 0, icon: MessageSquare, variant: "gold" as const },
   ];
 
   return (
     <div className="space-y-6">
-      {/* ---------- Statistiques ---------- */}
+      {/* ---------- Statistiques (fond multicolore jaune / bleu) ---------- */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {statCards.map((card) => (
-          <Card key={card.label} className="border-slate-100 shadow-sm">
-            <CardContent className="flex items-center gap-4 p-4 md:p-5">
-              <div
-                className={`w-11 h-11 rounded-xl ${card.bg} flex items-center justify-center shrink-0`}
-              >
-                <card.icon className={`w-5 h-5 ${card.color}`} />
-              </div>
-              <div className="min-w-0">
-                <p className="text-2xl font-bold leading-none text-sapphire">
-                  {loading ? "…" : card.value}
-                </p>
-                <p className="text-xs text-muted-foreground mt-1 truncate">
-                  {card.label}
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+        {statCards.map((card) => {
+          const v = STAT_VARIANTS[card.variant];
+          return (
+            <Card key={card.label} className={`shadow-md ${v.card}`}>
+              <CardContent className="flex items-center gap-4 p-4 md:p-5">
+                <div
+                  className={`w-11 h-11 rounded-xl ${v.iconBox} flex items-center justify-center shrink-0`}
+                >
+                  <card.icon className={`w-5 h-5 ${v.icon}`} />
+                </div>
+                <div className="min-w-0">
+                  <p className={`text-2xl font-bold leading-none ${v.value}`}>
+                    {loading ? "…" : card.value}
+                  </p>
+                  <p className={`text-xs mt-1 truncate ${v.label}`}>
+                    {card.label}
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })}
       </div>
 
       {/* ---------- Filtres + recherche + actualiser ---------- */}
@@ -275,8 +296,8 @@ export function MessagesView({ onUnreadChange }: { onUnreadChange?: (n: number) 
               className={
                 "rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors border " +
                 (filter === f.key
-                  ? "bg-sapphire text-white border-sapphire"
-                  : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50")
+                  ? "bg-sapphire text-white border-sapphire dark:bg-gold dark:text-sapphire-dark dark:border-gold"
+                  : "bg-background text-muted-foreground border-border hover:bg-muted hover:text-foreground")
               }
             >
               {f.label}
@@ -289,13 +310,13 @@ export function MessagesView({ onUnreadChange }: { onUnreadChange?: (n: number) 
           ))}
         </div>
         <div className="relative sm:ml-auto sm:w-64">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <input
             type="search"
             placeholder="Rechercher un message…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full rounded-lg border border-slate-200 bg-white pl-9 pr-3 py-2 text-sm outline-none focus:border-sapphire/40 focus:ring-2 focus:ring-sapphire/10"
+            className="w-full rounded-lg border border-input bg-background pl-9 pr-3 py-2 text-sm outline-none focus:border-ring/40 focus:ring-2 focus:ring-ring/10 placeholder:text-muted-foreground"
           />
         </div>
         <Button
@@ -303,7 +324,6 @@ export function MessagesView({ onUnreadChange }: { onUnreadChange?: (n: number) 
           size="sm"
           onClick={() => fetchMessages()}
           disabled={refreshing}
-          className="border-slate-200"
         >
           <RefreshCw
             className={"w-4 h-4 mr-1.5" + (refreshing ? " animate-spin" : "")}
@@ -313,7 +333,7 @@ export function MessagesView({ onUnreadChange }: { onUnreadChange?: (n: number) 
       </div>
 
       {error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-500/30 dark:bg-red-500/10 dark:text-red-400">
           {error}{" "}
           <button
             className="font-semibold underline"
@@ -330,18 +350,18 @@ export function MessagesView({ onUnreadChange }: { onUnreadChange?: (n: number) 
           {Array.from({ length: 3 }).map((_, i) => (
             <div
               key={i}
-              className="md:col-span-3 h-28 animate-pulse rounded-xl bg-slate-100"
+              className="md:col-span-3 h-28 animate-pulse rounded-xl bg-muted"
             />
           ))}
         </div>
       ) : filtered.length === 0 ? (
         <Card className="border-dashed">
           <CardContent className="flex flex-col items-center justify-center gap-3 py-14 text-center">
-            <div className="w-16 h-16 rounded-2xl bg-sapphire/5 flex items-center justify-center">
-              <Inbox className="w-8 h-8 text-sapphire/40" />
+            <div className="w-16 h-16 rounded-2xl bg-sapphire/5 dark:bg-white/5 flex items-center justify-center">
+              <Inbox className="w-8 h-8 text-sapphire/40 dark:text-gold-light/40" />
             </div>
             <div>
-              <p className="font-semibold text-sapphire">
+              <p className="font-semibold text-sapphire dark:text-gold-light">
                 Aucun message pour le moment
               </p>
               <p className="mt-1 text-sm text-muted-foreground max-w-md">
@@ -361,10 +381,10 @@ export function MessagesView({ onUnreadChange }: { onUnreadChange?: (n: number) 
                 key={message.id}
                 onClick={() => openMessage(message)}
                 className={
-                  "w-full text-left rounded-xl border bg-white p-4 shadow-sm transition-all hover:shadow-md " +
+                  "w-full text-left rounded-xl border bg-card p-4 shadow-sm transition-all hover:shadow-md " +
                   (selected?.id === message.id
-                    ? "border-sapphire/40 ring-2 ring-sapphire/10"
-                    : "border-slate-100") +
+                    ? "border-sapphire/40 ring-2 ring-sapphire/10 dark:border-gold/40 dark:ring-gold/15"
+                    : "border-border hover:border-gold/30") +
                   (message.read ? "" : " border-l-4 border-l-gold")
                 }
               >
@@ -378,8 +398,8 @@ export function MessagesView({ onUnreadChange }: { onUnreadChange?: (n: number) 
                         className={
                           "truncate text-sm " +
                           (message.read
-                            ? "font-medium text-slate-700"
-                            : "font-bold text-sapphire")
+                            ? "font-medium text-foreground"
+                            : "font-bold text-sapphire dark:text-gold-light")
                         }
                       >
                         {message.name}
@@ -388,7 +408,7 @@ export function MessagesView({ onUnreadChange }: { onUnreadChange?: (n: number) 
                     <p className="mt-1 truncate text-sm text-muted-foreground">
                       {message.subject || message.content}
                     </p>
-                    <p className="mt-1.5 text-xs text-slate-400">
+                    <p className="mt-1.5 text-xs text-muted-foreground">
                       {timeAgo(message.createdAt)} · {message.email}
                     </p>
                   </div>
@@ -396,15 +416,15 @@ export function MessagesView({ onUnreadChange }: { onUnreadChange?: (n: number) 
                     <Badge
                       className={
                         message.type === "devis"
-                          ? "bg-gold/15 text-gold-dark border border-gold/30 hover:bg-gold/20"
-                          : "bg-sapphire/10 text-sapphire border border-sapphire/20 hover:bg-sapphire/15"
+                          ? "bg-gold/15 text-gold-dark dark:text-gold-light border border-gold/30 hover:bg-gold/20"
+                          : "bg-sapphire/10 text-sapphire dark:text-gold-light border border-sapphire/20 hover:bg-sapphire/15"
                       }
                       variant="outline"
                     >
                       {message.type === "devis" ? "Devis" : "Contact"}
                     </Badge>
                     {!message.read && (
-                      <span className="text-[10px] font-semibold uppercase tracking-wide text-gold-dark">
+                      <span className="text-[10px] font-semibold uppercase tracking-wide text-gold-dark dark:text-gold-light">
                         Nouveau
                       </span>
                     )}
@@ -417,7 +437,7 @@ export function MessagesView({ onUnreadChange }: { onUnreadChange?: (n: number) 
           {/* Détail */}
           <div className="md:col-span-2">
             {selected ? (
-              <Card className="border-slate-100 shadow-sm md:sticky md:top-20">
+              <Card className="border-border shadow-sm md:sticky md:top-20">
                 <CardContent className="p-5 space-y-4">
                   <div className="flex items-start justify-between gap-2 border-b pb-4">
                     <div className="min-w-0">
@@ -425,8 +445,8 @@ export function MessagesView({ onUnreadChange }: { onUnreadChange?: (n: number) 
                         <Badge
                           className={
                             selected.type === "devis"
-                              ? "bg-gold/15 text-gold-dark border border-gold/30"
-                              : "bg-sapphire/10 text-sapphire border border-sapphire/20"
+                              ? "bg-gold/15 text-gold-dark dark:text-gold-light border border-gold/30"
+                              : "bg-sapphire/10 text-sapphire dark:text-gold-light border border-sapphire/20"
                           }
                           variant="outline"
                         >
@@ -437,7 +457,7 @@ export function MessagesView({ onUnreadChange }: { onUnreadChange?: (n: number) 
                         {selected.read ? (
                           <Badge
                             variant="outline"
-                            className="text-[11px] border-slate-200 text-slate-500"
+                            className="text-[11px] border-border text-muted-foreground"
                           >
                             Lu
                           </Badge>
@@ -447,7 +467,7 @@ export function MessagesView({ onUnreadChange }: { onUnreadChange?: (n: number) 
                           </Badge>
                         )}
                       </div>
-                      <h3 className="mt-2 text-base font-bold text-sapphire truncate">
+                      <h3 className="mt-2 text-base font-bold text-sapphire dark:text-gold-light truncate">
                         {selected.subject || "Sans sujet"}
                       </h3>
                       <p className="text-xs text-muted-foreground">
@@ -458,24 +478,24 @@ export function MessagesView({ onUnreadChange }: { onUnreadChange?: (n: number) 
 
                   <div className="space-y-2.5 text-sm">
                     <p className="flex items-center gap-2">
-                      <User className="w-4 h-4 shrink-0 text-sapphire" />
-                      <span className="font-medium text-slate-800">
+                      <User className="w-4 h-4 shrink-0 text-sapphire dark:text-gold-light" />
+                      <span className="font-medium text-foreground">
                         {selected.name}
                       </span>
                     </p>
                     <p className="flex items-center gap-2">
-                      <AtSign className="w-4 h-4 shrink-0 text-sapphire" />
+                      <AtSign className="w-4 h-4 shrink-0 text-sapphire dark:text-gold-light" />
                       <a
                         href={`mailto:${selected.email}`}
-                        className="truncate text-sapphire underline-offset-2 hover:underline"
+                        className="truncate text-sapphire dark:text-gold-light underline-offset-2 hover:underline"
                       >
                         {selected.email}
                       </a>
                     </p>
                     {selected.service && (
                       <p className="flex items-center gap-2">
-                        <Tag className="w-4 h-4 shrink-0 text-sapphire" />
-                        <span className="text-slate-700">
+                        <Tag className="w-4 h-4 shrink-0 text-sapphire dark:text-gold-light" />
+                        <span className="text-foreground">
                           {selected.service}
                         </span>
                       </p>
@@ -486,8 +506,8 @@ export function MessagesView({ onUnreadChange }: { onUnreadChange?: (n: number) 
                     </p>
                   </div>
 
-                  <div className="rounded-lg bg-slate-50 border border-slate-100 p-4">
-                    <p className="whitespace-pre-wrap text-sm leading-relaxed text-slate-700">
+                  <div className="rounded-lg bg-muted border border-border p-4">
+                    <p className="whitespace-pre-wrap text-sm leading-relaxed text-foreground">
                       {selected.content}
                     </p>
                   </div>
@@ -497,7 +517,6 @@ export function MessagesView({ onUnreadChange }: { onUnreadChange?: (n: number) 
                       size="sm"
                       variant="outline"
                       onClick={() => toggleRead(selected)}
-                      className="border-slate-200"
                     >
                       <MailOpen className="w-4 h-4 mr-1.5" />
                       {selected.read ? "Marquer non lu" : "Marquer comme lu"}
@@ -506,7 +525,7 @@ export function MessagesView({ onUnreadChange }: { onUnreadChange?: (n: number) 
                       size="sm"
                       variant="outline"
                       asChild
-                      className="border-slate-200 ml-auto text-red-600 hover:bg-red-50 hover:text-red-700"
+                      className="ml-auto text-red-600 hover:bg-red-50 hover:text-red-700 dark:text-red-400 dark:hover:bg-red-500/10 dark:hover:text-red-300"
                     >
                       <a href={`mailto:${selected.email}?subject=Re: ${encodeURIComponent(selected.subject || "Votre message")}`}>
                         Répondre
@@ -526,7 +545,7 @@ export function MessagesView({ onUnreadChange }: { onUnreadChange?: (n: number) 
             ) : (
               <Card className="border-dashed hidden md:flex items-center justify-center">
                 <CardContent className="flex flex-col items-center gap-3 py-16 text-center text-muted-foreground">
-                  <MailOpen className="w-10 h-10 text-slate-300" />
+                  <MailOpen className="w-10 h-10 text-muted-foreground/50" />
                   <p className="text-sm">
                     Sélectionnez un message dans la liste
                     <br />
@@ -546,7 +565,7 @@ export function MessagesView({ onUnreadChange }: { onUnreadChange?: (n: number) 
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-sapphire">
+            <AlertDialogTitle className="text-sapphire dark:text-gold-light">
               Supprimer ce message ?
             </AlertDialogTitle>
             <AlertDialogDescription>

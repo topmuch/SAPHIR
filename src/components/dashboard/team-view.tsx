@@ -253,8 +253,8 @@ export function TeamView() {
             onClick={() => setActiveFilter(dept)}
             className={
               activeFilter === dept
-                ? 'rounded-full bg-sapphire px-4 py-1.5 text-sm font-medium text-white transition-colors'
-                : 'rounded-full bg-slate-100 px-4 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-200'
+                ? 'rounded-full bg-sapphire dark:bg-gold dark:text-sapphire-dark px-4 py-1.5 text-sm font-medium text-white transition-colors'
+                : 'rounded-full bg-muted px-4 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground'
             }
           >
             {dept}

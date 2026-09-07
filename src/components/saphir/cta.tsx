@@ -41,7 +41,7 @@ export function CTASection() {
               </DialogTrigger>
               <DialogContent className="sm:max-w-md">
                 <DialogHeader>
-                  <DialogTitle className="text-sapphire flex items-center gap-2">
+                  <DialogTitle className="text-sapphire dark:text-gold-light flex items-center gap-2">
                     <Gem className="w-5 h-5 text-gold" /> Contactez-nous
                   </DialogTitle>
                 </DialogHeader>

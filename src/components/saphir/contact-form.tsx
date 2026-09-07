@@ -92,10 +92,10 @@ export function ContactForm() {
   if (submitted) {
     return (
       <div className="text-center py-8">
-        <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
-          <CheckCircle2 className="w-8 h-8 text-green-600" />
+        <div className="w-16 h-16 rounded-full bg-green-100 dark:bg-green-500/15 flex items-center justify-center mx-auto mb-4">
+          <CheckCircle2 className="w-8 h-8 text-green-600 dark:text-green-400" />
         </div>
-        <h3 className="text-lg font-semibold text-sapphire mb-2">
+        <h3 className="text-lg font-semibold text-sapphire dark:text-white mb-2">
           Message envoyé !
         </h3>
         <p className="text-muted-foreground text-sm">
@@ -104,7 +104,7 @@ export function ContactForm() {
         </p>
         <Button
           variant="outline"
-          className="mt-4 border-sapphire/20 text-sapphire hover:bg-sapphire/5"
+          className="mt-4 border-sapphire/20 text-sapphire dark:text-gold-light dark:border-gold/30 hover:bg-sapphire/5 dark:hover:bg-gold/10"
           onClick={() => setSubmitted(false)}
         >
           Envoyer un autre message
@@ -180,7 +180,7 @@ export function ContactForm() {
       </div>
 
       {serverError && (
-        <p className="text-red-500 text-xs flex items-center gap-1.5 rounded-lg bg-red-50 border border-red-200 px-3 py-2">
+        <p className="text-red-500 dark:text-red-400 text-xs flex items-center gap-1.5 rounded-lg bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/30 px-3 py-2">
           <AlertCircle className="w-3.5 h-3.5 shrink-0" /> {serverError}
         </p>
       )}
@@ -188,7 +188,7 @@ export function ContactForm() {
       <Button
         type="submit"
         disabled={loading}
-        className="w-full bg-sapphire hover:bg-sapphire-light text-white font-semibold"
+        className="w-full bg-sapphire dark:bg-gold hover:bg-sapphire-light dark:hover:bg-gold-light text-white dark:text-sapphire-dark font-semibold"
       >
         {loading ? (
           <>

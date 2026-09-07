@@ -256,9 +256,9 @@ export function ServiceDetailPage({
 
   if (!data) {
     return (
-      <main className="min-h-screen flex items-center justify-center bg-white">
+      <main className="min-h-screen flex items-center justify-center bg-white dark:bg-sapphire-dark">
         <div className="text-center px-4">
-          <h1 className="text-3xl font-bold text-sapphire mb-4">
+          <h1 className="text-3xl font-bold text-sapphire dark:text-white mb-4">
             Service non trouvé
           </h1>
           <Button
@@ -307,22 +307,22 @@ export function ServiceDetailPage({
       </section>
 
       {/* Detailed Description */}
-      <section className="bg-white py-16 md:py-24">
+      <section className="bg-white dark:bg-sapphire-dark py-16 md:py-24">
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
           <FadeIn>
             <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
               <div>
-                <div className="inline-block px-3 py-1 rounded-full bg-gold/10 text-gold-dark text-xs font-medium mb-4">
+                <div className="inline-block px-3 py-1 rounded-full bg-gold/10 text-gold-dark dark:text-gold-light text-xs font-medium mb-4">
                   Service {String(data.index + 1).padStart(2, "0")}
                 </div>
-                <h2 className="text-2xl md:text-3xl font-bold text-sapphire mb-6 leading-tight">
+                <h2 className="text-2xl md:text-3xl font-bold text-sapphire dark:text-white mb-6 leading-tight">
                   {data.title}
                 </h2>
                 <p className="text-muted-foreground leading-relaxed text-base md:text-lg">
                   {data.description}
                 </p>
               </div>
-              <div className="relative rounded-xl overflow-hidden h-72 md:h-96 bg-slate-100">
+              <div className="relative rounded-xl overflow-hidden h-72 md:h-96 bg-slate-100 dark:bg-white/10">
                 <div
                   className="absolute inset-0 bg-cover bg-center"
                   style={{ backgroundImage: `url('${data.image}')` }}
@@ -334,11 +334,11 @@ export function ServiceDetailPage({
       </section>
 
       {/* Ce que nous offrons */}
-      <section className="bg-slate-50 py-16 md:py-24">
+      <section className="bg-slate-50 dark:bg-sapphire py-16 md:py-24">
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
           <FadeIn>
             <div className="text-center mb-12">
-              <h2 className="text-2xl md:text-3xl font-bold text-sapphire">
+              <h2 className="text-2xl md:text-3xl font-bold text-sapphire dark:text-white">
                 Ce que nous <span className="text-gradient-gold">offrons</span>
               </h2>
               <p className="mt-3 text-muted-foreground max-w-2xl mx-auto">
@@ -355,9 +355,9 @@ export function ServiceDetailPage({
           <StaggerContainer className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {data.features.map((feature, i) => (
               <StaggerItem key={i}>
-                <div className="flex items-start gap-3 bg-white rounded-lg p-4 md:p-5 shadow-sm border border-slate-100 hover:shadow-md hover:border-gold/30 transition-all duration-300">
+                <div className="flex items-start gap-3 bg-white dark:bg-white/5 rounded-lg p-4 md:p-5 shadow-sm border border-slate-100 dark:border-white/10 hover:shadow-md hover:border-gold/30 transition-all duration-300">
                   <CheckCircle2 className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" />
-                  <span className="text-sapphire font-medium text-sm md:text-base">
+                  <span className="text-sapphire dark:text-white font-medium text-sm md:text-base">
                     {feature}
                   </span>
                 </div>
@@ -368,11 +368,11 @@ export function ServiceDetailPage({
       </section>
 
       {/* Nos réalisations */}
-      <section className="bg-white py-16 md:py-24">
+      <section className="bg-white dark:bg-sapphire-dark py-16 md:py-24">
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
           <FadeIn>
             <div className="text-center mb-12">
-              <h2 className="text-2xl md:text-3xl font-bold text-sapphire">
+              <h2 className="text-2xl md:text-3xl font-bold text-sapphire dark:text-white">
                 Nos <span className="text-gradient-gold">réalisations</span>
               </h2>
               <p className="mt-3 text-muted-foreground max-w-2xl mx-auto">
@@ -384,7 +384,7 @@ export function ServiceDetailPage({
           <StaggerContainer className="grid md:grid-cols-3 gap-6 md:gap-8">
             {data.projects.map((project, i) => (
               <StaggerItem key={i}>
-                <div className="group bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg hover:border-gold/30 transition-all duration-300">
+                <div className="group bg-white dark:bg-white/5 rounded-xl border border-slate-200 dark:border-white/10 overflow-hidden hover:shadow-lg hover:border-gold/30 transition-all duration-300">
                   <div className="relative h-48 bg-sapphire-gradient overflow-hidden">
                     <div
                       className="absolute inset-0 bg-cover bg-center opacity-30 group-hover:opacity-40 group-hover:scale-105 transition-all duration-500"
@@ -397,7 +397,7 @@ export function ServiceDetailPage({
                     </div>
                   </div>
                   <div className="p-5 md:p-6">
-                    <h3 className="font-bold text-sapphire text-base md:text-lg mb-2 leading-snug">
+                    <h3 className="font-bold text-sapphire dark:text-white text-base md:text-lg mb-2 leading-snug">
                       {project.title}
                     </h3>
                     <p className="text-muted-foreground text-sm leading-relaxed">

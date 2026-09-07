@@ -160,12 +160,12 @@ export function ContactPage() {
       </section>
 
       {/* Contact Section */}
-      <section className="bg-white py-20 md:py-28">
+      <section className="bg-white dark:bg-sapphire-dark py-20 md:py-28">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Left: Contact Info */}
             <FadeIn direction="right">
-              <h2 className="text-3xl md:text-4xl font-bold text-sapphire mb-8">
+              <h2 className="text-3xl md:text-4xl font-bold text-sapphire dark:text-white mb-8">
                 Nos <span className="text-gradient-gold">coordonnées</span>
               </h2>
               <div className="space-y-6">
@@ -178,7 +178,7 @@ export function ContactPage() {
                     >
                       <CardContent className="p-5 flex items-center gap-4">
                         <div className="w-12 h-12 rounded-xl bg-sapphire/5 flex items-center justify-center shrink-0">
-                          <Icon className="w-5 h-5 text-sapphire" />
+                          <Icon className="w-5 h-5 text-sapphire dark:text-gold-light" />
                         </div>
                         <div>
                           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
@@ -189,12 +189,12 @@ export function ContactPage() {
                               href={item.href}
                               target={item.href.startsWith("http") ? "_blank" : undefined}
                               rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                              className="text-sm text-sapphire font-medium mt-0.5 hover:text-gold-dark transition-colors"
+                              className="text-sm text-sapphire dark:text-white font-medium mt-0.5 hover:text-gold-dark dark:hover:text-gold-light transition-colors"
                             >
                               {item.value}
                             </a>
                           ) : (
-                            <p className="text-sm text-sapphire font-medium mt-0.5">
+                            <p className="text-sm text-sapphire dark:text-white font-medium mt-0.5">
                               {item.value}
                             </p>
                           )}
@@ -210,15 +210,15 @@ export function ContactPage() {
             <FadeIn direction="left" delay={0.2}>
               <Card className="border-sapphire/8 shadow-lg shadow-sapphire/5">
                 <CardContent className="p-6 md:p-8">
-                  <h3 className="text-xl font-semibold text-sapphire mb-6">
+                  <h3 className="text-xl font-semibold text-sapphire dark:text-white mb-6">
                     Envoyez-nous un message
                   </h3>
                   {sent ? (
                     <div className="text-center py-10">
-                      <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
-                        <CheckCircle2 className="w-8 h-8 text-green-600" />
+                      <div className="w-16 h-16 rounded-full bg-green-100 dark:bg-green-500/15 flex items-center justify-center mx-auto mb-4">
+                        <CheckCircle2 className="w-8 h-8 text-green-600 dark:text-green-400" />
                       </div>
-                      <h4 className="text-lg font-semibold text-sapphire mb-2">
+                      <h4 className="text-lg font-semibold text-sapphire dark:text-white mb-2">
                         Message envoyé !
                       </h4>
                       <p className="text-muted-foreground text-sm">
@@ -227,7 +227,7 @@ export function ContactPage() {
                       </p>
                       <Button
                         variant="outline"
-                        className="mt-4 border-sapphire/20 text-sapphire hover:bg-sapphire/5"
+                        className="mt-4 border-sapphire/20 text-sapphire dark:text-gold-light dark:border-gold/30 hover:bg-sapphire/5 dark:hover:bg-gold/10"
                         onClick={() => setSent(false)}
                       >
                         Envoyer un autre message
@@ -345,10 +345,10 @@ export function ContactPage() {
       </section>
 
       {/* Carte de Dakar */}
-      <section className="bg-slate-50 py-20">
+      <section className="bg-slate-50 dark:bg-sapphire py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <FadeIn>
-            <h2 className="text-2xl md:text-3xl font-bold text-sapphire mb-4 text-center">
+            <h2 className="text-2xl md:text-3xl font-bold text-sapphire dark:text-white mb-4 text-center">
               Notre <span className="text-gradient-gold">localisation</span>
             </h2>
             <p className="text-center text-muted-foreground mb-10 max-w-xl mx-auto">
@@ -367,14 +367,14 @@ export function ContactPage() {
               />
               {/* Carte d'information superposée */}
               <div className="absolute top-4 left-4 right-4 md:right-auto md:w-80">
-                <Card className="border-sapphire/10 shadow-lg shadow-black/10 bg-white/95 backdrop-blur-sm">
+                <Card className="border-sapphire/10 dark:border-white/10 shadow-lg shadow-black/10 dark:shadow-black/40 bg-white/95 dark:bg-card/95 backdrop-blur-sm">
                   <CardContent className="p-5">
                     <div className="flex items-start gap-3">
                       <div className="w-10 h-10 rounded-xl bg-gold/15 flex items-center justify-center shrink-0">
-                        <MapPin className="w-5 h-5 text-gold-dark" />
+                        <MapPin className="w-5 h-5 text-gold-dark dark:text-gold-light" />
                       </div>
                       <div className="min-w-0">
-                        <p className="font-semibold text-sapphire text-sm">
+                        <p className="font-semibold text-sapphire dark:text-white text-sm">
                           EMERAUDE COM
                         </p>
                         <p className="text-sm text-muted-foreground mt-0.5">
@@ -402,7 +402,7 @@ export function ContactPage() {
                             <Button
                               size="sm"
                               variant="outline"
-                              className="border-sapphire/20 text-sapphire hover:bg-sapphire/5 text-xs h-8"
+                              className="border-sapphire/20 text-sapphire dark:text-gold-light dark:border-gold/30 hover:bg-sapphire/5 dark:hover:bg-gold/10 text-xs h-8"
                             >
                               Agrandir la carte
                             </Button>

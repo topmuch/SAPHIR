@@ -106,7 +106,7 @@ export default function AdminPage() {
   // Écran de chargement (vérification de session)
   if (authStatus === "loading") {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 gap-4">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-background gap-4">
         <div className="w-12 h-12 rounded-xl bg-sapphire/10 flex items-center justify-center border border-sapphire/20">
           <Gem className="w-5 h-5 text-gold animate-pulse" />
         </div>
@@ -131,7 +131,7 @@ export default function AdminPage() {
 
   // Mode tableau de bord
   return (
-    <div className="min-h-screen bg-slate-50/80">
+    <div className="min-h-screen bg-background">
       <DashboardSidebar
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}

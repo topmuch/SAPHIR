@@ -55,7 +55,7 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
   }
 
   return (
-    <div className="min-h-screen flex bg-slate-50">
+    <div className="min-h-screen flex bg-background">
       {/* Panneau de marque */}
       <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-sapphire-dark via-sapphire to-sapphire-dark relative overflow-hidden flex-col justify-between p-12">
         <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-gold/10 blur-3xl" />
@@ -114,20 +114,20 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
             </span>
           </div>
 
-          <h2 className="text-2xl font-bold tracking-tight text-slate-900">
+          <h2 className="text-2xl font-bold tracking-tight text-foreground">
             Connexion
           </h2>
-          <p className="text-sm text-slate-500 mt-1 mb-8">
+          <p className="text-sm text-muted-foreground mt-1 mb-8">
             Accédez à votre tableau de bord.
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-4" noValidate>
             <div className="space-y-2">
-              <label htmlFor="email" className="text-sm font-medium text-slate-700">
+              <label htmlFor="email" className="text-sm font-medium text-foreground">
                 Email
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   id="email"
                   type="email"
@@ -142,11 +142,11 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="password" className="text-sm font-medium text-slate-700">
+              <label htmlFor="password" className="text-sm font-medium text-foreground">
                 Mot de passe
               </label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
@@ -160,7 +160,7 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
                 <button
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                   aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -171,7 +171,7 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
             {error && (
               <div
                 role="alert"
-                className="flex items-start gap-2 rounded-lg bg-red-50 border border-red-100 p-3 text-sm text-red-700"
+                className="flex items-start gap-2 rounded-lg bg-red-50 border border-red-100 dark:bg-red-500/10 dark:border-red-500/30 p-3 text-sm text-red-700 dark:text-red-400"
               >
                 <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
                 <span>{error}</span>
@@ -195,7 +195,7 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
 
             <a
               href="/"
-              className="block text-center text-sm text-slate-500 hover:text-sapphire transition-colors pt-2"
+              className="block text-center text-sm text-muted-foreground hover:text-sapphire dark:hover:text-gold-light transition-colors pt-2"
             >
               ← Retour au site
             </a>

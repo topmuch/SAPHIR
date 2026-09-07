@@ -51,12 +51,12 @@ const BLOG_POSTS = [
 ];
 
 const CATEGORY_COLORS: Record<string, string> = {
-  "Marketing digital": "bg-sapphire/10 text-sapphire",
-  Branding: "bg-gold/10 text-gold-dark",
-  "Réseaux sociaux": "bg-sapphire/10 text-sapphire",
-  Référencement: "bg-gold/10 text-gold-dark",
-  Événementiel: "bg-sapphire/10 text-sapphire",
-  Communication: "bg-gold/10 text-gold-dark",
+  "Marketing digital": "bg-sapphire/10 text-sapphire dark:text-gold-light",
+  Branding: "bg-gold/10 text-gold-dark dark:text-gold-light",
+  "Réseaux sociaux": "bg-sapphire/10 text-sapphire dark:text-gold-light",
+  Référencement: "bg-gold/10 text-gold-dark dark:text-gold-light",
+  Événementiel: "bg-sapphire/10 text-sapphire dark:text-gold-light",
+  Communication: "bg-gold/10 text-gold-dark dark:text-gold-light",
 };
 
 export function BlogPage() {
@@ -80,7 +80,7 @@ export function BlogPage() {
       </section>
 
       {/* Blog Grid */}
-      <section className="bg-white py-20 md:py-28">
+      <section className="bg-white dark:bg-sapphire-dark py-20 md:py-28">
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
           <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {BLOG_POSTS.map((post) => (
@@ -91,11 +91,11 @@ export function BlogPage() {
                   <CardContent className="p-6">
                     <Badge
                       variant="secondary"
-                      className={`${CATEGORY_COLORS[post.category] || "bg-sapphire/10 text-sapphire"} border-0 text-xs mb-3`}
+                      className={`${CATEGORY_COLORS[post.category] || "bg-sapphire/10 text-sapphire dark:text-gold-light"} border-0 text-xs mb-3`}
                     >
                       {post.category}
                     </Badge>
-                    <h3 className="font-semibold text-sapphire text-base mb-2 leading-snug group-hover:text-gold-dark transition-colors line-clamp-2">
+                    <h3 className="font-semibold text-sapphire dark:text-white text-base mb-2 leading-snug group-hover:text-gold-dark dark:group-hover:text-gold-light transition-colors line-clamp-2">
                       {post.title}
                     </h3>
                     <p className="text-xs text-muted-foreground mb-3">
@@ -104,7 +104,7 @@ export function BlogPage() {
                     <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2 mb-4">
                       {post.excerpt}
                     </p>
-                    <button className="inline-flex items-center text-sm font-medium text-sapphire hover:text-gold-dark transition-colors group/link">
+                    <button className="inline-flex items-center text-sm font-medium text-sapphire dark:text-gold-light hover:text-gold-dark dark:hover:text-gold-light transition-colors group/link">
                       Lire la suite
                       <ArrowRight className="w-3.5 h-3.5 ml-1 group-hover/link:translate-x-1 transition-transform" />
                     </button>

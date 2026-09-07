@@ -7,17 +7,17 @@ import { MISSION_PILLARS } from "./data";
 
 export function Mission() {
   return (
-    <section id="mission" className="bg-white py-20 md:py-28 w-full">
+    <section id="mission" className="bg-white dark:bg-sapphire-dark py-20 md:py-28 w-full">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <FadeIn direction="right">
             <Badge
               variant="outline"
-              className="border-gold/30 text-gold-dark bg-gold/5 text-xs mb-4"
+              className="border-gold/30 text-gold-dark dark:text-gold-light bg-gold/5 text-xs mb-4"
             >
               Notre mission
             </Badge>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-sapphire leading-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-sapphire dark:text-white leading-tight">
               Créer des campagnes
               <br />
               <span className="text-gradient-gold">efficaces</span>
@@ -38,7 +38,7 @@ export function Mission() {
                   key={pillar.label}
                   whileHover={{ y: -4 }}
                   transition={{ duration: 0.2 }}
-                  className="rounded-xl bg-white overflow-hidden shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-sapphire/10 border border-slate-100 hover:border-gold/30 transition-colors"
+                  className="rounded-xl bg-white dark:bg-white/5 overflow-hidden shadow-lg shadow-slate-200/50 dark:shadow-black/30 hover:shadow-xl hover:shadow-sapphire/10 border border-slate-100 dark:border-white/10 hover:border-gold/30 transition-colors"
                 >
                   <div className="h-36 overflow-hidden">
                     <img
@@ -49,7 +49,7 @@ export function Mission() {
                     />
                   </div>
                   <div className="p-5 text-center">
-                    <h3 className="font-semibold text-sapphire text-base">
+                    <h3 className="font-semibold text-sapphire dark:text-white text-base">
                       {pillar.label}
                     </h3>
                   </div>

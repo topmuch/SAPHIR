@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Gem, Menu, X, Mail, Phone, MapPin, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 // Homepage sections
 import { Hero } from "@/components/saphir/hero";
@@ -88,7 +89,7 @@ function Navbar({
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-white/98 backdrop-blur-md shadow-sm shadow-black/5"
+          ? "bg-white/98 dark:bg-sapphire-dark/98 backdrop-blur-md shadow-sm shadow-black/5 dark:shadow-black/30"
           : "bg-transparent"
       }`}
     >
@@ -103,7 +104,7 @@ function Navbar({
               <Gem className="w-4 h-4 text-gold" />
             </div>
             <span className="text-lg font-bold tracking-tight">
-              <span className="text-sapphire-dark">EMERAUDE</span>{" "}
+              <span className="text-sapphire-dark dark:text-white">EMERAUDE</span>{" "}
               <span className="text-gold">COM</span>
             </span>
           </button>
@@ -117,7 +118,7 @@ function Navbar({
                 className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
                   currentPage === page.id
                     ? "text-gold"
-                    : "text-sapphire-dark hover:text-gold"
+                    : "text-sapphire-dark dark:text-white/80 hover:text-gold"
                 }`}
               >
                 {page.label}
@@ -127,28 +128,31 @@ function Navbar({
 
           {/* Right: Dashboard / Connexion + Mobile Toggle */}
           <div className="flex items-center gap-3">
+            {/* Bascule mode clair / sombre (adaptée au fond de la navbar) */}
+            <ThemeToggle variant={scrolled ? "default" : "onDark"} className="hidden sm:inline-flex" />
             {onBackToDashboard ? (
               <Button
                 variant="outline"
                 size="sm"
                 onClick={onBackToDashboard}
-                className="border-sapphire/20 text-sapphire-dark hover:bg-sapphire/5 hover:text-sapphire-dark text-xs font-semibold"
+                className="border-sapphire/20 dark:border-white/20 text-sapphire-dark dark:text-white hover:bg-sapphire/5 dark:hover:bg-white/10 hover:text-sapphire-dark dark:hover:text-white text-xs font-semibold"
               >
                 Dashboard
               </Button>
             ) : (
               <a
                 href="/admin"
-                className="hidden md:inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-lg border border-sapphire/20 text-sapphire-dark hover:bg-sapphire/5 hover:border-gold/40 hover:text-gold-dark transition-all"
+                className="hidden md:inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-lg border border-sapphire/20 dark:border-white/20 text-sapphire-dark dark:text-white/80 hover:bg-sapphire/5 dark:hover:bg-white/10 hover:border-gold/40 hover:text-gold-dark dark:hover:text-gold-light transition-all"
               >
                 <Lock className="w-3.5 h-3.5" />
                 Connexion
               </a>
             )}
 
+            <ThemeToggle variant={scrolled ? "default" : "onDark"} className="sm:hidden" />
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden p-2 text-sapphire-dark hover:text-gold transition-colors"
+              className="md:hidden p-2 text-sapphire-dark dark:text-white hover:text-gold transition-colors"
               aria-label="Menu"
             >
               {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -158,7 +162,7 @@ function Navbar({
 
         {/* Mobile Menu */}
         {mobileOpen && (
-          <div className="md:hidden pb-4 border-t border-slate-200">
+          <div className="md:hidden pb-4 border-t border-slate-200 dark:border-white/10">
             <div className="flex flex-col gap-1 pt-3">
               {PAGES.map((page) => (
                 <button
@@ -167,7 +171,7 @@ function Navbar({
                   className={`px-4 py-3 text-sm font-medium rounded-lg text-left transition-colors ${
                     currentPage === page.id
                       ? "text-gold bg-gold/10"
-                      : "text-sapphire-dark hover:text-gold hover:bg-slate-50"
+                      : "text-sapphire-dark dark:text-white/80 hover:text-gold hover:bg-slate-50 dark:hover:bg-white/5"
                   }`}
                 >
                   {page.label}
@@ -175,7 +179,7 @@ function Navbar({
               ))}
               <a
                 href="/admin"
-                className="flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-lg text-sapphire-dark hover:text-gold hover:bg-slate-50 transition-colors"
+                className="flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-lg text-sapphire-dark dark:text-white/80 hover:text-gold hover:bg-slate-50 dark:hover:bg-white/5 transition-colors"
               >
                 <Lock className="w-4 h-4" />
                 Connexion
@@ -358,7 +362,7 @@ export function SiteRouter({
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-sapphire-dark">
       <Navbar
         currentPage={currentPage}
         onNavigate={navigate}

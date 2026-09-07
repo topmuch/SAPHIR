@@ -58,9 +58,9 @@ const JOBS = [
 ];
 
 const CONTRACT_COLORS: Record<string, string> = {
-  CDI: "bg-sapphire/10 text-sapphire",
-  "CDD 6 mois": "bg-gold/10 text-gold-dark",
-  Stage: "bg-sapphire/5 text-sapphire",
+  CDI: "bg-sapphire/10 text-sapphire dark:text-gold-light",
+  "CDD 6 mois": "bg-gold/10 text-gold-dark dark:text-gold-light",
+  Stage: "bg-sapphire/5 text-sapphire dark:text-gold-light",
 };
 
 export function CarrieresPage() {
@@ -84,10 +84,10 @@ export function CarrieresPage() {
       </section>
 
       {/* Pourquoi nous rejoindre */}
-      <section className="bg-white py-20 md:py-28">
+      <section className="bg-white dark:bg-sapphire-dark py-20 md:py-28">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <FadeIn className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold text-sapphire">
+            <h2 className="text-3xl md:text-4xl font-bold text-sapphire dark:text-white">
               Pourquoi nous <span className="text-gradient-gold">rejoindre</span> ?
             </h2>
             <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
@@ -100,9 +100,9 @@ export function CarrieresPage() {
                 <Card className="h-full border-sapphire/8 hover:border-gold/30 hover:shadow-lg hover:shadow-sapphire/5 transition-all duration-300 group text-center">
                   <CardContent className="p-6">
                     <div className="w-14 h-14 rounded-2xl bg-sapphire/5 flex items-center justify-center mx-auto mb-4 group-hover:bg-sapphire/10 transition-colors">
-                      <benefit.icon className="w-7 h-7 text-sapphire" />
+                      <benefit.icon className="w-7 h-7 text-sapphire dark:text-gold-light" />
                     </div>
-                    <h3 className="font-semibold text-sapphire text-base mb-2">
+                    <h3 className="font-semibold text-sapphire dark:text-white text-base mb-2">
                       {benefit.title}
                     </h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">
@@ -117,10 +117,10 @@ export function CarrieresPage() {
       </section>
 
       {/* Postes disponibles */}
-      <section className="bg-slate-50 py-20 md:py-28">
+      <section className="bg-slate-50 dark:bg-sapphire py-20 md:py-28">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <FadeIn className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold text-sapphire">
+            <h2 className="text-3xl md:text-4xl font-bold text-sapphire dark:text-white">
               Postes <span className="text-gradient-gold">disponibles</span>
             </h2>
           </FadeIn>
@@ -131,12 +131,12 @@ export function CarrieresPage() {
                   <CardContent className="p-6 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
-                        <h3 className="font-semibold text-sapphire text-base md:text-lg">
+                        <h3 className="font-semibold text-sapphire dark:text-white text-base md:text-lg">
                           {job.title}
                         </h3>
                         <Badge
                           variant="secondary"
-                          className={`${CONTRACT_COLORS[job.contract] || "bg-sapphire/10 text-sapphire"} border-0 text-xs`}
+                          className={`${CONTRACT_COLORS[job.contract] || "bg-sapphire/10 text-sapphire dark:text-gold-light"} border-0 text-xs`}
                         >
                           {job.contract}
                         </Badge>
@@ -152,7 +152,7 @@ export function CarrieresPage() {
                     </div>
                     <Button
                       variant="outline"
-                      className="border-sapphire/20 text-sapphire hover:bg-sapphire hover:text-white shrink-0"
+                      className="border-sapphire/20 text-sapphire dark:text-gold-light dark:border-gold/30 hover:bg-sapphire hover:text-white dark:hover:bg-gold dark:hover:text-sapphire-dark shrink-0"
                     >
                       Postuler
                       <ArrowRight className="w-3.5 h-3.5 ml-1.5" />

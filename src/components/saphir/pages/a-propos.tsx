@@ -89,10 +89,10 @@ export function AProposPage() {
       </section>
 
       {/* Notre histoire */}
-      <section className="bg-white py-20 md:py-28">
+      <section className="bg-white dark:bg-sapphire-dark py-20 md:py-28">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <FadeIn>
-            <h2 className="text-3xl md:text-4xl font-bold text-sapphire mb-8">
+            <h2 className="text-3xl md:text-4xl font-bold text-sapphire dark:text-white mb-8">
               Notre <span className="text-gradient-gold">histoire</span>
             </h2>
           </FadeIn>
@@ -135,16 +135,16 @@ export function AProposPage() {
       </section>
 
       {/* Notre ancrage sénégalais */}
-      <section className="bg-slate-50 py-20 md:py-28">
+      <section className="bg-slate-50 dark:bg-sapphire py-20 md:py-28">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <FadeIn className="text-center mb-14">
             <Badge
               variant="outline"
-              className="border-gold/30 text-gold-dark bg-gold/5 text-xs mb-4"
+              className="border-gold/30 text-gold-dark dark:text-gold-light bg-gold/5 text-xs mb-4"
             >
               Notre identité
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-sapphire">
+            <h2 className="text-3xl md:text-4xl font-bold text-sapphire dark:text-white">
               Un ancrage <span className="text-gradient-gold">sénégalais</span>{" "}
               fort
             </h2>
@@ -160,10 +160,10 @@ export function AProposPage() {
                 <Card className="h-full border-sapphire/8 hover:border-gold/30 hover:shadow-lg hover:shadow-sapphire/5 transition-all duration-300 group">
                   <CardContent className="p-8 flex items-start gap-5">
                     <div className="w-14 h-14 rounded-2xl bg-sapphire/5 flex items-center justify-center shrink-0 group-hover:bg-gold/10 transition-colors">
-                      <item.icon className="w-7 h-7 text-sapphire group-hover:text-gold-dark transition-colors" />
+                      <item.icon className="w-7 h-7 text-sapphire dark:text-gold-light group-hover:text-gold-dark dark:group-hover:text-gold transition-colors" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-sapphire text-xl mb-2">
+                      <h3 className="font-semibold text-sapphire dark:text-white text-xl mb-2">
                         {item.title}
                       </h3>
                       <p className="text-muted-foreground leading-relaxed text-sm">
@@ -179,10 +179,10 @@ export function AProposPage() {
       </section>
 
       {/* Nos valeurs */}
-      <section className="bg-white py-20 md:py-28">
+      <section className="bg-white dark:bg-sapphire-dark py-20 md:py-28">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <FadeIn className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold text-sapphire">
+            <h2 className="text-3xl md:text-4xl font-bold text-sapphire dark:text-white">
               Nos <span className="text-gradient-gold">valeurs</span>
             </h2>
             <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
@@ -196,9 +196,9 @@ export function AProposPage() {
                 <Card className="h-full border-sapphire/8 hover:border-gold/30 hover:shadow-lg hover:shadow-sapphire/5 transition-all duration-300 group">
                   <CardContent className="p-8 text-center">
                     <div className="w-16 h-16 rounded-2xl bg-sapphire/5 flex items-center justify-center mx-auto mb-6 group-hover:bg-gold/10 transition-colors">
-                      <value.icon className="w-8 h-8 text-sapphire group-hover:text-gold-dark transition-colors" />
+                      <value.icon className="w-8 h-8 text-sapphire dark:text-gold-light group-hover:text-gold-dark dark:group-hover:text-gold transition-colors" />
                     </div>
-                    <h3 className="font-semibold text-sapphire text-xl mb-3">
+                    <h3 className="font-semibold text-sapphire dark:text-white text-xl mb-3">
                       {value.title}
                     </h3>
                     <p className="text-muted-foreground leading-relaxed text-sm">

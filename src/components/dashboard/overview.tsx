@@ -67,8 +67,29 @@ const deptConfig: ChartConfig = {
 };
 
 // ------------------------------------------------------------------
-// KPI data
+// KPI data — fonds multicolores jaune (or) et bleu (saphir) alternés
 // ------------------------------------------------------------------
+
+const KPI_VARIANTS = {
+  blue: {
+    card: "bg-gradient-to-br from-sapphire via-sapphire-light to-sapphire text-white border-0",
+    iconBox: "bg-white/15",
+    icon: "text-gold",
+    value: "text-white",
+    label: "text-white/75",
+    trendUp: "text-emerald-300",
+    trendDown: "text-rose-300",
+  },
+  gold: {
+    card: "bg-gradient-to-br from-gold via-gold-light to-gold text-sapphire-dark border-0",
+    iconBox: "bg-sapphire/10",
+    icon: "text-sapphire",
+    value: "text-sapphire-dark",
+    label: "text-sapphire-dark/75",
+    trendUp: "text-emerald-800",
+    trendDown: "text-rose-800",
+  },
+} as const;
 
 const kpis = [
   {
@@ -78,6 +99,7 @@ const kpis = [
     trendUp: true,
     trendLabel: "vs mois dernier",
     icon: FolderKanban,
+    variant: "blue",
   },
   {
     label: "Revenus mensuels",
@@ -86,6 +108,7 @@ const kpis = [
     trendUp: true,
     trendLabel: "",
     icon: TrendingUp,
+    variant: "gold",
   },
   {
     label: "Clients actifs",
@@ -94,6 +117,7 @@ const kpis = [
     trendUp: true,
     trendLabel: "ce mois",
     icon: Users,
+    variant: "blue",
   },
   {
     label: "Satisfaction client",
@@ -102,8 +126,9 @@ const kpis = [
     trendUp: true,
     trendLabel: "",
     icon: Star,
+    variant: "gold",
   },
-];
+] as const;
 
 // ------------------------------------------------------------------
 // Activity icon helper
@@ -129,26 +154,30 @@ function activityIcon(type: Activity["type"]) {
 export function OverviewView() {
   return (
     <div className="space-y-6">
-      {/* ---------- KPI Cards ---------- */}
+      {/* ---------- KPI Cards (fond multicolore jaune / bleu) ---------- */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {kpis.map((kpi) => {
           const Icon = kpi.icon;
+          const v = KPI_VARIANTS[kpi.variant];
           return (
-            <Card key={kpi.label} className="p-6">
+            <Card
+              key={kpi.label}
+              className={`p-6 shadow-lg ${v.card}`}
+            >
               <div className="flex items-center justify-between">
-                <p className="text-sm text-muted-foreground">{kpi.label}</p>
-                <Icon className="h-5 w-5 text-muted-foreground" />
+                <p className={`text-sm ${v.label}`}>{kpi.label}</p>
+                <div
+                  className={`flex h-9 w-9 items-center justify-center rounded-lg ${v.iconBox}`}
+                >
+                  <Icon className={`h-5 w-5 ${v.icon}`} />
+                </div>
               </div>
-              <p className="mt-2 text-2xl font-bold text-sapphire">
+              <p className={`mt-2 text-2xl font-bold ${v.value}`}>
                 {kpi.value}
               </p>
-              <p className="mt-1 text-xs text-muted-foreground">
+              <p className={`mt-1 text-xs ${v.label}`}>
                 <span
-                  className={
-                    kpi.trendUp
-                      ? "text-emerald-600"
-                      : "text-rose-600"
-                  }
+                  className={kpi.trendUp ? v.trendUp : v.trendDown}
                 >
                   {kpi.trendUp ? "+" : ""}
                   {kpi.trend}
