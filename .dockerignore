@@ -1,0 +1,31 @@
+# Dépendances (réinstallées dans l'image) et cache de build
+node_modules
+.next
+out
+dev.log
+server.log
+
+# Git et fichiers locaux de dev
+.git
+.gitignore
+.env
+.env.*
+!.env.example
+worklog.md
+
+# Dossiers inutiles au runtime
+tool-results
+upload
+tests
+examples
+download
+db
+*.db
+*.db-journal
+
+# Fichiers sandbox / déploiement local non pertinents dans l'image
+Caddyfile
+Dockerfile
+docker-compose*.yml
+.dockerignore
+docker-entrypoint.sh

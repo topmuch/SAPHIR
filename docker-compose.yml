@@ -1,0 +1,16 @@
+# Test local du même setup que Coolify
+# Usage : docker compose up --build
+services:
+  saphir:
+    build: .
+    container_name: saphir-web
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: file:/app/db/custom.db
+    volumes:
+      - saphir-data:/app/db
+    restart: unless-stopped
+
+volumes:
+  saphir-data:
