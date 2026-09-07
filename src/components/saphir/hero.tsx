@@ -80,7 +80,7 @@ export function Hero() {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-white/30 text-white hover:bg-white/10 hover:text-white font-semibold px-8 text-base"
+                className="bg-transparent border-white/30 text-white hover:bg-white/10 hover:text-white font-semibold px-8 text-base"
               >
                 Contactez-nous
               </Button>
