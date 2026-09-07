@@ -60,3 +60,17 @@ model TeamMember {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }
+
+// Paramètres de l'agence (ligne unique, id = "default")
+model Setting {
+  id                 String   @id @default("default")
+  agencyName         String   @default("SAPHIR COM SEN")
+  email              String   @default("contact@zaphircomsen.com")
+  phone              String   @default("+221 70 316 76 76")
+  address            String   @default("Dakar, Sénégal")
+  website            String   @default("www.zaphircomsen.com")
+  currency           String   @default("XOF")
+  language           String   @default("Français")
+  emailNotifications Boolean  @default(true)
+  updatedAt          DateTime @updatedAt
+}

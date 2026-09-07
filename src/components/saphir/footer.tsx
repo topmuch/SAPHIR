@@ -79,15 +79,15 @@ export function Footer() {
             <ul className="space-y-3">
               <li className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-gold/70 shrink-0" />
-                <span className="text-sm text-white/50">contact@saphircom.com</span>
+                <span className="text-sm text-white/50"><a href="mailto:contact@zaphircomsen.com" className="hover:text-gold transition-colors">contact@zaphircomsen.com</a></span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-gold/70 shrink-0" />
-                <span className="text-sm text-white/50">+212 5 22 00 00 00</span>
+                <span className="text-sm text-white/50"><a href="tel:+221703167676" className="hover:text-gold transition-colors">+221 70 316 76 76</a></span>
               </li>
               <li className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-gold/70 shrink-0 mt-0.5" />
-                <span className="text-sm text-white/50">Casablanca, Maroc</span>
+                <span className="text-sm text-white/50">Dakar, Sénégal</span>
               </li>
             </ul>
           </div>

@@ -38,7 +38,7 @@ export function ContactSection() {
                 <div>
                   <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Email</p>
                   <span className="text-sm text-sapphire font-medium">
-                    contact@saphircom.com
+                    <a href="mailto:contact@zaphircomsen.com" className="hover:text-gold-dark transition-colors">contact@zaphircomsen.com</a>
                   </span>
                 </div>
               </div>
@@ -49,7 +49,7 @@ export function ContactSection() {
                 <div>
                   <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Téléphone</p>
                   <span className="text-sm text-sapphire font-medium">
-                    +212 5 22 00 00 00
+                    <a href="tel:+221703167676" className="hover:text-gold-dark transition-colors">+221 70 316 76 76</a>
                   </span>
                 </div>
               </div>
@@ -60,7 +60,7 @@ export function ContactSection() {
                 <div>
                   <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Adresse</p>
                   <span className="text-sm text-sapphire font-medium">
-                    Casablanca, Maroc
+                    Dakar, Sénégal
                   </span>
                 </div>
               </div>

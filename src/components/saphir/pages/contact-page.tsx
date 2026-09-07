@@ -16,9 +16,9 @@ import {
 import { FadeIn } from "@/components/saphir/animations";
 
 const CONTACT_INFO = [
-  { icon: Mail, label: "Email", value: "contact@saphircom.com" },
-  { icon: Phone, label: "Téléphone", value: "+212 5 22 00 00 00" },
-  { icon: MapPin, label: "Adresse", value: "Casablanca, Maroc" },
+  { icon: Mail, label: "Email", value: "contact@zaphircomsen.com" },
+  { icon: Phone, label: "Téléphone", value: "+221 70 316 76 76" },
+  { icon: MapPin, label: "Adresse", value: "Dakar, Sénégal" },
 ];
 
 export function ContactPage() {
@@ -162,7 +162,7 @@ export function ContactPage() {
             <div className="bg-slate-100 h-64 rounded-xl flex items-center justify-center">
               <div className="text-center">
                 <MapPin className="w-10 h-10 text-sapphire/30 mx-auto mb-2" />
-                <p className="text-sapphire/50 font-medium">Carte - Casablanca, Maroc</p>
+                <p className="text-sapphire/50 font-medium">Carte - Dakar, Sénégal</p>
               </div>
             </div>
           </FadeIn>

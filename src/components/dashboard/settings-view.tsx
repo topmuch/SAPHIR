@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { Loader2 } from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -19,16 +20,115 @@ import {
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Separator } from '@/components/ui/separator';
+import { useToast } from '@/hooks/use-toast';
+
+interface SettingsForm {
+  agencyName: string;
+  email: string;
+  phone: string;
+  address: string;
+  website: string;
+  currency: string;
+  language: string;
+  emailNotifications: boolean;
+}
+
+const DEFAULTS: SettingsForm = {
+  agencyName: 'SAPHIR COM SEN',
+  email: 'contact@zaphircomsen.com',
+  phone: '+221 70 316 76 76',
+  address: 'Dakar, Sénégal',
+  website: 'www.zaphircomsen.com',
+  currency: 'XOF',
+  language: 'Français',
+  emailNotifications: true,
+};
 
 export function SettingsView() {
-  const [agencyName, setAgencyName] = useState('SAPHIR COM');
-  const [email, setEmail] = useState('contact@saphircom.ma');
-  const [phone, setPhone] = useState('+212 5 22 00 00 00');
-  const [address, setAddress] = useState('Casablanca, Maroc');
-  const [website, setWebsite] = useState('www.saphircom.ma');
-  const [currency, setCurrency] = useState('MAD');
-  const [language, setLanguage] = useState('Français');
-  const [emailNotifications, setEmailNotifications] = useState(true);
+  const { toast } = useToast();
+
+  const [form, setForm] = useState<SettingsForm>(DEFAULTS);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+
+  const loadSettings = useCallback(async () => {
+    try {
+      const res = await fetch('/api/settings');
+      if (!res.ok) throw new Error('Chargement impossible');
+      const data = await res.json();
+      if (data?.settings) {
+        setForm({ ...DEFAULTS, ...data.settings });
+      }
+    } catch {
+      toast({
+        title: 'Erreur',
+        description: 'Impossible de charger les paramètres.',
+        variant: 'destructive',
+      });
+    } finally {
+      setLoading(false);
+    }
+  }, [toast]);
+
+  useEffect(() => {
+    loadSettings();
+  }, [loadSettings]);
+
+  function setField<K extends keyof SettingsForm>(key: K, value: string) {
+    setForm((prev) => ({ ...prev, [key]: value }));
+  }
+
+  async function handleSave() {
+    if (!form.agencyName.trim() || !form.email.trim()) {
+      toast({
+        title: 'Champs obligatoires',
+        description: 'Le nom de l\u2019agence et l\u2019email sont requis.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
+      toast({
+        title: 'Email invalide',
+        description: 'Veuillez saisir une adresse email valide.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setSaving(true);
+    try {
+      const res = await fetch('/api/settings', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        toast({
+          title: 'Erreur',
+          description: data?.error || 'Sauvegarde impossible.',
+          variant: 'destructive',
+        });
+        return;
+      }
+      if (data?.settings) {
+        setForm({ ...DEFAULTS, ...data.settings });
+      }
+      toast({
+        title: 'Paramètres sauvegardés',
+        description: 'Les informations de l\u2019agence ont été mises à jour.',
+      });
+    } catch {
+      toast({
+        title: 'Erreur réseau',
+        description: 'Sauvegarde impossible. Réessayez.',
+        variant: 'destructive',
+      });
+    } finally {
+      setSaving(false);
+    }
+  }
 
   return (
     <div className="space-y-6">
@@ -44,7 +144,7 @@ export function SettingsView() {
           <CardTitle>Profil de l'agence</CardTitle>
         </CardHeader>
         <CardContent>
-          <fieldset className="space-y-4">
+          <fieldset className="space-y-4" disabled={loading}>
             <legend className="sr-only">Informations de l'agence</legend>
 
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -52,8 +152,8 @@ export function SettingsView() {
                 <Label htmlFor="agency-name">Nom de l'agence</Label>
                 <Input
                   id="agency-name"
-                  value={agencyName}
-                  onChange={(e) => setAgencyName(e.target.value)}
+                  value={form.agencyName}
+                  onChange={(e) => setField('agencyName', e.target.value)}
                 />
               </div>
 
@@ -62,8 +162,8 @@ export function SettingsView() {
                 <Input
                   id="email"
                   type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={form.email}
+                  onChange={(e) => setField('email', e.target.value)}
                 />
               </div>
 
@@ -72,8 +172,8 @@ export function SettingsView() {
                 <Input
                   id="phone"
                   type="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  value={form.phone}
+                  onChange={(e) => setField('phone', e.target.value)}
                 />
               </div>
 
@@ -81,8 +181,8 @@ export function SettingsView() {
                 <Label htmlFor="address">Adresse</Label>
                 <Input
                   id="address"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
+                  value={form.address}
+                  onChange={(e) => setField('address', e.target.value)}
                 />
               </div>
 
@@ -90,8 +190,8 @@ export function SettingsView() {
                 <Label htmlFor="website">Site web</Label>
                 <Input
                   id="website"
-                  value={website}
-                  onChange={(e) => setWebsite(e.target.value)}
+                  value={form.website}
+                  onChange={(e) => setField('website', e.target.value)}
                 />
               </div>
             </div>
@@ -104,27 +204,31 @@ export function SettingsView() {
           <CardTitle>Préférences</CardTitle>
         </CardHeader>
         <CardContent>
-          <fieldset className="space-y-4">
+          <fieldset className="space-y-4" disabled={loading}>
             <legend className="sr-only">Préférences</legend>
 
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="currency">Devise</Label>
-                <Select value={currency} onValueChange={setCurrency}>
+                <Select
+                  value={form.currency}
+                  onValueChange={(v) => setField('currency', v)}
+                >
                   <SelectTrigger id="currency">
                     <SelectValue placeholder="Sélectionner une devise" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="MAD">MAD</SelectItem>
-                    <SelectItem value="EUR">EUR</SelectItem>
-                    <SelectItem value="USD">USD</SelectItem>
+                    <SelectItem value="XOF">XOF — Franc CFA (FCFA)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="language">Langue</Label>
-                <Select value={language} onValueChange={setLanguage}>
+                <Select
+                  value={form.language}
+                  onValueChange={(v) => setField('language', v)}
+                >
                   <SelectTrigger id="language">
                     <SelectValue placeholder="Sélectionner une langue" />
                   </SelectTrigger>
@@ -147,8 +251,13 @@ export function SettingsView() {
                 </div>
                 <Switch
                   id="email-notifications"
-                  checked={emailNotifications}
-                  onCheckedChange={setEmailNotifications}
+                  checked={form.emailNotifications}
+                  onCheckedChange={(checked) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      emailNotifications: checked,
+                    }))
+                  }
                 />
               </div>
             </div>
@@ -159,8 +268,19 @@ export function SettingsView() {
       <Separator />
 
       <div className="flex justify-end">
-        <Button className="bg-sapphire text-white hover:bg-sapphire/90">
-          Sauvegarder
+        <Button
+          className="bg-sapphire text-white hover:bg-sapphire/90"
+          onClick={handleSave}
+          disabled={loading || saving}
+        >
+          {saving ? (
+            <>
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              Sauvegarde...
+            </>
+          ) : (
+            'Sauvegarder'
+          )}
         </Button>
       </div>
     </div>

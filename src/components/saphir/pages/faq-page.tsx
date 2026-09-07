@@ -42,7 +42,7 @@ const FAQ_ITEMS = [
   {
     question: "Comment puis-je demander un devis ?",
     answer:
-      "Vous pouvez nous demander un devis via notre formulaire de contact sur le site, par email à contact@saphircom.com, ou directement par téléphone au +212 5 22 00 00 00. Nous vous répondrons dans les 24 à 48 heures avec une proposition détaillée adaptée à vos besoins.",
+      "Vous pouvez nous demander un devis via notre formulaire de contact sur le site, par email à contact@zaphircomsen.com, ou directement par téléphone au +221 70 316 76 76. Nous vous répondrons dans les 24 à 48 heures avec une proposition détaillée adaptée à vos besoins.",
   },
   {
     question: "Quels secteurs d'activité couvrez-vous ?",

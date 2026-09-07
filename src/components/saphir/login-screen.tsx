@@ -92,7 +92,7 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
         </div>
 
         <p className="relative text-xs text-white/40">
-          © {new Date().getFullYear()} SAPHIR COM — Casablanca, Maroc
+          © {new Date().getFullYear()} SAPHIR COM SEN — Dakar, Sénégal
         </p>
       </div>
 

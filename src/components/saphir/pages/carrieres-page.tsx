@@ -173,7 +173,7 @@ export function CarrieresPage() {
               Vous ne trouvez pas votre poste ?
             </h2>
             <p className="text-white/70 text-base md:text-lg mb-8">
-              Envoyez-nous votre CV spontané à recrutement@saphircom.com,
+              Envoyez-nous votre CV spontané à recrutement@zaphircomsen.com,
               nous serons ravis de découvrir votre profil.
             </p>
             <Button
