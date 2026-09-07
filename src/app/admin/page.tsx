@@ -5,6 +5,7 @@ import { Gem } from "lucide-react";
 import { DashboardSidebar } from "@/components/dashboard/dashboard-sidebar";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { OverviewView } from "@/components/dashboard/overview";
+import { MessagesView } from "@/components/dashboard/messages-view";
 import { ProjectsView } from "@/components/dashboard/projects-view";
 import { ClientsView } from "@/components/dashboard/clients-view";
 import { TeamView } from "@/components/dashboard/team-view";
@@ -14,6 +15,7 @@ import { LoginScreen, type AuthUser } from "@/components/saphir/login-screen";
 
 const VIEW_TITLES: Record<string, string> = {
   dashboard: "Tableau de bord",
+  messages: "Messages",
   projets: "Projets",
   clients: "Clients",
   equipe: "\u00c9quipe",
@@ -66,6 +68,30 @@ export default function AdminPage() {
   // --- Navigation du dashboard ---
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [activeView, setActiveView] = useState("dashboard");
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  // Compteur de messages non lus (rafraîchi toutes les 30 s)
+  useEffect(() => {
+    if (authStatus !== "authenticated") return;
+    let cancelled = false;
+    const poll = async () => {
+      try {
+        const res = await fetch("/api/messages", { cache: "no-store" });
+        if (res.ok) {
+          const data = await res.json();
+          if (!cancelled) setUnreadCount(data.stats?.unread ?? 0);
+        }
+      } catch {
+        // silencieux
+      }
+    };
+    poll();
+    const interval = setInterval(poll, 30000);
+    return () => {
+      cancelled = true;
+      clearInterval(interval);
+    };
+  }, [authStatus]);
 
   const isSiteWeb = activeView === "site_web";
 
@@ -111,6 +137,7 @@ export default function AdminPage() {
         onClose={() => setSidebarOpen(false)}
         activeView={activeView}
         onViewChange={handleViewChange}
+        unreadCount={unreadCount}
       />
 
       <div className="md:ml-64 flex min-h-screen flex-col transition-all duration-300">
@@ -121,6 +148,9 @@ export default function AdminPage() {
           onLogout={handleLogout}
         />
         <main className="flex-1 p-4 md:p-6 lg:p-8">
+          {activeView === "messages" && (
+            <MessagesView onUnreadChange={setUnreadCount} />
+          )}
           {activeView === "projets" && <ProjectsView />}
           {activeView === "clients" && <ClientsView />}
           {activeView === "equipe" && <TeamView />}

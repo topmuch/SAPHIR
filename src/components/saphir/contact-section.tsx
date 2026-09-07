@@ -1,12 +1,10 @@
 "use client";
 
-import { ArrowRight, Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { FadeIn } from "./animations";
+import { ContactForm } from "./contact-form";
 
 export function ContactSection() {
   return (
@@ -70,60 +68,7 @@ export function ContactSection() {
           <FadeIn direction="left" delay={0.2}>
             <Card className="border-slate-100 shadow-xl shadow-slate-200/50">
               <CardContent className="p-6 md:p-8">
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                  }}
-                  className="space-y-5"
-                >
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <div>
-                      <label className="text-xs font-medium text-muted-foreground mb-1.5 block">
-                        Nom
-                      </label>
-                      <Input placeholder="Votre nom" className="bg-slate-50" />
-                    </div>
-                    <div>
-                      <label className="text-xs font-medium text-muted-foreground mb-1.5 block">
-                        Prénom
-                      </label>
-                      <Input placeholder="Votre prénom" className="bg-slate-50" />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="text-xs font-medium text-muted-foreground mb-1.5 block">
-                      Email
-                    </label>
-                    <Input
-                      type="email"
-                      placeholder="votre@email.com"
-                      className="bg-slate-50"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-xs font-medium text-muted-foreground mb-1.5 block">
-                      Sujet
-                    </label>
-                    <Input placeholder="L'objet de votre message" className="bg-slate-50" />
-                  </div>
-                  <div>
-                    <label className="text-xs font-medium text-muted-foreground mb-1.5 block">
-                      Message
-                    </label>
-                    <Textarea
-                      placeholder="Décrivez votre projet..."
-                      rows={5}
-                      className="bg-slate-50"
-                    />
-                  </div>
-                  <Button
-                    type="submit"
-                    className="w-full bg-sapphire hover:bg-sapphire-light text-white font-semibold"
-                  >
-                    Envoyer le message
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </form>
+                <ContactForm />
               </CardContent>
             </Card>
           </FadeIn>

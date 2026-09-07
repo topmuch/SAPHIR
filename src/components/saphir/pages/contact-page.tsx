@@ -1,6 +1,16 @@
 "use client";
 
-import { Mail, Phone, MapPin, ArrowRight, Navigation } from "lucide-react";
+import { useState } from "react";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  ArrowRight,
+  Navigation,
+  Loader2,
+  CheckCircle2,
+  AlertCircle,
+} from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,6 +24,29 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { FadeIn } from "@/components/saphir/animations";
+
+const SUBJECT_OPTIONS = [
+  { value: "branding", label: "Branding" },
+  { value: "digital", label: "Communication digitale" },
+  { value: "web", label: "Création de site web" },
+  { value: "production", label: "Production audiovisuelle" },
+  { value: "evenement", label: "Événementiel" },
+  { value: "autre", label: "Autre" },
+];
+
+interface ContactPageForm {
+  nom: string;
+  email: string;
+  sujet: string;
+  content: string;
+}
+
+const EMPTY_FORM: ContactPageForm = {
+  nom: "",
+  email: "",
+  sujet: "",
+  content: "",
+};
 
 const CONTACT_INFO = [
   {
@@ -37,6 +70,76 @@ const CONTACT_INFO = [
 ];
 
 export function ContactPage() {
+  const [form, setForm] = useState<ContactPageForm>(EMPTY_FORM);
+  const [errors, setErrors] = useState<Partial<ContactPageForm>>({});
+  const [loading, setLoading] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [serverError, setServerError] = useState<string | null>(null);
+
+  const set =
+    (field: keyof ContactPageForm) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setForm((f) => ({ ...f, [field]: e.target.value }));
+      setErrors((err) => ({ ...err, [field]: undefined }));
+      setServerError(null);
+    };
+
+  const validate = (): Partial<ContactPageForm> => {
+    const err: Partial<ContactPageForm> = {};
+    if (form.nom.trim().length < 2) err.nom = "Veuillez indiquer votre nom.";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim()))
+      err.email = "Adresse e-mail invalide.";
+    if (form.content.trim().length < 10)
+      err.content = "Votre message doit contenir au moins 10 caractères.";
+    return err;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setServerError(null);
+
+    const err = validate();
+    if (Object.keys(err).length > 0) {
+      setErrors(err);
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const sujetLabel =
+        SUBJECT_OPTIONS.find((s) => s.value === form.sujet)?.label || "Contact";
+      const res = await fetch("/api/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.nom.trim(),
+          email: form.email.trim(),
+          subject: `Contact — ${sujetLabel}`,
+          type: "contact",
+          service: form.sujet ? sujetLabel : null,
+          content: form.content.trim(),
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        setServerError(
+          data?.error || "L'envoi a échoué. Veuillez réessayer dans un instant."
+        );
+        return;
+      }
+
+      setSent(true);
+      setForm(EMPTY_FORM);
+    } catch {
+      setServerError(
+        "Connexion impossible. Vérifiez votre réseau puis réessayez."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <main>
       {/* Hero */}
@@ -110,20 +213,44 @@ export function ContactPage() {
                   <h3 className="text-xl font-semibold text-sapphire mb-6">
                     Envoyez-nous un message
                   </h3>
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                    }}
-                    className="space-y-4"
-                  >
+                  {sent ? (
+                    <div className="text-center py-10">
+                      <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
+                        <CheckCircle2 className="w-8 h-8 text-green-600" />
+                      </div>
+                      <h4 className="text-lg font-semibold text-sapphire mb-2">
+                        Message envoyé !
+                      </h4>
+                      <p className="text-muted-foreground text-sm">
+                        Merci pour votre message. Nous vous recontacterons dans
+                        les plus brefs délais.
+                      </p>
+                      <Button
+                        variant="outline"
+                        className="mt-4 border-sapphire/20 text-sapphire hover:bg-sapphire/5"
+                        onClick={() => setSent(false)}
+                      >
+                        Envoyer un autre message
+                      </Button>
+                    </div>
+                  ) : (
+                  <form onSubmit={handleSubmit} noValidate className="space-y-4">
                     <div>
                       <Label className="text-xs font-medium text-muted-foreground mb-1 block">
                         Nom
                       </Label>
                       <Input
                         placeholder="Votre nom complet"
+                        value={form.nom}
+                        onChange={set("nom")}
+                        aria-invalid={!!errors.nom}
                         className="bg-sapphire/5"
                       />
+                      {errors.nom && (
+                        <p className="text-red-500 text-xs mt-1 flex items-center gap-1">
+                          <AlertCircle className="w-3 h-3" /> {errors.nom}
+                        </p>
+                      )}
                     </div>
                     <div>
                       <Label className="text-xs font-medium text-muted-foreground mb-1 block">
@@ -132,24 +259,37 @@ export function ContactPage() {
                       <Input
                         type="email"
                         placeholder="votre@email.com"
+                        value={form.email}
+                        onChange={set("email")}
+                        aria-invalid={!!errors.email}
                         className="bg-sapphire/5"
                       />
+                      {errors.email && (
+                        <p className="text-red-500 text-xs mt-1 flex items-center gap-1">
+                          <AlertCircle className="w-3 h-3" /> {errors.email}
+                        </p>
+                      )}
                     </div>
                     <div>
                       <Label className="text-xs font-medium text-muted-foreground mb-1 block">
                         Sujet
                       </Label>
-                      <Select>
+                      <Select
+                        value={form.sujet || undefined}
+                        onValueChange={(v) => {
+                          setForm((f) => ({ ...f, sujet: v }));
+                          setServerError(null);
+                        }}
+                      >
                         <SelectTrigger className="bg-sapphire/5">
                           <SelectValue placeholder="Sélectionnez un sujet" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="branding">Branding</SelectItem>
-                          <SelectItem value="digital">Communication digitale</SelectItem>
-                          <SelectItem value="web">Création de site web</SelectItem>
-                          <SelectItem value="production">Production audiovisuelle</SelectItem>
-                          <SelectItem value="evenement">Événementiel</SelectItem>
-                          <SelectItem value="autre">Autre</SelectItem>
+                          {SUBJECT_OPTIONS.map((opt) => (
+                            <SelectItem key={opt.value} value={opt.value}>
+                              {opt.label}
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
                     </div>
@@ -160,17 +300,43 @@ export function ContactPage() {
                       <Textarea
                         placeholder="Décrivez votre projet..."
                         rows={5}
+                        value={form.content}
+                        onChange={set("content")}
+                        aria-invalid={!!errors.content}
                         className="bg-sapphire/5"
                       />
+                      {errors.content && (
+                        <p className="text-red-500 text-xs mt-1 flex items-center gap-1">
+                          <AlertCircle className="w-3 h-3" /> {errors.content}
+                        </p>
+                      )}
                     </div>
+
+                    {serverError && (
+                      <p className="text-red-500 text-xs flex items-center gap-1.5 rounded-lg bg-red-50 border border-red-200 px-3 py-2">
+                        <AlertCircle className="w-3.5 h-3.5 shrink-0" /> {serverError}
+                      </p>
+                    )}
+
                     <Button
                       type="submit"
+                      disabled={loading}
                       className="w-full bg-sapphire hover:bg-sapphire-light text-white font-semibold"
                     >
-                      Envoyer le message
-                      <ArrowRight className="w-4 h-4 ml-2" />
+                      {loading ? (
+                        <>
+                          Envoi en cours…
+                          <Loader2 className="w-4 h-4 ml-2 animate-spin" />
+                        </>
+                      ) : (
+                        <>
+                          Envoyer le message
+                          <ArrowRight className="w-4 h-4 ml-2" />
+                        </>
+                      )}
                     </Button>
                   </form>
+                  )}
                 </CardContent>
               </Card>
             </FadeIn>

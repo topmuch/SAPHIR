@@ -240,3 +240,52 @@ Stage Summary:
 - Cartes services avec badges numérotés et overlay "En savoir plus"
 - Design professionnel inspiré Roofstick adapté au thème sapphire/or
 - Lint propre, tout vérifié Agent Browser
+---
+Task ID: 9
+Agent: Main agent (Super Z)
+Task: Restaurer le projet SAPHIR (clone GitHub) et corriger les formulaires (devis hero + contact) pour que tous les messages arrivent dans un onglet « Messages » du dashboard.
+
+Contexte:
+- Le sandbox a été réinitialisé entre les sessions : le code du projet SAPHIR avait disparu du workspace.
+- L'utilisateur a signalé : « le bouton du formulaire de devis dans le hero et du formulaire de contact ne réagit pas » et « ces messages envoyés doivent atterrir dans l'onglet message du dashboard ».
+- L'utilisateur a fourni le dépôt GitHub : https://github.com/topmuch/SAPHIR
+
+Work Log:
+- (Session précédente perdue) Tentative de reconstruction d'un site « RénovPro » — abandonnée et supprimée à la demande de l'utilisateur.
+- Cloné https://github.com/topmuch/SAPHIR → copié dans /home/z/my-project (rsync, en conservant .zscripts du sandbox).
+- Diagnostic des 4 formulaires factices (onSubmit vide) : hero.tsx, contact-section.tsx, contact-page.tsx, contact-form.tsx.
+- Prisma : ajout du modèle `Message` (id, name, email, subject, type devis|contact, service, content, read, createdAt) + `bun run db:push`.
+- Créé `src/app/api/messages/route.ts` : POST public (envoi) + GET protégé par session (liste + stats total/unread/devis/contact).
+- Créé `src/app/api/messages/[id]/route.ts` : PATCH (lu/non lu) + DELETE, protégés par session.
+- Corrigé `src/components/saphir/hero.tsx` : formulaire de devis réel (nom, email, service via Select sur SERVICES de data.ts, message), validation, état de chargement, écran de succès, erreurs serveur affichées. POST type "devis".
+- Corrigé `src/components/saphir/contact-form.tsx` (composant, utilisé par contact-section) : formulaire réel nom/prénom/email/message. POST type "contact".
+- Corrigé `src/components/saphir/contact-section.tsx` : remplacement du faux formulaire par <ContactForm />.
+- Corrigé `src/components/saphir/pages/contact-page.tsx` : formulaire réel (nom, email, sujet Select, message). POST type "contact".
+- Créé `src/components/dashboard/messages-view.tsx` : 4 cartes stats, filtres (Tous/Non lus/Devis/Contact), recherche, liste + panneau de détail (marquer lu/non lu auto à l'ouverture, bouton Répondre mailto:, suppression avec AlertDialog), rafraîchissement auto 10 s.
+- `dashboard-sidebar.tsx` : ajout de l'entrée « Messages » (icône Inbox, badge non lus doré).
+- `admin/page.tsx` : câblage de MessagesView + polling du compteur non lus (30 s) passé à la sidebar.
+- Vérification navigateur (agent-browser) : envoi devis hero ✓, envoi page contact ✓, envoi section contact accueil ✓ → les 3 messages apparaissent dans l'onglet Messages du dashboard ✓, marquage lu/non lu ✓ (badge sidebar mis à jour), suppression ✓, filtres + recherche ✓, responsive mobile 390px ✓, aperçu « Site web » ✓, aucune erreur console.
+- Données de test nettoyées (0 message en base au final).
+
+Identifiants admin (inchangés, venant du repo) : admin@zaphircomsen.com / SaphirSenegal@2026
+
+Stage Summary:
+- Projet SAPHIR (EMERAUDE COM SEN) restauré depuis GitHub dans /home/z/my-project et pleinement fonctionnel.
+- Flux complet opérationnel : formulaires publics (hero devis + contact) → API /api/messages → base SQLite (modèle Message) → onglet « Messages » du dashboard admin.
+
+---
+Task ID: 10
+Agent: Main agent (Super Z)
+Task: Pousser les corrections (formulaires + onglet Messages) vers GitHub avec le token fourni par l'utilisateur.
+
+Work Log:
+- L'utilisateur a fourni un Personal Access Token GitHub pour effectuer le push impossible depuis le sandbox sans identifiants.
+- git fetch du remote : historique distant de 19 commits jusqu'à 27bf408 (vraies photos à la place des icônes vectorielles), sans ancêtre commun avec les 3 auto-commits du sandbox (historique local recréé par le sandbox).
+- Diff FETCH_HEAD..HEAD vérifié : le contenu local est un sur-ensemble strict du distant — ajouts : API /api/messages, messages-view.tsx, admin/page.tsx (câblage), dashboard-sidebar.tsx (entrée Messages), formulaires corrigés (hero, contact-form, contact-section, contact-page), modèle Prisma Message, scripts/download-images.mjs ; retraits : uniquement des fichiers de logs sandbox (tool-results/).
+- Worklog fusionné : historique distant (242 lignes) + section restauration/corrections + section push.
+- git reset --soft FETCH_HEAD puis commit unique propre par-dessus l'historique GitHub (aucun historique écrasé, push en fast-forward).
+- Push de main vers https://github.com/topmuch/SAPHIR.
+
+Stage Summary:
+- Corrections (formulaires fonctionnels + onglet Messages du dashboard + API messages) poussées sur GitHub, branche main, commit par-dessus 27bf408 (fast-forward, historique préservé, tag v1 intact).
+- Serveur dev local inchangé et toujours fonctionnel (HTTP 200).

@@ -10,6 +10,7 @@ import {
   Gem,
   HelpCircle,
   Globe,
+  Inbox,
 } from 'lucide-react';
 
 export interface DashboardSidebarProps {
@@ -17,10 +18,12 @@ export interface DashboardSidebarProps {
   onClose: () => void;
   activeView: string;
   onViewChange: (view: string) => void;
+  unreadCount?: number;
 }
 
 const navItems = [
   { id: 'dashboard', label: 'Tableau de bord', icon: LayoutDashboard },
+  { id: 'messages', label: 'Messages', icon: Inbox },
   { id: 'projets', label: 'Projets', icon: FolderKanban },
   { id: 'clients', label: 'Clients', icon: Users },
   { id: 'equipe', label: 'Équipe', icon: UserCircle },
@@ -34,6 +37,7 @@ export function DashboardSidebar({
   onClose,
   activeView,
   onViewChange,
+  unreadCount = 0,
 }: DashboardSidebarProps) {
   const handleNavClick = (viewId: string) => {
     onViewChange(viewId);
@@ -107,8 +111,22 @@ export function DashboardSidebar({
                 } />
                 {label}
 
+                {/* Badge messages non lus */}
+                {id === 'messages' && unreadCount > 0 && (
+                  <span
+                    className={
+                      'ml-auto flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-[11px] font-bold ' +
+                      (isActive
+                        ? 'bg-gold text-sapphire-dark'
+                        : 'bg-gold/20 text-gold')
+                    }
+                  >
+                    {unreadCount > 99 ? '99+' : unreadCount}
+                  </span>
+                )}
+
                 {/* Active indicator bar */}
-                {isActive && (
+                {id !== 'messages' && isActive && (
                   <span className="ml-auto h-1.5 w-1.5 rounded-full bg-gold" />
                 )}
               </button>
