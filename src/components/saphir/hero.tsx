@@ -56,7 +56,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
           >
-            Valorisez votre image, développez votre marque ! SAPHIR COM
+            Valorisez votre image, développez votre marque ! EMERAUDE COM
             accompagne les entreprises dans la conception et la mise en œuvre de
             stratégies de communication innovantes et performantes.
           </motion.p>

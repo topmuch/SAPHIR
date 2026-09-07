@@ -66,7 +66,7 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
             <Gem className="w-5 h-5 text-gold" />
           </div>
           <span className="text-xl font-bold tracking-tight text-white">
-            SAPHIR <span className="text-gradient-gold">COM</span>
+            EMERAUDE <span className="text-gradient-gold">COM</span>
           </span>
         </div>
 
@@ -92,7 +92,7 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
         </div>
 
         <p className="relative text-xs text-white/40">
-          © {new Date().getFullYear()} SAPHIR COM SEN — Dakar, Sénégal
+          © {new Date().getFullYear()} EMERAUDE COM SEN — Dakar, Sénégal
         </p>
       </div>
 
@@ -109,7 +109,7 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
               <Gem className="w-4 h-4 text-gold" />
             </div>
             <span className="text-lg font-bold tracking-tight">
-              <span className="text-sapphire-dark">SAPHIR</span>{" "}
+              <span className="text-sapphire-dark">EMERAUDE</span>{" "}
               <span className="text-gold">COM</span>
             </span>
           </div>

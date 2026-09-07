@@ -360,7 +360,7 @@ export function TeamView() {
             <DialogDescription>
               {editingId
                 ? "Mettez à jour les informations du collaborateur."
-                : "Ajoutez un nouveau collaborateur à l'équipe SAPHIR."}
+                : "Ajoutez un nouveau collaborateur à l'équipe EMERAUDE."}
             </DialogDescription>
           </DialogHeader>
 

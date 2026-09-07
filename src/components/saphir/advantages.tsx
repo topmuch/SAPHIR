@@ -26,11 +26,10 @@ export function Advantages() {
           {ADVANTAGES.map((adv) => (
             <StaggerItem key={adv.title}>
               <div className="flex gap-6 p-6 rounded-2xl bg-white border border-slate-100 hover:border-gold/30 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-sapphire/10 transition-all duration-300 group overflow-hidden">
-                <div className="shrink-0 w-28 h-28 rounded-xl overflow-hidden">
-                  <img
-                    src={adv.image}
-                    alt={adv.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                <div className="shrink-0 w-28 h-28 rounded-xl bg-sapphire-gradient flex items-center justify-center border border-sapphire/10">
+                  <adv.icon
+                    className="w-11 h-11 text-gold"
+                    strokeWidth={1.5}
                   />
                 </div>
                 <div className="flex flex-col justify-center">

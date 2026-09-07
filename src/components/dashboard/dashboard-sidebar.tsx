@@ -67,7 +67,7 @@ export function DashboardSidebar({
           <div className="flex items-center gap-2.5">
             <Gem className="h-7 w-7 text-gold" />
             <span className="text-lg font-bold tracking-wide text-white">
-              SAPHIR{' '}
+              EMERAUDE{' '}
               <span className="text-gradient-gold">COM</span>
             </span>
           </div>

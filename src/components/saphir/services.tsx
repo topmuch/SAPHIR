@@ -53,12 +53,14 @@ export function Services({ onServiceClick }: ServicesProps) {
                   if (slug && onServiceClick) onServiceClick(slug);
                 }}
               >
-                <div className="h-52 overflow-hidden relative rounded-t-xl">
-                  <img
-                    src={service.image}
-                    alt={service.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
+                <div className="h-52 relative rounded-t-xl bg-sapphire-gradient flex items-center justify-center overflow-hidden">
+                  {/* Icône du service */}
+                  <div className="w-24 h-24 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/15 flex items-center justify-center group-hover:scale-110 group-hover:border-gold/40 transition-all duration-500">
+                    <service.icon
+                      className="w-12 h-12 text-gold"
+                      strokeWidth={1.5}
+                    />
+                  </div>
                   {/* Badge number */}
                   <div className="absolute top-3 left-3">
                     <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm text-sapphire font-bold text-xs">
@@ -66,7 +68,7 @@ export function Services({ onServiceClick }: ServicesProps) {
                     </span>
                   </div>
                   {/* Hover overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-sapphire-dark/70 via-sapphire-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-5">
+                  <div className="absolute inset-0 bg-gradient-to-t from-sapphire-dark/80 via-sapphire-dark/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-5">
                     <span className="text-white text-sm font-medium flex items-center gap-1.5">
                       En savoir plus <ArrowRight className="w-3.5 h-3.5" />
                     </span>

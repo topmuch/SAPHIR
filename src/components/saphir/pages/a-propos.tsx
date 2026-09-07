@@ -79,7 +79,7 @@ export function AProposPage() {
             Agence 100% sénégalaise
           </Badge>
           <h1 className="text-4xl md:text-6xl font-bold text-white">
-            À propos de <span className="text-gradient-gold">SAPHIR COM</span>
+            À propos de <span className="text-gradient-gold">EMERAUDE COM</span>
           </h1>
           <p className="mt-4 text-white/70 text-lg max-w-xl mx-auto">
             Une agence de communication née à Dakar, au service des marques
@@ -98,13 +98,13 @@ export function AProposPage() {
           </FadeIn>
           <FadeIn delay={0.1}>
             <p className="text-muted-foreground leading-relaxed text-base md:text-lg mb-6">
-              SAPHIR COM est une société sénégalaise de communication et de
+              EMERAUDE COM est une société sénégalaise de communication et de
               marketing, née à Dakar de la vision d'un groupe de professionnels
               africains passionnés par les métiers de la création et du
               conseil. Convaincus que les entreprises du Sénégal méritaient une
               agence à la hauteur de leurs ambitions, ses fondateurs ont bâti
               une structure capable de conjuguer exigence internationale et
-              ancrage local. Dès ses débuts, SAPHIR COM s'est distinguée par
+              ancrage local. Dès ses débuts, EMERAUDE COM s'est distinguée par
               sa créativité, sa proximité avec ses clients et sa connaissance
               fine du marché sénégalais.
             </p>
@@ -113,7 +113,7 @@ export function AProposPage() {
             <p className="text-muted-foreground leading-relaxed text-base md:text-lg mb-6">
               Aujourd'hui, avec une équipe de plus de 25 experts créatifs et
               plus de 150 clients satisfaits — PME, grandes entreprises,
-              institutions et organisations du pays — SAPHIR COM est devenue
+              institutions et organisations du pays — EMERAUDE COM est devenue
               un acteur de référence de la communication au Sénégal. De la
               refonte d'une identité de marque à la stratégie digitale
               complète, en passant par la production audiovisuelle et
@@ -217,7 +217,7 @@ export function AProposPage() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <FadeIn className="text-center mb-14">
             <h2 className="text-3xl md:text-4xl font-bold text-white">
-              SAPHIR COM en <span className="text-gradient-gold">chiffres</span>
+              EMERAUDE COM en <span className="text-gradient-gold">chiffres</span>
             </h2>
             <p className="mt-4 text-white/60 max-w-xl mx-auto">
               Une équipe sénégalaise au service de la croissance de vos marques

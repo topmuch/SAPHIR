@@ -42,7 +42,7 @@ export function Navbar() {
               <Gem className="w-5 h-5 text-gold" />
             </div>
             <span className="text-xl font-bold tracking-tight">
-              <span className="text-white">SAPHIR</span>{" "}
+              <span className="text-white">EMERAUDE</span>{" "}
               <span className="text-gradient-gold">COM</span>
             </span>
           </a>

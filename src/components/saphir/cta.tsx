@@ -22,7 +22,7 @@ export function CTASection() {
         <FadeIn>
           <Gem className="w-12 h-12 text-gold mx-auto mb-6" />
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
-            SAPHIR COM
+            EMERAUDE COM
           </h2>
           <p className="mt-4 text-xl md:text-2xl text-white/70 font-light">
             L’agence qui réinvente la relation

@@ -1,6 +1,6 @@
-# SAPHIR COM — Site vitrine + Dashboard
+# EMERAUDE COM — Site vitrine + Dashboard
 
-Site web de l'agence SAPHIR COM (communication 360°) : Next.js 16 (Turbopack) + React 19 + Tailwind CSS 4 + shadcn/ui + Prisma (SQLite) + framer-motion.
+Site web de l'agence EMERAUDE COM (communication 360°) : Next.js 16 (Turbopack) + React 19 + Tailwind CSS 4 + shadcn/ui + Prisma (SQLite) + framer-motion.
 
 ## Stack technique
 
@@ -108,7 +108,7 @@ Sans ce volume, la base est recréée à chaque déploiement (acceptable tant qu
 ```
 [entrypoint] Schéma Prisma -> file:/app/db/custom.db
 [entrypoint] Base de données prête.
-[entrypoint] Démarrage de SAPHIR sur 0.0.0.0:3000
+[entrypoint] Démarrage de EMERAUDE sur 0.0.0.0:3000
 ```
 
 Ajoutez ensuite un **domaine** dans l'onglet Domains (Coolify génère le HTTPS via son proxy Traefik automatiquement).

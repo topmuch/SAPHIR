@@ -1,5 +1,5 @@
 // ------------------------------------------------------------------
-// Mock Data for SAPHIR COM Dashboard
+// Mock Data for EMERAUDE COM Dashboard
 // ------------------------------------------------------------------
 
 export type ProjectStatus = "en_cours" | "termine" | "en_attente" | "pause";

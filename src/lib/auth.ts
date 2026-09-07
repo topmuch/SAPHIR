@@ -119,7 +119,7 @@ async function seed(): Promise<void> {
     await db.user.create({
       data: {
         email: adminEmail,
-        name: "SAPHIR Admin",
+        name: "EMERAUDE Admin",
         passwordHash: hashPassword(DEFAULT_ADMIN_PASSWORD),
         role: "admin",
       },

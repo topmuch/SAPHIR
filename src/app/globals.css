@@ -127,7 +127,7 @@
   }
 }
 
-/* SAPHIR COM Custom Styles */
+/* EMERAUDE COM Custom Styles */
 @layer utilities {
   .text-gradient-gold {
     background: linear-gradient(135deg, #C9A84C 0%, #E2C97D 50%, #C9A84C 100%);

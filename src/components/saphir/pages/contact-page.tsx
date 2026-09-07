@@ -193,7 +193,7 @@ export function ContactPage() {
           <FadeIn delay={0.15}>
             <div className="relative rounded-2xl overflow-hidden shadow-xl shadow-sapphire/10 border border-sapphire/10">
               <iframe
-                title="Carte de Dakar, Sénégal — SAPHIR COM"
+                title="Carte de Dakar, Sénégal — EMERAUDE COM"
                 src="https://www.openstreetmap.org/export/embed.html?bbox=-17.5450%2C14.6400%2C-17.3450%2C14.7800&layer=mapnik&marker=14.6928%2C-17.4467"
                 className="w-full h-[400px] md:h-[480px] block"
                 loading="lazy"
@@ -209,7 +209,7 @@ export function ContactPage() {
                       </div>
                       <div className="min-w-0">
                         <p className="font-semibold text-sapphire text-sm">
-                          SAPHIR COM
+                          EMERAUDE COM
                         </p>
                         <p className="text-sm text-muted-foreground mt-0.5">
                           Dakar, Sénégal

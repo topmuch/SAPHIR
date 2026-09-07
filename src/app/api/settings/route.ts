@@ -25,7 +25,7 @@ interface SettingsPayload {
 }
 
 const FALLBACK: SettingsPayload = {
-  agencyName: "SAPHIR COM SEN",
+  agencyName: "EMERAUDE COM SEN",
   email: "contact@zaphircomsen.com",
   phone: "+221 70 316 76 76",
   address: "Dakar, Sénégal",
@@ -34,7 +34,7 @@ const FALLBACK: SettingsPayload = {
   language: "Français",
   emailNotifications: true,
   seoTitle:
-    "SAPHIR COM SEN — Agence de communication 360° à Dakar",
+    "EMERAUDE COM SEN — Agence de communication 360° à Dakar",
   seoDescription:
     "Agence de communication 360° à Dakar : branding, marketing digital, production audiovisuelle, événementiel et création de sites web.",
   seoKeywords:

@@ -28,7 +28,7 @@ export function Footer() {
                 <Gem className="w-4 h-4 text-gold" />
               </div>
               <span className="text-lg font-bold tracking-tight">
-                <span className="text-white">SAPHIR</span>{" "}
+                <span className="text-white">EMERAUDE</span>{" "}
                 <span className="text-gradient-gold">COM</span>
               </span>
             </a>
@@ -95,11 +95,11 @@ export function Footer() {
         <Separator className="bg-white/10 my-8" />
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/40">
-          <p>© {new Date().getFullYear()} SAPHIR COM. Tous droits réservés.</p>
+          <p>© {new Date().getFullYear()} EMERAUDE COM. Tous droits réservés.</p>
           <p>
             Conçu avec passion par{" "}
             <a href="#hero" className="text-gold/60 hover:text-gold transition-colors">
-              SAPHIR COM
+              EMERAUDE COM
             </a>
           </p>
         </div>

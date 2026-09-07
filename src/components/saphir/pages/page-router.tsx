@@ -103,7 +103,7 @@ function Navbar({
               <Gem className="w-4 h-4 text-gold" />
             </div>
             <span className="text-lg font-bold tracking-tight">
-              <span className="text-sapphire-dark">SAPHIR</span>{" "}
+              <span className="text-sapphire-dark">EMERAUDE</span>{" "}
               <span className="text-gold">COM</span>
             </span>
           </button>
@@ -125,7 +125,7 @@ function Navbar({
             ))}
           </div>
 
-          {/* Right: Dashboard / Espace admin + Mobile Toggle */}
+          {/* Right: Dashboard / Connexion + Mobile Toggle */}
           <div className="flex items-center gap-3">
             {onBackToDashboard ? (
               <Button
@@ -142,7 +142,7 @@ function Navbar({
                 className="hidden md:inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-lg border border-sapphire/20 text-sapphire-dark hover:bg-sapphire/5 hover:border-gold/40 hover:text-gold-dark transition-all"
               >
                 <Lock className="w-3.5 h-3.5" />
-                Espace admin
+                Connexion
               </a>
             )}
 
@@ -178,7 +178,7 @@ function Navbar({
                 className="flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-lg text-sapphire-dark hover:text-gold hover:bg-slate-50 transition-colors"
               >
                 <Lock className="w-4 h-4" />
-                Espace admin
+                Connexion
               </a>
             </div>
           </div>
@@ -210,7 +210,7 @@ function SiteFooter({
                 <Gem className="w-4 h-4 text-gold" />
               </div>
               <span className="text-lg font-bold tracking-tight">
-                <span className="text-white">SAPHIR</span>{" "}
+                <span className="text-white">EMERAUDE</span>{" "}
                 <span className="text-gradient-gold">COM</span>
               </span>
             </button>
@@ -278,9 +278,9 @@ function SiteFooter({
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/40">
           <p>
-            © {new Date().getFullYear()} SAPHIR COM. Tous droits réservés. ·{" "}
+            © {new Date().getFullYear()} EMERAUDE COM. Tous droits réservés. ·{" "}
             <a href="/admin" className="hover:text-gold/60 transition-colors">
-              Espace admin
+              Connexion
             </a>
           </p>
           <p>
@@ -289,7 +289,7 @@ function SiteFooter({
               onClick={() => onNavigate("accueil")}
               className="text-gold/60 hover:text-gold transition-colors"
             >
-              SAPHIR COM
+              EMERAUDE COM
             </button>
           </p>
         </div>

@@ -91,7 +91,7 @@ export function CarrieresPage() {
               Pourquoi nous <span className="text-gradient-gold">rejoindre</span> ?
             </h2>
             <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-              Chez SAPHIR COM, nous croyons que notre réussite repose sur le talent et l'épanouissement de chaque membre de notre équipe.
+              Chez EMERAUDE COM, nous croyons que notre réussite repose sur le talent et l'épanouissement de chaque membre de notre équipe.
             </p>
           </FadeIn>
           <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

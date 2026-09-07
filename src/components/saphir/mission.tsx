@@ -40,11 +40,10 @@ export function Mission() {
                   transition={{ duration: 0.2 }}
                   className="rounded-xl bg-white overflow-hidden shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-sapphire/10 border border-slate-100 hover:border-gold/30 transition-colors"
                 >
-                  <div className="h-36 overflow-hidden">
-                    <img
-                      src={pillar.image}
-                      alt={pillar.label}
-                      className="w-full h-full object-cover"
+                  <div className="h-36 overflow-hidden bg-sapphire-gradient flex items-center justify-center">
+                    <pillar.icon
+                      className="w-10 h-10 text-gold"
+                      strokeWidth={1.5}
                     />
                   </div>
                   <div className="p-5 text-center">
