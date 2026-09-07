@@ -1,18 +1,30 @@
 'use client';
 
-import { Menu, Search, Bell } from 'lucide-react';
+import { Menu, Search, Bell, LogOut } from 'lucide-react';
 import {
   HoverCard,
   HoverCardTrigger,
   HoverCardContent,
 } from '@/components/ui/hover-card';
+import { Button } from '@/components/ui/button';
+import type { AuthUser } from '@/components/saphir/login-screen';
 
 export interface DashboardHeaderProps {
   onMenuToggle: () => void;
   title: string;
+  user: AuthUser;
+  onLogout: () => void;
 }
 
-export function DashboardHeader({ onMenuToggle, title }: DashboardHeaderProps) {
+function getInitials(nameOrEmail: string): string {
+  const parts = nameOrEmail.replace(/@.*/, '').split(/[.\s_-]+/).filter(Boolean);
+  const initials = parts.slice(0, 2).map((p) => p[0]).join('').toUpperCase();
+  return initials || 'U';
+}
+
+export function DashboardHeader({ onMenuToggle, title, user, onLogout }: DashboardHeaderProps) {
+  const displayName = user.name || user.email.replace(/@.*/, '');
+
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-gray-200 bg-white px-4 md:px-6">
       {/* Left side */}
@@ -49,25 +61,35 @@ export function DashboardHeader({ onMenuToggle, title }: DashboardHeaderProps) {
           <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-red-500" />
         </button>
 
-        {/* User avatar with hover card */}
+        {/* User avatar with hover card + logout */}
         <HoverCard openDelay={200} closeDelay={100}>
           <HoverCardTrigger asChild>
             <button
               className="flex h-8 w-8 items-center justify-center rounded-full bg-sapphire text-xs font-bold text-white transition-colors hover:bg-sapphire-dark"
               aria-label="Profil utilisateur"
             >
-              SA
+              {getInitials(displayName)}
             </button>
           </HoverCardTrigger>
           <HoverCardContent side="bottom" align="end" className="w-56">
             <div className="flex flex-col gap-1">
-              <p className="text-sm font-semibold text-gray-900">
-                SAPHIR Admin
-              </p>
-              <p className="text-xs text-gray-500">admin@saphircom.ma</p>
+              <p className="text-sm font-semibold text-gray-900">{displayName}</p>
+              <p className="text-xs text-gray-500">{user.email}</p>
+              <p className="text-xs text-gray-400 capitalize">{user.role}</p>
             </div>
           </HoverCardContent>
         </HoverCard>
+
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={onLogout}
+          className="border-gray-200 text-gray-600 hover:bg-red-50 hover:text-red-600 hover:border-red-200"
+        >
+          <LogOut className="mr-1 h-4 w-4" />
+          <span className="hidden sm:inline">Déconnexion</span>
+          <span className="sr-only">Se déconnecter</span>
+        </Button>
       </div>
     </header>
   );

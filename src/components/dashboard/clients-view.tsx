@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
-  CLIENTS,
   TIER_LABELS,
   TIER_COLORS,
   formatCurrency,
@@ -10,11 +9,13 @@ import {
   type ClientTier,
   type Client,
 } from "@/components/dashboard/dashboard-data";
+import { useToast } from "@/hooks/use-toast";
 
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -22,6 +23,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 import {
   Plus,
@@ -30,15 +39,66 @@ import {
   Mail,
   Phone,
   FolderKanban,
+  Loader2,
 } from "lucide-react";
 
 type TierFilter = "all" | ClientTier;
 
+interface ClientForm {
+  nom: string;
+  entreprise: string;
+  email: string;
+  telephone: string;
+  tier: ClientTier;
+}
+
+const EMPTY_FORM: ClientForm = {
+  nom: "",
+  entreprise: "",
+  email: "",
+  telephone: "",
+  tier: "nouveau",
+};
+
 export function ClientsView() {
+  const { toast } = useToast();
+
+  // Données
+  const [clients, setClients] = useState<Client[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Filtres
   const [search, setSearch] = useState("");
   const [tierFilter, setTierFilter] = useState<TierFilter>("all");
 
-  const filteredClients: Client[] = CLIENTS.filter((client) => {
+  // Dialog de création
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [form, setForm] = useState<ClientForm>(EMPTY_FORM);
+  const [submitting, setSubmitting] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
+
+  const loadClients = useCallback(async () => {
+    try {
+      const res = await fetch("/api/clients");
+      if (!res.ok) throw new Error("Chargement impossible");
+      const data = await res.json();
+      setClients(data.clients);
+    } catch {
+      toast({
+        title: "Erreur",
+        description: "Impossible de charger les clients.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  }, [toast]);
+
+  useEffect(() => {
+    loadClients();
+  }, [loadClients]);
+
+  const filteredClients: Client[] = clients.filter((client) => {
     const matchesSearch =
       search.trim() === "" ||
       client.nom.toLowerCase().includes(search.toLowerCase()) ||
@@ -54,6 +114,51 @@ export function ClientsView() {
     setTierFilter(value as TierFilter);
   }
 
+  function openDialog() {
+    setForm(EMPTY_FORM);
+    setFormError(null);
+    setDialogOpen(true);
+  }
+
+  function setField<K extends keyof ClientForm>(key: K, value: string) {
+    setForm((prev) => ({ ...prev, [key]: value }));
+  }
+
+  async function handleSubmit() {
+    if (!form.nom.trim() || !form.entreprise.trim() || !form.email.trim()) {
+      setFormError("Nom, entreprise et email sont obligatoires.");
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
+      setFormError("Adresse email invalide.");
+      return;
+    }
+    setSubmitting(true);
+    setFormError(null);
+    try {
+      const res = await fetch("/api/clients", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setFormError(data?.error || "Création impossible.");
+        return;
+      }
+      setDialogOpen(false);
+      await loadClients();
+      toast({
+        title: "Client créé",
+        description: `${data.client.nom} (${data.client.entreprise}) a été ajouté.`,
+      });
+    } catch {
+      setFormError("Erreur réseau. Réessayez.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
   return (
     <Card className="p-6">
       {/* Header */}
@@ -65,7 +170,7 @@ export function ClientsView() {
           </Badge>
         </div>
 
-        <Button>
+        <Button onClick={openDialog}>
           <Plus className="mr-2 h-4 w-4" />
           Nouveau client
         </Button>
@@ -97,7 +202,14 @@ export function ClientsView() {
       </div>
 
       {/* Clients Grid */}
-      {filteredClients.length === 0 ? (
+      {loading ? (
+        <div className="text-center py-12 text-muted-foreground">
+          <span className="inline-flex items-center gap-2">
+            <Loader2 className="h-4 w-4 animate-spin" />
+            Chargement des clients...
+          </span>
+        </div>
+      ) : filteredClients.length === 0 ? (
         <div className="text-center py-12 text-muted-foreground">
           Aucun client trouvé.
         </div>
@@ -157,6 +269,109 @@ export function ClientsView() {
           ))}
         </div>
       )}
+
+      {/* Dialog : Nouveau client */}
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Nouveau client</DialogTitle>
+            <DialogDescription>
+              Ajoutez un nouveau client à votre portefeuille.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="grid gap-4 py-2">
+            <div className="grid gap-2">
+              <Label htmlFor="client-nom">Nom du contact *</Label>
+              <Input
+                id="client-nom"
+                value={form.nom}
+                onChange={(e) => setField("nom", e.target.value)}
+                placeholder="Ex : Mohammed Alami"
+                disabled={submitting}
+              />
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="client-entreprise">Entreprise *</Label>
+              <Input
+                id="client-entreprise"
+                value={form.entreprise}
+                onChange={(e) => setField("entreprise", e.target.value)}
+                placeholder="Ex : Maroc Telecom"
+                disabled={submitting}
+              />
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="client-email">Email *</Label>
+              <Input
+                id="client-email"
+                type="email"
+                value={form.email}
+                onChange={(e) => setField("email", e.target.value)}
+                placeholder="contact@entreprise.ma"
+                disabled={submitting}
+              />
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="client-tel">Téléphone</Label>
+              <Input
+                id="client-tel"
+                value={form.telephone}
+                onChange={(e) => setField("telephone", e.target.value)}
+                placeholder="+212 5 22 00 00 00"
+                disabled={submitting}
+              />
+            </div>
+
+            <div className="grid gap-2">
+              <Label>Catégorie</Label>
+              <Select
+                value={form.tier}
+                onValueChange={(v) => setField("tier", v)}
+                disabled={submitting}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Choisir" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="nouveau">Nouveau</SelectItem>
+                  <SelectItem value="standard">Standard</SelectItem>
+                  <SelectItem value="premium">Premium</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {formError && (
+              <p className="text-sm text-red-600" role="alert">
+                {formError}
+              </p>
+            )}
+          </div>
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setDialogOpen(false)}
+              disabled={submitting}
+            >
+              Annuler
+            </Button>
+            <Button onClick={handleSubmit} disabled={submitting}>
+              {submitting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Création...
+                </>
+              ) : (
+                "Créer le client"
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 }

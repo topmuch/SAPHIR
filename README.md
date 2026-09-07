@@ -1,4 +1,4 @@
-# SAPHIR COM — Site vitrine
+# SAPHIR COM — Site vitrine + Dashboard
 
 Site web de l'agence SAPHIR COM (communication 360°) : Next.js 16 (Turbopack) + React 19 + Tailwind CSS 4 + shadcn/ui + Prisma (SQLite) + framer-motion.
 
@@ -9,6 +9,7 @@ Site web de l'agence SAPHIR COM (communication 360°) : Next.js 16 (Turbopack) +
 | Framework | Next.js 16, output `standalone` |
 | UI | React 19, Tailwind 4, shadcn/ui, framer-motion |
 | Base de données | Prisma + SQLite (schéma `prisma/schema.prisma`) |
+| Authentification | Session cookie signée HMAC + mots de passe scrypt |
 | Runtime / paquets | bun (`bun.lock`) |
 | Port par défaut | 3000 (écrasé par la variable `PORT`) |
 
@@ -24,6 +25,39 @@ bun run dev                  # http://localhost:3000
 Variables d'environnement : voir `.env.example` (`DATABASE_URL`).
 
 ---
+
+## Authentification
+
+Le site est protégé : la page de connexion s'affiche avant l'accès au site vitrine
+et au dashboard. Le compte administrateur est créé **automatiquement** à la
+première connexion si la base est vide (idempotent), ainsi que les données de
+démonstration (12 projets, 10 clients, 12 membres).
+
+**Identifiants par défaut :**
+
+| Champ | Valeur |
+|---|---|
+| Email | `admin@saphircom.ma` |
+| Mot de passe | `Admin2026` |
+
+> ⚠️ Changez le mot de passe par défaut en production via les variables
+> d'environnement (à définir **avant** le premier démarrage).
+
+| Variable | Rôle | Défaut |
+|---|---|---|
+| `ADMIN_EMAIL` | Email du compte admin créé au premier démarrage | `admin@saphircom.ma` |
+| `ADMIN_PASSWORD` | Mot de passe du compte admin | `Admin2026` |
+| `AUTH_SECRET` | Clé de signature des sessions (HMAC) | valeur de dev |
+
+Routes API : `POST /api/auth/login`, `POST /api/auth/logout`, `GET /api/auth/me`,
+`GET/POST/DELETE /api/projects`, `GET/POST /api/clients`, `GET/POST /api/team`.
+
+Fonctionnalités du dashboard : création de projets (référence P-XXX auto-générée),
+création de clients, ajout de membres d'équipe, suppression de projets —
+toutes persistées en base SQLite.
+
+---
+
 
 ## Déploiement sur Coolify
 

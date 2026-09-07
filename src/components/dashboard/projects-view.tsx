@@ -1,14 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
-  PROJECTS,
   STATUS_LABELS,
   STATUS_COLORS,
   formatCurrency,
   type ProjectStatus,
   type Project,
 } from "@/components/dashboard/dashboard-data";
+import { useToast } from "@/hooks/use-toast";
 
 import {
   Table,
@@ -34,7 +34,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 import {
   Plus,
@@ -44,6 +54,7 @@ import {
   Trash2,
   ChevronLeft,
   ChevronRight,
+  Loader2,
 } from "lucide-react";
 
 const ITEMS_PER_PAGE = 6;
@@ -56,14 +67,87 @@ const STATUS_OPTIONS: { value: "all" | ProjectStatus; label: string }[] = [
   { value: "pause", label: "En pause" },
 ];
 
+const DEPARTEMENTS = [
+  "Création graphique",
+  "Production audiovisuelle",
+  "Informatique & Sonorisation",
+  "Planning stratégique",
+  "Événementiel",
+  "Commercial",
+];
+
+interface ProjectForm {
+  nom: string;
+  client: string;
+  departement: string;
+  statut: ProjectStatus;
+  budget: string;
+  progression: string;
+  dateDebut: string;
+  dateEcheance: string;
+  responsable: string;
+}
+
+const EMPTY_FORM: ProjectForm = {
+  nom: "",
+  client: "",
+  departement: "",
+  statut: "en_attente",
+  budget: "",
+  progression: "0",
+  dateDebut: "",
+  dateEcheance: "",
+  responsable: "",
+};
+
 export function ProjectsView() {
+  const { toast } = useToast();
+
+  // Données
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [clientNames, setClientNames] = useState<string[]>([]);
+
+  // Filtres / pagination
   const [statusFilter, setStatusFilter] = useState<"all" | ProjectStatus>("all");
   const [currentPage, setCurrentPage] = useState(1);
 
+  // Dialog de création
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [form, setForm] = useState<ProjectForm>(EMPTY_FORM);
+  const [submitting, setSubmitting] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
+
+  const loadProjects = useCallback(async () => {
+    try {
+      const res = await fetch("/api/projects");
+      if (!res.ok) throw new Error("Chargement impossible");
+      const data = await res.json();
+      setProjects(data.projects);
+    } catch {
+      toast({
+        title: "Erreur",
+        description: "Impossible de charger les projets.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  }, [toast]);
+
+  useEffect(() => {
+    loadProjects();
+    // Suggestions de clients pour le formulaire
+    fetch("/api/clients")
+      .then((res) => (res.ok ? res.json() : { clients: [] }))
+      .then((data) => setClientNames(data.clients.map((c: { nom: string }) => c.nom)))
+      .catch(() => {});
+  }, [loadProjects]);
+
   const filteredProjects: Project[] =
     statusFilter === "all"
-      ? PROJECTS
-      : PROJECTS.filter((p) => p.statut === statusFilter);
+      ? projects
+      : projects.filter((p) => p.statut === statusFilter);
 
   const totalPages = Math.max(1, Math.ceil(filteredProjects.length / ITEMS_PER_PAGE));
   const safeCurrentPage = Math.min(currentPage, totalPages);
@@ -74,6 +158,71 @@ export function ProjectsView() {
   function handleFilterChange(value: string) {
     setStatusFilter(value as "all" | ProjectStatus);
     setCurrentPage(1);
+  }
+
+  function openDialog() {
+    setForm(EMPTY_FORM);
+    setFormError(null);
+    setDialogOpen(true);
+  }
+
+  function setField<K extends keyof ProjectForm>(key: K, value: string) {
+    setForm((prev) => ({ ...prev, [key]: value }));
+  }
+
+  async function handleSubmit() {
+    if (!form.nom.trim() || !form.client.trim() || !form.departement) {
+      setFormError("Nom, client et département sont obligatoires.");
+      return;
+    }
+    setSubmitting(true);
+    setFormError(null);
+    try {
+      const res = await fetch("/api/projects", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...form,
+          budget: form.budget ? Number(form.budget) : 0,
+          progression: form.progression ? Number(form.progression) : 0,
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setFormError(data?.error || "Création impossible.");
+        return;
+      }
+      setDialogOpen(false);
+      await loadProjects();
+      toast({
+        title: "Projet créé",
+        description: `${data.project.nom} (${data.project.id}) a été ajouté.`,
+      });
+    } catch {
+      setFormError("Erreur réseau. Réessayez.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  async function handleDelete(reference: string, nom: string) {
+    try {
+      const res = await fetch(`/api/projects?id=${encodeURIComponent(reference)}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) throw new Error();
+      await loadProjects();
+      toast({
+        title: "Projet supprimé",
+        description: `${nom} (${reference}) a été supprimé.`,
+      });
+    } catch {
+      toast({
+        title: "Erreur",
+        description: "Suppression impossible.",
+        variant: "destructive",
+      });
+    }
   }
 
   return (
@@ -96,7 +245,7 @@ export function ProjectsView() {
             </SelectContent>
           </Select>
 
-          <Button>
+          <Button onClick={openDialog}>
             <Plus className="mr-2 h-4 w-4" />
             Nouveau projet
           </Button>
@@ -119,7 +268,16 @@ export function ProjectsView() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {paginatedProjects.length === 0 ? (
+            {loading ? (
+              <TableRow>
+                <TableCell colSpan={8} className="h-24 text-center text-muted-foreground">
+                  <span className="inline-flex items-center gap-2">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Chargement des projets...
+                  </span>
+                </TableCell>
+              </TableRow>
+            ) : paginatedProjects.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={8} className="h-24 text-center text-muted-foreground">
                   Aucun projet trouvé.
@@ -172,7 +330,10 @@ export function ProjectsView() {
                           <Pencil className="mr-2 h-4 w-4" />
                           Modifier
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="text-destructive focus:text-destructive">
+                        <DropdownMenuItem
+                          className="text-destructive focus:text-destructive"
+                          onClick={() => handleDelete(project.id, project.nom)}
+                        >
                           <Trash2 className="mr-2 h-4 w-4" />
                           Supprimer
                         </DropdownMenuItem>
@@ -214,6 +375,177 @@ export function ProjectsView() {
           </Button>
         </div>
       </div>
+
+      {/* Dialog : Nouveau projet */}
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Nouveau projet</DialogTitle>
+            <DialogDescription>
+              Renseignez les informations du projet. La référence est générée
+              automatiquement.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="grid gap-4 py-2">
+            <div className="grid gap-2">
+              <Label htmlFor="proj-nom">Nom du projet *</Label>
+              <Input
+                id="proj-nom"
+                value={form.nom}
+                onChange={(e) => setField("nom", e.target.value)}
+                placeholder="Ex : Campagne social media..."
+                disabled={submitting}
+              />
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="proj-client">Client *</Label>
+              <Input
+                id="proj-client"
+                list="proj-client-suggestions"
+                value={form.client}
+                onChange={(e) => setField("client", e.target.value)}
+                placeholder="Ex : Maroc Telecom"
+                disabled={submitting}
+              />
+              <datalist id="proj-client-suggestions">
+                {clientNames.map((name) => (
+                  <option key={name} value={name} />
+                ))}
+              </datalist>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid gap-2">
+                <Label>Département *</Label>
+                <Select
+                  value={form.departement}
+                  onValueChange={(v) => setField("departement", v)}
+                  disabled={submitting}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Choisir" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {DEPARTEMENTS.map((d) => (
+                      <SelectItem key={d} value={d}>
+                        {d}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="grid gap-2">
+                <Label>Statut</Label>
+                <Select
+                  value={form.statut}
+                  onValueChange={(v) => setField("statut", v)}
+                  disabled={submitting}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Choisir" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="en_attente">En attente</SelectItem>
+                    <SelectItem value="en_cours">En cours</SelectItem>
+                    <SelectItem value="termine">Terminé</SelectItem>
+                    <SelectItem value="pause">En pause</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="proj-budget">Budget (MAD)</Label>
+                <Input
+                  id="proj-budget"
+                  type="number"
+                  min={0}
+                  value={form.budget}
+                  onChange={(e) => setField("budget", e.target.value)}
+                  placeholder="0"
+                  disabled={submitting}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="proj-progression">Progression (%)</Label>
+                <Input
+                  id="proj-progression"
+                  type="number"
+                  min={0}
+                  max={100}
+                  value={form.progression}
+                  onChange={(e) => setField("progression", e.target.value)}
+                  disabled={submitting}
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="proj-debut">Date de début</Label>
+                <Input
+                  id="proj-debut"
+                  type="date"
+                  value={form.dateDebut}
+                  onChange={(e) => setField("dateDebut", e.target.value)}
+                  disabled={submitting}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="proj-echeance">Échéance</Label>
+                <Input
+                  id="proj-echeance"
+                  type="date"
+                  value={form.dateEcheance}
+                  onChange={(e) => setField("dateEcheance", e.target.value)}
+                  disabled={submitting}
+                />
+              </div>
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="proj-resp">Responsable</Label>
+              <Input
+                id="proj-resp"
+                value={form.responsable}
+                onChange={(e) => setField("responsable", e.target.value)}
+                placeholder="Ex : Amina Benali"
+                disabled={submitting}
+              />
+            </div>
+
+            {formError && (
+              <p className="text-sm text-red-600" role="alert">
+                {formError}
+              </p>
+            )}
+          </div>
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setDialogOpen(false)}
+              disabled={submitting}
+            >
+              Annuler
+            </Button>
+            <Button onClick={handleSubmit} disabled={submitting}>
+              {submitting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Création...
+                </>
+              ) : (
+                "Créer le projet"
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 }
