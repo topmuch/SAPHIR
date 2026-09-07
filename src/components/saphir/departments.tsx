@@ -30,13 +30,13 @@ export function Departments() {
           {DEPARTMENTS.map((dept) => (
             <StaggerItem key={dept.name}>
               <div className="bg-white/70 backdrop-blur-sm rounded-2xl overflow-hidden group hover:shadow-xl hover:shadow-sapphire/10 border border-slate-200/50 hover:border-gold/30 transition-all duration-300">
-                <div className="h-48 overflow-hidden bg-sapphire-gradient flex items-center justify-center relative">
-                  <div className="w-20 h-20 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/15 flex items-center justify-center group-hover:scale-110 group-hover:border-gold/40 transition-all duration-500">
-                    <dept.icon
-                      className="w-10 h-10 text-gold"
-                      strokeWidth={1.5}
-                    />
-                  </div>
+                <div className="h-48 overflow-hidden">
+                  <img
+                    src={dept.image}
+                    alt={dept.name}
+                    loading="lazy"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
                 <div className="p-6 text-center">
                   <h3 className="font-semibold text-sapphire text-lg">

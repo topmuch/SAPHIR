@@ -53,14 +53,13 @@ export function Services({ onServiceClick }: ServicesProps) {
                   if (slug && onServiceClick) onServiceClick(slug);
                 }}
               >
-                <div className="h-52 relative rounded-t-xl bg-sapphire-gradient flex items-center justify-center overflow-hidden">
-                  {/* Icône du service */}
-                  <div className="w-24 h-24 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/15 flex items-center justify-center group-hover:scale-110 group-hover:border-gold/40 transition-all duration-500">
-                    <service.icon
-                      className="w-12 h-12 text-gold"
-                      strokeWidth={1.5}
-                    />
-                  </div>
+                <div className="h-52 relative rounded-t-xl overflow-hidden">
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    loading="lazy"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
                   {/* Badge number */}
                   <div className="absolute top-3 left-3">
                     <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm text-sapphire font-bold text-xs">
