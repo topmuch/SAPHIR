@@ -16,19 +16,14 @@ RUN bun install
 # Generate Prisma Client
 RUN npx prisma generate
 
-# Build the application
-ENV NEXT_TELEMETRY_DISABLED=1
-ENV DATABASE_URL=file:/app/data/saphir.db
-RUN bun run build
+# Build the application (variables inline, pas de directive ENV)
+RUN NEXT_TELEMETRY_DISABLED=1 DATABASE_URL=file:/app/data/saphir.db bun run build
 
 # Create data directory
 RUN mkdir -p /app/data
 
 EXPOSE 3000
 
-ENV PORT=3000
-ENV HOSTNAME="0.0.0.0"
-ENV DATABASE_URL=file:/app/data/saphir.db
-
 # Start command - init database and start server
-CMD sh -c "mkdir -p /app/data && export DATABASE_URL=file:/app/data/saphir.db && npx prisma db push --skip-generate 2>/dev/null || true && exec node .next/standalone/server.js"
+# Variables definies en ligne (surchargeables via l'onglet Environment de Coolify)
+CMD sh -c "mkdir -p /app/data && export HOSTNAME=0.0.0.0 PORT=${PORT:-3000} DATABASE_URL=${DATABASE_URL:-file:/app/data/saphir.db} && npx prisma db push --skip-generate 2>/dev/null || true && exec node .next/standalone/server.js"
