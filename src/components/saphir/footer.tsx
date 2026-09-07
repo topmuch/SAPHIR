@@ -12,9 +12,8 @@ const FOOTER_SERVICES = [
 
 const FOOTER_COMPANY = [
   "À propos",
-  "Carrières",
-  "Blog",
   "FAQ",
+  "Contact",
 ];
 
 export function Footer() {

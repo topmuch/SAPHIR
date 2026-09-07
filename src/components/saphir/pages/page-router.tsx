@@ -18,8 +18,6 @@ import { ContactSection } from "@/components/saphir/contact-section";
 // Page components
 import { AProposPage } from "./a-propos";
 import { ServicesPage } from "./services-page";
-import { BlogPage } from "./blog-page";
-import { CarrieresPage } from "./carrieres-page";
 import { FaqPage } from "./faq-page";
 import { ContactPage } from "./contact-page";
 import { ServiceDetailPage } from "./service-detail-page";
@@ -28,8 +26,6 @@ const PAGES = [
   { id: "accueil", label: "Accueil" },
   { id: "a-propos", label: "À propos" },
   { id: "services", label: "Services" },
-  { id: "blog", label: "Blog" },
-  { id: "carrieres", label: "Carrières" },
   { id: "faq", label: "FAQ" },
   { id: "contact", label: "Contact" },
 ];
@@ -54,9 +50,8 @@ const FOOTER_SERVICES = [
 
 const FOOTER_COMPANY_MAP: Record<string, string> = {
   "À propos": "a-propos",
-  Carrières: "carrieres",
-  Blog: "blog",
   FAQ: "faq",
+  Contact: "contact",
 };
 
 /* ------------------------------------------------------------------ */
@@ -353,10 +348,6 @@ export function SiteRouter({
         return <AProposPage />;
       case "services":
         return <ServicesPage onServiceClick={handleServiceClick} />;
-      case "blog":
-        return <BlogPage />;
-      case "carrieres":
-        return <CarrieresPage />;
       case "faq":
         return <FaqPage />;
       case "contact":
