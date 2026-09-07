@@ -13,9 +13,13 @@ const AUTH_SECRET =
   process.env.AUTH_SECRET || "saphir-com-secret-a-changer-en-production";
 
 export const DEFAULT_ADMIN_EMAIL =
-  process.env.ADMIN_EMAIL || "admin@saphircom.ma";
+  process.env.ADMIN_EMAIL || "admin@zaphircomsen.com";
 export const DEFAULT_ADMIN_PASSWORD =
-  process.env.ADMIN_PASSWORD || "Admin2026";
+  process.env.ADMIN_PASSWORD || "SaphirSenegal@2026";
+
+// Ancien compte admin par défaut (identifiants publics dans l'historique du
+// dépôt) : supprimé automatiquement au démarrage pour sécurité.
+const LEGACY_ADMIN_EMAIL = "admin@saphircom.ma";
 
 // ------------------------------------------------------------------
 // Mots de passe (scrypt, natif Node/Bun — aucune dépendance)
@@ -104,17 +108,27 @@ export async function getSessionUser(): Promise<SessionUser | null> {
 let seedPromise: Promise<void> | null = null;
 
 async function seed(): Promise<void> {
-  // 1) Compte administrateur (créé une seule fois, jamais écrasé)
-  const userCount = await db.user.count();
-  if (userCount === 0) {
+  // 1) Compte administrateur : garanti existant avec les identifiants par
+  //    défaut. Créé même si d'autres comptes existent déjà (montée de
+  //    version d'une base en production) ; jamais écrasé s'il existe déjà.
+  const adminEmail = DEFAULT_ADMIN_EMAIL.toLowerCase();
+  const existingAdmin = await db.user.findUnique({
+    where: { email: adminEmail },
+  });
+  if (!existingAdmin) {
     await db.user.create({
       data: {
-        email: DEFAULT_ADMIN_EMAIL.toLowerCase(),
+        email: adminEmail,
         name: "SAPHIR Admin",
         passwordHash: hashPassword(DEFAULT_ADMIN_PASSWORD),
         role: "admin",
       },
     });
+  }
+
+  // 1bis) Sécurité : révocation de l'ancien admin par défaut si présent
+  if (adminEmail !== LEGACY_ADMIN_EMAIL) {
+    await db.user.deleteMany({ where: { email: LEGACY_ADMIN_EMAIL } });
   }
 
   // 2) Projets de démonstration

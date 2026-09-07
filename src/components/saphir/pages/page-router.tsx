@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { Gem, Menu, X, Mail, Phone, MapPin } from "lucide-react";
+import { Gem, Menu, X, Mail, Phone, MapPin, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
@@ -130,9 +130,9 @@ function Navbar({
             ))}
           </div>
 
-          {/* Right: Dashboard + Mobile Toggle */}
+          {/* Right: Dashboard / Espace admin + Mobile Toggle */}
           <div className="flex items-center gap-3">
-            {onBackToDashboard && (
+            {onBackToDashboard ? (
               <Button
                 variant="outline"
                 size="sm"
@@ -141,6 +141,14 @@ function Navbar({
               >
                 Dashboard
               </Button>
+            ) : (
+              <a
+                href="/admin"
+                className="hidden md:inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-lg border border-sapphire/20 text-sapphire-dark hover:bg-sapphire/5 hover:border-gold/40 hover:text-gold-dark transition-all"
+              >
+                <Lock className="w-3.5 h-3.5" />
+                Espace admin
+              </a>
             )}
 
             <button
@@ -170,6 +178,13 @@ function Navbar({
                   {page.label}
                 </button>
               ))}
+              <a
+                href="/admin"
+                className="flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-lg text-sapphire-dark hover:text-gold hover:bg-slate-50 transition-colors"
+              >
+                <Lock className="w-4 h-4" />
+                Espace admin
+              </a>
             </div>
           </div>
         )}
@@ -267,7 +282,12 @@ function SiteFooter({
         <Separator className="bg-white/10 my-8" />
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/40">
-          <p>© {new Date().getFullYear()} SAPHIR COM. Tous droits réservés.</p>
+          <p>
+            © {new Date().getFullYear()} SAPHIR COM. Tous droits réservés. ·{" "}
+            <a href="/admin" className="hover:text-gold/60 transition-colors">
+              Espace admin
+            </a>
+          </p>
           <p>
             Conçu avec passion par{" "}
             <button

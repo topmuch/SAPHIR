@@ -28,29 +28,33 @@ Variables d'environnement : voir `.env.example` (`DATABASE_URL`).
 
 ## Authentification
 
-Le site est protégé : la page de connexion s'affiche avant l'accès au site vitrine
-et au dashboard. Le compte administrateur est créé **automatiquement** à la
-première connexion si la base est vide (idempotent), ainsi que les données de
-démonstration (12 projets, 10 clients, 12 membres).
+Le site vitrine est **public** (page d'accueil `/`). L'espace d'administration
+est accessible sur **`/admin`** (lien « Espace admin » dans la navbar et le
+footer du site) : la page de connexion s'affiche avant l'accès au dashboard.
+Le compte administrateur est créé **automatiquement** au premier démarrage
+(même sur une base existante), ainsi que les données de démonstration
+(12 projets, 10 clients, 12 membres).
 
 **Identifiants par défaut :**
 
 | Champ | Valeur |
 |---|---|
-| Email | `admin@saphircom.ma` |
-| Mot de passe | `Admin2026` |
+| Email | `admin@zaphircomsen.com` |
+| Mot de passe | `SaphirSenegal@2026` |
 
 > ⚠️ Changez le mot de passe par défaut en production via les variables
-> d'environnement (à définir **avant** le premier démarrage).
+> d'environnement. L'ancien compte par défaut (`admin@saphircom.ma`) est
+> automatiquement révoqué au démarrage pour des raisons de sécurité.
 
 | Variable | Rôle | Défaut |
 |---|---|---|
-| `ADMIN_EMAIL` | Email du compte admin créé au premier démarrage | `admin@saphircom.ma` |
-| `ADMIN_PASSWORD` | Mot de passe du compte admin | `Admin2026` |
+| `ADMIN_EMAIL` | Email du compte admin | `admin@zaphircomsen.com` |
+| `ADMIN_PASSWORD` | Mot de passe du compte admin | `SaphirSenegal@2026` |
 | `AUTH_SECRET` | Clé de signature des sessions (HMAC) | valeur de dev |
 
 Routes API : `POST /api/auth/login`, `POST /api/auth/logout`, `GET /api/auth/me`,
-`GET/POST/DELETE /api/projects`, `GET/POST /api/clients`, `GET/POST /api/team`.
+`GET/POST/DELETE /api/projects`, `GET/POST /api/clients`, `GET/POST /api/team`,
+`GET/PUT /api/settings`.
 
 Fonctionnalités du dashboard : création de projets (référence P-XXX auto-générée),
 création de clients, ajout de membres d'équipe, suppression de projets —

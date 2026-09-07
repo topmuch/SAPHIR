@@ -132,7 +132,7 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
                   id="email"
                   type="email"
                   autoComplete="email"
-                  placeholder="admin@saphircom.ma"
+                  placeholder="admin@zaphircomsen.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={loading}
@@ -192,6 +192,13 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
                 "Se connecter"
               )}
             </Button>
+
+            <a
+              href="/"
+              className="block text-center text-sm text-slate-500 hover:text-sapphire transition-colors pt-2"
+            >
+              ← Retour au site
+            </a>
           </form>
         </motion.div>
       </div>
