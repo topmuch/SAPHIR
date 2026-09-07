@@ -16,6 +16,12 @@ interface SettingsPayload {
   currency: string;
   language: string;
   emailNotifications: boolean;
+  seoTitle: string;
+  seoDescription: string;
+  seoKeywords: string;
+  notifyContactMessages: boolean;
+  notifyNewMember: boolean;
+  notifyNewProject: boolean;
 }
 
 const FALLBACK: SettingsPayload = {
@@ -27,6 +33,15 @@ const FALLBACK: SettingsPayload = {
   currency: "XOF",
   language: "Français",
   emailNotifications: true,
+  seoTitle:
+    "SAPHIR COM SEN — Agence de communication 360° à Dakar",
+  seoDescription:
+    "Agence de communication 360° à Dakar : branding, marketing digital, production audiovisuelle, événementiel et création de sites web.",
+  seoKeywords:
+    "agence communication Dakar, communication 360 Sénégal, branding, marketing digital, production audiovisuelle, événementiel",
+  notifyContactMessages: true,
+  notifyNewMember: true,
+  notifyNewProject: true,
 };
 
 function serialize(row: {
@@ -38,6 +53,12 @@ function serialize(row: {
   currency: string;
   language: string;
   emailNotifications: boolean;
+  seoTitle: string;
+  seoDescription: string;
+  seoKeywords: string;
+  notifyContactMessages: boolean;
+  notifyNewMember: boolean;
+  notifyNewProject: boolean;
 }): SettingsPayload {
   return {
     agencyName: row.agencyName,
@@ -48,6 +69,12 @@ function serialize(row: {
     currency: CURRENCIES.includes(row.currency) ? row.currency : "XOF",
     language: LANGUAGES.includes(row.language) ? row.language : "Français",
     emailNotifications: row.emailNotifications,
+    seoTitle: row.seoTitle,
+    seoDescription: row.seoDescription,
+    seoKeywords: row.seoKeywords,
+    notifyContactMessages: row.notifyContactMessages,
+    notifyNewMember: row.notifyNewMember,
+    notifyNewProject: row.notifyNewProject,
   };
 }
 
@@ -114,6 +141,12 @@ export async function PUT(request: NextRequest) {
           ? body.language
           : "Français",
       emailNotifications: body.emailNotifications === true,
+      seoTitle: readString(body, "seoTitle") ?? "",
+      seoDescription: readString(body, "seoDescription") ?? "",
+      seoKeywords: readString(body, "seoKeywords") ?? "",
+      notifyContactMessages: body.notifyContactMessages === true,
+      notifyNewMember: body.notifyNewMember === true,
+      notifyNewProject: body.notifyNewProject === true,
     };
 
     const row = await db.setting.upsert({

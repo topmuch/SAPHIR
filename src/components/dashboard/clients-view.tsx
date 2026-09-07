@@ -31,6 +31,22 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 import {
   Plus,
@@ -40,6 +56,9 @@ import {
   Phone,
   FolderKanban,
   Loader2,
+  MoreHorizontal,
+  Pencil,
+  Trash2,
 } from "lucide-react";
 
 type TierFilter = "all" | ClientTier;
@@ -71,11 +90,16 @@ export function ClientsView() {
   const [search, setSearch] = useState("");
   const [tierFilter, setTierFilter] = useState<TierFilter>("all");
 
-  // Dialog de création
+  // Dialog de création / modification
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState<ClientForm>(EMPTY_FORM);
   const [submitting, setSubmitting] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
+
+  // Confirmation de suppression
+  const [deleteTarget, setDeleteTarget] = useState<Client | null>(null);
+  const [deleting, setDeleting] = useState(false);
 
   const loadClients = useCallback(async () => {
     try {
@@ -114,8 +138,22 @@ export function ClientsView() {
     setTierFilter(value as TierFilter);
   }
 
-  function openDialog() {
+  function openCreateDialog() {
+    setEditingId(null);
     setForm(EMPTY_FORM);
+    setFormError(null);
+    setDialogOpen(true);
+  }
+
+  function openEditDialog(client: Client) {
+    setEditingId(client.id);
+    setForm({
+      nom: client.nom,
+      entreprise: client.entreprise,
+      email: client.email,
+      telephone: client.telephone,
+      tier: client.tier,
+    });
     setFormError(null);
     setDialogOpen(true);
   }
@@ -136,26 +174,55 @@ export function ClientsView() {
     setSubmitting(true);
     setFormError(null);
     try {
+      const isEdit = editingId !== null;
       const res = await fetch("/api/clients", {
-        method: "POST",
+        method: isEdit ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify(isEdit ? { ...form, id: editingId } : form),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        setFormError(data?.error || "Création impossible.");
+        setFormError(data?.error || "Enregistrement impossible.");
         return;
       }
       setDialogOpen(false);
       await loadClients();
       toast({
-        title: "Client créé",
-        description: `${data.client.nom} (${data.client.entreprise}) a été ajouté.`,
+        title: isEdit ? "Client modifié" : "Client créé",
+        description: isEdit
+          ? `${data.client.nom} a été mis à jour.`
+          : `${data.client.nom} (${data.client.entreprise}) a été ajouté.`,
       });
     } catch {
       setFormError("Erreur réseau. Réessayez.");
     } finally {
       setSubmitting(false);
+    }
+  }
+
+  async function handleDelete() {
+    if (!deleteTarget) return;
+    setDeleting(true);
+    try {
+      const res = await fetch(
+        `/api/clients?id=${encodeURIComponent(deleteTarget.id)}`,
+        { method: "DELETE" }
+      );
+      if (!res.ok) throw new Error();
+      await loadClients();
+      toast({
+        title: "Client supprimé",
+        description: `${deleteTarget.nom} (${deleteTarget.entreprise}) a été supprimé.`,
+      });
+      setDeleteTarget(null);
+    } catch {
+      toast({
+        title: "Erreur",
+        description: "Suppression impossible.",
+        variant: "destructive",
+      });
+    } finally {
+      setDeleting(false);
     }
   }
 
@@ -170,7 +237,7 @@ export function ClientsView() {
           </Badge>
         </div>
 
-        <Button onClick={openDialog}>
+        <Button onClick={openCreateDialog}>
           <Plus className="mr-2 h-4 w-4" />
           Nouveau client
         </Button>
@@ -216,16 +283,45 @@ export function ClientsView() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredClients.map((client) => (
-            <Card key={client.id} className="overflow-hidden">
-              {/* Top: Avatar + Tier Badge */}
+            <Card key={client.id} className="overflow-hidden group">
+              {/* Top: Avatar + Tier Badge + Actions */}
               <CardHeader className="pb-0">
                 <div className="flex items-start justify-between">
                   <div className="flex h-10 w-10 items-center justify-center rounded-full bg-sapphire/10 text-sapphire font-semibold text-lg">
                     {client.nom.charAt(0)}
                   </div>
-                  <Badge variant="secondary" className={TIER_COLORS[client.tier]}>
-                    {TIER_LABELS[client.tier]}
-                  </Badge>
+                  <div className="flex items-center gap-1">
+                    <Badge variant="secondary" className={TIER_COLORS[client.tier]}>
+                      {TIER_LABELS[client.tier]}
+                    </Badge>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                        >
+                          <MoreHorizontal className="h-4 w-4" />
+                          <span className="sr-only">Actions</span>
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                          onClick={() => openEditDialog(client)}
+                        >
+                          <Pencil className="mr-2 h-4 w-4" />
+                          Modifier
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          className="text-destructive focus:text-destructive"
+                          onClick={() => setDeleteTarget(client)}
+                        >
+                          <Trash2 className="mr-2 h-4 w-4" />
+                          Supprimer
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
                 </div>
               </CardHeader>
 
@@ -270,13 +366,17 @@ export function ClientsView() {
         </div>
       )}
 
-      {/* Dialog : Nouveau client */}
+      {/* Dialog : Nouveau / Modifier client */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Nouveau client</DialogTitle>
+            <DialogTitle>
+              {editingId ? "Modifier le client" : "Nouveau client"}
+            </DialogTitle>
             <DialogDescription>
-              Ajoutez un nouveau client à votre portefeuille.
+              {editingId
+                ? "Mettez à jour les informations du client."
+                : "Ajoutez un nouveau client à votre portefeuille."}
             </DialogDescription>
           </DialogHeader>
 
@@ -287,7 +387,7 @@ export function ClientsView() {
                 id="client-nom"
                 value={form.nom}
                 onChange={(e) => setField("nom", e.target.value)}
-                placeholder="Ex : Mohammed Alami"
+                placeholder="Ex : Awa Ndiaye"
                 disabled={submitting}
               />
             </div>
@@ -298,7 +398,7 @@ export function ClientsView() {
                 id="client-entreprise"
                 value={form.entreprise}
                 onChange={(e) => setField("entreprise", e.target.value)}
-                placeholder="Ex : Maroc Telecom"
+                placeholder="Ex : Sonatel"
                 disabled={submitting}
               />
             </div>
@@ -310,7 +410,7 @@ export function ClientsView() {
                 type="email"
                 value={form.email}
                 onChange={(e) => setField("email", e.target.value)}
-                placeholder="contact@entreprise.ma"
+                placeholder="contact@entreprise.sn"
                 disabled={submitting}
               />
             </div>
@@ -321,7 +421,7 @@ export function ClientsView() {
                 id="client-tel"
                 value={form.telephone}
                 onChange={(e) => setField("telephone", e.target.value)}
-                placeholder="+212 5 22 00 00 00"
+                placeholder="+221 70 000 00 00"
                 disabled={submitting}
               />
             </div>
@@ -363,8 +463,10 @@ export function ClientsView() {
               {submitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Création...
+                  {editingId ? "Modification..." : "Création..."}
                 </>
+              ) : editingId ? (
+                "Enregistrer"
               ) : (
                 "Créer le client"
               )}
@@ -372,6 +474,42 @@ export function ClientsView() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Confirmation de suppression */}
+      <AlertDialog
+        open={deleteTarget !== null}
+        onOpenChange={(open) => !open && setDeleteTarget(null)}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Supprimer ce client ?</AlertDialogTitle>
+            <AlertDialogDescription>
+              {deleteTarget &&
+                `${deleteTarget.nom} (${deleteTarget.entreprise}) sera définitivement supprimé. Cette action est irréversible.`}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={deleting}>Annuler</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={(e) => {
+                e.preventDefault();
+                handleDelete();
+              }}
+              disabled={deleting}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {deleting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Suppression...
+                </>
+              ) : (
+                "Supprimer"
+              )}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Card>
   );
 }

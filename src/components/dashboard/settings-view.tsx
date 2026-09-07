@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Search, Bell, BellOff } from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
@@ -31,6 +32,12 @@ interface SettingsForm {
   currency: string;
   language: string;
   emailNotifications: boolean;
+  seoTitle: string;
+  seoDescription: string;
+  seoKeywords: string;
+  notifyContactMessages: boolean;
+  notifyNewMember: boolean;
+  notifyNewProject: boolean;
 }
 
 const DEFAULTS: SettingsForm = {
@@ -42,6 +49,15 @@ const DEFAULTS: SettingsForm = {
   currency: 'XOF',
   language: 'Français',
   emailNotifications: true,
+  seoTitle:
+    'SAPHIR COM SEN — Agence de communication 360° à Dakar',
+  seoDescription:
+    'Agence de communication 360° à Dakar : branding, marketing digital, production audiovisuelle, événementiel et création de sites web.',
+  seoKeywords:
+    'agence communication Dakar, communication 360 Sénégal, branding, marketing digital, production audiovisuelle, événementiel',
+  notifyContactMessages: true,
+  notifyNewMember: true,
+  notifyNewProject: true,
 };
 
 export function SettingsView() {
@@ -75,6 +91,13 @@ export function SettingsView() {
   }, [loadSettings]);
 
   function setField<K extends keyof SettingsForm>(key: K, value: string) {
+    setForm((prev) => ({ ...prev, [key]: value }));
+  }
+
+  function setBoolField<K extends keyof SettingsForm>(
+    key: K,
+    value: boolean
+  ) {
     setForm((prev) => ({ ...prev, [key]: value }));
   }
 
@@ -135,7 +158,7 @@ export function SettingsView() {
       <div>
         <h2 className="text-2xl font-bold tracking-tight">Paramètres</h2>
         <p className="text-sm text-muted-foreground">
-          Gérez les informations et les préférences de votre agence.
+          Gérez les informations, le SEO et les notifications de votre agence.
         </p>
       </div>
 
@@ -201,6 +224,60 @@ export function SettingsView() {
 
       <Card>
         <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Search className="w-4 h-4 text-gold" />
+            Référencement (SEO)
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <fieldset className="space-y-4" disabled={loading}>
+            <legend className="sr-only">Paramètres SEO</legend>
+
+            <div className="space-y-2">
+              <Label htmlFor="seo-title">Titre SEO</Label>
+              <Input
+                id="seo-title"
+                value={form.seoTitle}
+                onChange={(e) => setField('seoTitle', e.target.value)}
+                placeholder="Titre affiché dans les résultats Google"
+              />
+              <p className="text-xs text-muted-foreground">
+                {form.seoTitle.length}/60 caractères recommandés
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="seo-description">Description SEO</Label>
+              <Textarea
+                id="seo-description"
+                value={form.seoDescription}
+                onChange={(e) => setField('seoDescription', e.target.value)}
+                placeholder="Description affichée sous le titre dans Google"
+                rows={3}
+              />
+              <p className="text-xs text-muted-foreground">
+                {form.seoDescription.length}/160 caractères recommandés
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="seo-keywords">Mots-clés</Label>
+              <Input
+                id="seo-keywords"
+                value={form.seoKeywords}
+                onChange={(e) => setField('seoKeywords', e.target.value)}
+                placeholder="Mots-clés séparés par des virgules"
+              />
+              <p className="text-xs text-muted-foreground">
+                Séparez les mots-clés par des virgules.
+              </p>
+            </div>
+          </fieldset>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
           <CardTitle>Préférences</CardTitle>
         </CardHeader>
         <CardContent>
@@ -239,24 +316,106 @@ export function SettingsView() {
                   </SelectContent>
                 </Select>
               </div>
+            </div>
+          </fieldset>
+        </CardContent>
+      </Card>
 
-              <div className="flex items-center justify-between rounded-lg border p-4">
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            {form.emailNotifications ? (
+              <Bell className="w-4 h-4 text-gold" />
+            ) : (
+              <BellOff className="w-4 h-4 text-muted-foreground" />
+            )}
+            Notifications par email
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <fieldset className="space-y-4" disabled={loading}>
+            <legend className="sr-only">Notifications</legend>
+
+            {/* Interrupteur principal */}
+            <div className="flex items-center justify-between rounded-lg border p-4">
+              <div className="space-y-0.5">
+                <Label htmlFor="email-notifications">
+                  Activer les notifications
+                </Label>
+                <p className="text-sm text-muted-foreground">
+                  Recevez des alertes par email (envoyées à{' '}
+                  <span className="font-medium">{form.email}</span>).
+                </p>
+              </div>
+              <Switch
+                id="email-notifications"
+                checked={form.emailNotifications}
+                onCheckedChange={(checked) =>
+                  setBoolField('emailNotifications', checked)
+                }
+              />
+            </div>
+
+            {/* Préférences détaillées */}
+            <div
+              className={`space-y-3 rounded-lg border p-4 transition-opacity ${
+                form.emailNotifications ? '' : 'opacity-50 pointer-events-none'
+              }`}
+            >
+              <p className="text-sm font-medium">Me notifier par email :</p>
+
+              <div className="flex items-center justify-between gap-4">
                 <div className="space-y-0.5">
-                  <Label htmlFor="email-notifications">
-                    Notifications par email
+                  <Label htmlFor="notify-contact">
+                    Messages du formulaire de contact
                   </Label>
-                  <p className="text-sm text-muted-foreground">
-                    Recevez les alertes et mises à jour par email.
+                  <p className="text-xs text-muted-foreground">
+                    Un email à chaque nouveau message envoyé depuis le site.
                   </p>
                 </div>
                 <Switch
-                  id="email-notifications"
-                  checked={form.emailNotifications}
+                  id="notify-contact"
+                  checked={form.notifyContactMessages}
                   onCheckedChange={(checked) =>
-                    setForm((prev) => ({
-                      ...prev,
-                      emailNotifications: checked,
-                    }))
+                    setBoolField('notifyContactMessages', checked)
+                  }
+                />
+              </div>
+
+              <Separator />
+
+              <div className="flex items-center justify-between gap-4">
+                <div className="space-y-0.5">
+                  <Label htmlFor="notify-member">
+                    Nouveaux membres de l'équipe
+                  </Label>
+                  <p className="text-xs text-muted-foreground">
+                    Un email quand un membre est ajouté à l'équipe.
+                  </p>
+                </div>
+                <Switch
+                  id="notify-member"
+                  checked={form.notifyNewMember}
+                  onCheckedChange={(checked) =>
+                    setBoolField('notifyNewMember', checked)
+                  }
+                />
+              </div>
+
+              <Separator />
+
+              <div className="flex items-center justify-between gap-4">
+                <div className="space-y-0.5">
+                  <Label htmlFor="notify-project">Nouveaux projets</Label>
+                  <p className="text-xs text-muted-foreground">
+                    Un email quand un projet est créé dans le dashboard.
+                  </p>
+                </div>
+                <Switch
+                  id="notify-project"
+                  checked={form.notifyNewProject}
+                  onCheckedChange={(checked) =>
+                    setBoolField('notifyNewProject', checked)
                   }
                 />
               </div>

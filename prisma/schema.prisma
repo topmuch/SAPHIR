@@ -72,5 +72,16 @@ model Setting {
   currency           String   @default("XOF")
   language           String   @default("Français")
   emailNotifications Boolean  @default(true)
+
+  // SEO
+  seoTitle           String   @default("SAPHIR COM SEN — Agence de communication 360° à Dakar")
+  seoDescription     String   @default("Agence de communication 360° à Dakar : branding, marketing digital, production audiovisuelle, événementiel et création de sites web.")
+  seoKeywords        String   @default("agence communication Dakar, communication 360 Sénégal, branding, marketing digital, production audiovisuelle, événementiel")
+
+  // Notifications (envoi d'alertes email à l'admin)
+  notifyContactMessages Boolean @default(true)
+  notifyNewMember       Boolean @default(true)
+  notifyNewProject      Boolean @default(true)
+
   updatedAt          DateTime @updatedAt
 }

@@ -42,11 +42,23 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 import {
+  Calendar,
+  User,
   Plus,
   MoreHorizontal,
   Eye,
@@ -112,11 +124,19 @@ export function ProjectsView() {
   const [statusFilter, setStatusFilter] = useState<"all" | ProjectStatus>("all");
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Dialog de création
+  // Dialog de création / modification
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState<ProjectForm>(EMPTY_FORM);
   const [submitting, setSubmitting] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
+
+  // Dialog de consultation
+  const [viewingProject, setViewingProject] = useState<Project | null>(null);
+
+  // Confirmation de suppression
+  const [deleteTarget, setDeleteTarget] = useState<Project | null>(null);
+  const [deleting, setDeleting] = useState(false);
 
   const loadProjects = useCallback(async () => {
     try {
@@ -161,7 +181,25 @@ export function ProjectsView() {
   }
 
   function openDialog() {
+    setEditingId(null);
     setForm(EMPTY_FORM);
+    setFormError(null);
+    setDialogOpen(true);
+  }
+
+  function openEditDialog(project: Project) {
+    setEditingId(project.id);
+    setForm({
+      nom: project.nom,
+      client: project.client,
+      departement: project.departement,
+      statut: project.statut,
+      budget: String(project.budget),
+      progression: String(project.progression),
+      dateDebut: project.dateDebut ? project.dateDebut.slice(0, 10) : "",
+      dateEcheance: project.dateEcheance ? project.dateEcheance.slice(0, 10) : "",
+      responsable: project.responsable ?? "",
+    });
     setFormError(null);
     setDialogOpen(true);
   }
@@ -178,10 +216,12 @@ export function ProjectsView() {
     setSubmitting(true);
     setFormError(null);
     try {
+      const isEdit = editingId !== null;
       const res = await fetch("/api/projects", {
-        method: "POST",
+        method: isEdit ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          ...(isEdit ? { id: editingId } : {}),
           ...form,
           budget: form.budget ? Number(form.budget) : 0,
           progression: form.progression ? Number(form.progression) : 0,
@@ -189,14 +229,16 @@ export function ProjectsView() {
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        setFormError(data?.error || "Création impossible.");
+        setFormError(data?.error || "Enregistrement impossible.");
         return;
       }
       setDialogOpen(false);
       await loadProjects();
       toast({
-        title: "Projet créé",
-        description: `${data.project.nom} (${data.project.id}) a été ajouté.`,
+        title: isEdit ? "Projet modifié" : "Projet créé",
+        description: isEdit
+          ? `${data.project.nom} (${data.project.id}) a été mis à jour.`
+          : `${data.project.nom} (${data.project.id}) a été ajouté.`,
       });
     } catch {
       setFormError("Erreur réseau. Réessayez.");
@@ -205,23 +247,29 @@ export function ProjectsView() {
     }
   }
 
-  async function handleDelete(reference: string, nom: string) {
+  async function handleDelete() {
+    if (!deleteTarget) return;
+    setDeleting(true);
     try {
-      const res = await fetch(`/api/projects?id=${encodeURIComponent(reference)}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `/api/projects?id=${encodeURIComponent(deleteTarget.id)}`,
+        { method: "DELETE" }
+      );
       if (!res.ok) throw new Error();
       await loadProjects();
       toast({
         title: "Projet supprimé",
-        description: `${nom} (${reference}) a été supprimé.`,
+        description: `${deleteTarget.nom} (${deleteTarget.id}) a été supprimé.`,
       });
+      setDeleteTarget(null);
     } catch {
       toast({
         title: "Erreur",
         description: "Suppression impossible.",
         variant: "destructive",
       });
+    } finally {
+      setDeleting(false);
     }
   }
 
@@ -322,17 +370,21 @@ export function ProjectsView() {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={() => setViewingProject(project)}
+                        >
                           <Eye className="mr-2 h-4 w-4" />
                           Voir
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={() => openEditDialog(project)}
+                        >
                           <Pencil className="mr-2 h-4 w-4" />
                           Modifier
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           className="text-destructive focus:text-destructive"
-                          onClick={() => handleDelete(project.id, project.nom)}
+                          onClick={() => setDeleteTarget(project)}
                         >
                           <Trash2 className="mr-2 h-4 w-4" />
                           Supprimer
@@ -376,14 +428,17 @@ export function ProjectsView() {
         </div>
       </div>
 
-      {/* Dialog : Nouveau projet */}
+      {/* Dialog : Nouveau / Modifier projet */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Nouveau projet</DialogTitle>
+            <DialogTitle>
+              {editingId ? `Modifier ${editingId}` : "Nouveau projet"}
+            </DialogTitle>
             <DialogDescription>
-              Renseignez les informations du projet. La référence est générée
-              automatiquement.
+              {editingId
+                ? "Mettez à jour les informations du projet."
+                : "Renseignez les informations du projet. La référence est générée automatiquement."}
             </DialogDescription>
           </DialogHeader>
 
@@ -537,8 +592,10 @@ export function ProjectsView() {
               {submitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Création...
+                  {editingId ? "Modification..." : "Création..."}
                 </>
+              ) : editingId ? (
+                "Enregistrer"
               ) : (
                 "Créer le projet"
               )}
@@ -546,6 +603,179 @@ export function ProjectsView() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Dialog : Voir un projet */}
+      <Dialog
+        open={viewingProject !== null}
+        onOpenChange={(open) => !open && setViewingProject(null)}
+      >
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <span className="font-mono text-sm text-muted-foreground">
+                {viewingProject?.id}
+              </span>
+              {viewingProject?.nom}
+            </DialogTitle>
+            <DialogDescription>Fiche détaillée du projet.</DialogDescription>
+          </DialogHeader>
+
+          {viewingProject && (
+            <div className="space-y-4 py-1">
+              <div className="grid grid-cols-2 gap-3">
+                <div className="rounded-lg border p-3">
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">
+                    Client
+                  </p>
+                  <p className="text-sm font-medium">{viewingProject.client}</p>
+                </div>
+                <div className="rounded-lg border p-3">
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">
+                    Département
+                  </p>
+                  <p className="text-sm font-medium">
+                    {viewingProject.departement}
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="rounded-lg border p-3">
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">
+                    Statut
+                  </p>
+                  <Badge
+                    variant="secondary"
+                    className={STATUS_COLORS[viewingProject.statut]}
+                  >
+                    {STATUS_LABELS[viewingProject.statut]}
+                  </Badge>
+                </div>
+                <div className="rounded-lg border p-3">
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">
+                    Budget
+                  </p>
+                  <p className="text-sm font-medium">
+                    {formatCurrency(viewingProject.budget)}
+                  </p>
+                </div>
+              </div>
+
+              <div className="rounded-lg border p-3">
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider">
+                    Progression
+                  </p>
+                  <span className="text-sm font-medium">
+                    {viewingProject.progression}%
+                  </span>
+                </div>
+                <Progress value={viewingProject.progression} className="h-2" />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="rounded-lg border p-3 flex items-start gap-2">
+                  <Calendar className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider">
+                      Début
+                    </p>
+                    <p className="text-sm font-medium">
+                      {viewingProject.dateDebut
+                        ? new Date(viewingProject.dateDebut).toLocaleDateString(
+                            "fr-FR"
+                          )
+                        : "—"}
+                    </p>
+                  </div>
+                </div>
+                <div className="rounded-lg border p-3 flex items-start gap-2">
+                  <Calendar className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider">
+                      Échéance
+                    </p>
+                    <p className="text-sm font-medium">
+                      {viewingProject.dateEcheance
+                        ? new Date(
+                            viewingProject.dateEcheance
+                          ).toLocaleDateString("fr-FR")
+                        : "—"}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-lg border p-3 flex items-start gap-2">
+                <User className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider">
+                    Responsable
+                  </p>
+                  <p className="text-sm font-medium">
+                    {viewingProject.responsable || "Non assigné"}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setViewingProject(null)}
+            >
+              Fermer
+            </Button>
+            <Button
+              onClick={() => {
+                const p = viewingProject;
+                setViewingProject(null);
+                if (p) openEditDialog(p);
+              }}
+            >
+              <Pencil className="mr-2 h-4 w-4" />
+              Modifier
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Confirmation de suppression */}
+      <AlertDialog
+        open={deleteTarget !== null}
+        onOpenChange={(open) => !open && setDeleteTarget(null)}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Supprimer ce projet ?</AlertDialogTitle>
+            <AlertDialogDescription>
+              {deleteTarget &&
+                `${deleteTarget.nom} (${deleteTarget.id}) sera définitivement supprimé. Cette action est irréversible.`}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={deleting}>Annuler</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={(e) => {
+                e.preventDefault();
+                handleDelete();
+              }}
+              disabled={deleting}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {deleting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Suppression...
+                </>
+              ) : (
+                "Supprimer"
+              )}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Card>
   );
 }

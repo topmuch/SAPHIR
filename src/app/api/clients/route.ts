@@ -80,3 +80,71 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+export async function PUT(request: NextRequest) {
+  const user = await getSessionUser();
+  if (!user) {
+    return NextResponse.json({ error: "Non authentifié." }, { status: 401 });
+  }
+
+  try {
+    const body = await request.json().catch(() => null);
+
+    const id = typeof body?.id === "string" ? body.id.trim() : "";
+    const nom = typeof body?.nom === "string" ? body.nom.trim() : "";
+    const entreprise =
+      typeof body?.entreprise === "string" ? body.entreprise.trim() : "";
+    const email = typeof body?.email === "string" ? body.email.trim() : "";
+
+    if (!id || !nom || !entreprise || !email) {
+      return NextResponse.json(
+        { error: "Identifiant, nom, entreprise et email sont obligatoires." },
+        { status: 400 }
+      );
+    }
+
+    const telephone =
+      typeof body?.telephone === "string" ? body.telephone.trim() : "";
+    const tier = TIERS.includes(body?.tier) ? body.tier : "nouveau";
+
+    const updated = await db.client.update({
+      where: { id },
+      data: { nom, entreprise, email, telephone, tier },
+    });
+
+    return NextResponse.json({ client: serializeClient(updated) });
+  } catch (error: {
+    code?: string;
+    message?: string;
+  } & unknown) {
+    if (error?.code === "P2025") {
+      return NextResponse.json({ error: "Client introuvable." }, { status: 404 });
+    }
+    console.error("[clients:PUT]", error);
+    return NextResponse.json(
+      { error: "Erreur serveur lors de la modification du client." },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(request: NextRequest) {
+  const user = await getSessionUser();
+  if (!user) {
+    return NextResponse.json({ error: "Non authentifié." }, { status: 401 });
+  }
+
+  const id = request.nextUrl.searchParams.get("id");
+  if (!id) {
+    return NextResponse.json(
+      { error: "Identifiant du client requis." },
+      { status: 400 }
+    );
+  }
+
+  const deleted = await db.client.deleteMany({ where: { id } });
+  if (deleted.count === 0) {
+    return NextResponse.json({ error: "Client introuvable." }, { status: 404 });
+  }
+  return NextResponse.json({ success: true });
+}
