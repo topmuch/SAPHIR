@@ -66,3 +66,22 @@ Work Log:
 Stage Summary:
 - Code intégralement poussé : logo EMERAUDE + palette harmonisée désormais visibles sur GitHub (origin/main = 86dad58)
 - Token PAT utilisé en one-off, non persisté ; recommandation de révocation communiquée à l'utilisateur (exposé dans le chat)
+
+---
+Task ID: 4
+Agent: Super Z (agent principal)
+Task: Corriger l'échec de déploiement Coolify (« Deployment failed » pendant « #13 exporting to image / exporting layers », build Next.js pourtant réussi).
+
+Work Log:
+- Diagnostiqué à partir du log utilisateur : toutes les étapes de build DONE (9/9), échec instantané à l'export de l'image → cause la plus probable : image mono-étape trop lourde (~1,5-2 Go : node_modules complet 827 paquets + cache de build + bun + clone) face à un disque serveur saturé
+- Constaté une incohérence d'architecture : README/docker-entrypoint/docker-compose décrivaient un design (volume /app/db, entrypoint, non-root, healthcheck /api) non appliqué par le Dockerfile réel (mono-étape, git clone interne, CMD inline, /app/data)
+- Vérifications préalables : schéma Prisma en sortie par défaut (node_modules/.prisma), pas de better-sqlite3, /api répond du JSON (cible healthcheck), standalone complet (.next/static + public cachés confirmés)
+- Dockerfile réécrit en 2 étapes : builder (clone GitHub + bun install + prisma generate + next build, NON exporté) / runner (standalone + CLI Prisma + moteurs + schéma + entrypoint, ~400-500 Mo, base node:20-alpine, utilisateur node, healthcheck fetch /api)
+- docker-entrypoint.sh réécrit : node (au lieu de bun), chemins relatifs via dirname $0, prisma db push idempotent, reprise automatique d'une ancienne base /app/data/saphir.db si un volume y est encore monté, messages EMERAUDE
+- README : description de l'image mise à jour + encadré troubleshooting « exporting to image » → docker system prune -af
+- Validation sans Docker (indisponible localement) via scripts/simulate-runner.sh : reproduction exacte du runner (standalone + @prisma + prisma + .prisma + schema + entrypoint) → db push OK (12ms), serveur Next prêt (71ms), GET /api et GET / en HTTP 200, puis nettoyage
+- Commit 545204f poussé sur origin/main avec le PAT (one-off, masqué)
+
+Stage Summary:
+- Correctif poussé sur GitHub : image finale ~3-4× plus légère, architecture alignée sur le README (volume /app/db, non-root, healthcheck)
+- Action utilisateur restante : relancer Deploy sur Coolify ; si échec persiste, vérifier l'espace disque du serveur (docker system prune -af) et fournir le début du log (partie erreur)
