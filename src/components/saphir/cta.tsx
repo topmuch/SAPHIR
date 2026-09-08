@@ -21,12 +21,12 @@ export function CTASection() {
 
       <div className="relative max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <FadeIn>
-          <div className="w-20 h-20 rounded-2xl bg-white shadow-xl mx-auto mb-6 flex items-center justify-center p-1.5 animate-float">
+          <div className="w-24 h-24 rounded-2xl bg-white shadow-xl mx-auto mb-6 flex items-center justify-center p-1.5 animate-float">
             <Image
               src="/images/logo-mark.png"
               alt="EMERAUDE COM"
-              width={96}
-              height={96}
+              width={112}
+              height={112}
               className="w-full h-full object-contain"
             />
           </div>
@@ -54,9 +54,9 @@ export function CTASection() {
                     <Image
                       src="/images/logo-mark.png"
                       alt="EMERAUDE"
-                      width={20}
-                      height={20}
-                      className="w-5 h-5 object-contain"
+                      width={24}
+                      height={24}
+                      className="w-6 h-6 object-contain"
                     />{" "}Contactez-nous
                   </DialogTitle>
                 </DialogHeader>

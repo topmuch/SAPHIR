@@ -25,12 +25,12 @@ export function Footer() {
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
             <a href="#hero" className="flex items-center gap-3 mb-4">
-              <div className="w-14 h-14 rounded-xl bg-white shadow-md flex items-center justify-center p-1.5">
+              <div className="w-16 h-16 rounded-xl bg-white shadow-md flex items-center justify-center p-1.5">
                 <Image
                   src="/images/logo-mark.png"
                   alt="EMERAUDE COM"
-                  width={64}
-                  height={64}
+                  width={80}
+                  height={80}
                   className="w-full h-full object-contain"
                 />
               </div>

@@ -107,12 +107,12 @@ export default function AdminPage() {
   if (authStatus === "loading") {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-background gap-4">
-        <div className="w-12 h-12 rounded-xl bg-white shadow-md flex items-center justify-center p-1">
+        <div className="w-16 h-16 rounded-xl bg-white shadow-md flex items-center justify-center p-1">
           <Image
             src="/images/logo-mark.png"
             alt="EMERAUDE COM"
-            width={56}
-            height={56}
+            width={64}
+            height={64}
             className="w-full h-full object-contain animate-pulse"
           />
         </div>

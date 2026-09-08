@@ -63,12 +63,12 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
         <div className="absolute -bottom-32 -left-16 w-96 h-96 rounded-full bg-white/5 blur-3xl" />
 
         <div className="relative flex items-center gap-3">
-          <div className="w-14 h-14 rounded-xl bg-white shadow-lg flex items-center justify-center p-1.5">
+          <div className="w-16 h-16 rounded-xl bg-white shadow-lg flex items-center justify-center p-1.5">
             <Image
               src="/images/logo-mark.png"
               alt="EMERAUDE COM"
-              width={72}
-              height={72}
+              width={80}
+              height={80}
               className="w-full h-full object-contain"
               priority
             />
@@ -113,12 +113,12 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
           className="w-full max-w-sm"
         >
           <div className="flex lg:hidden items-center gap-2.5 mb-8 justify-center">
-            <div className="w-10 h-10 rounded-lg bg-white shadow-sm flex items-center justify-center p-1 dark:shadow-md dark:shadow-black/20">
+            <div className="w-12 h-12 rounded-lg bg-white shadow-sm flex items-center justify-center p-1 dark:shadow-md dark:shadow-black/20">
               <Image
                 src="/images/logo-mark.png"
                 alt="EMERAUDE COM"
-                width={48}
-                height={48}
+                width={56}
+                height={56}
                 className="w-full h-full object-contain"
               />
             </div>

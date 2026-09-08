@@ -34,7 +34,7 @@ interface FormState {
 const EMPTY_FORM: FormState = { name: "", email: "", service: "", content: "" };
 
 const INPUT_CLASS =
-  "bg-white/10 border-white/20 text-white placeholder:text-white/55 focus:border-gold/60";
+  "bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:border-gold/50";
 const LABEL_CLASS = "text-xs font-medium text-white/70 mb-1 block";
 
 export function Hero() {
@@ -111,22 +111,14 @@ export function Hero() {
       id="hero"
       className="relative min-h-[90vh] flex items-center overflow-hidden"
     >
-      {/* Fond dégradé aux couleurs du logo (bleu royal → indigo) */}
-      <div className="absolute inset-0 bg-sapphire-radial" />
-      {/* Filigrane diamant (rappel du logo EMERAUDE) */}
+      {/* Full-bleed background image */}
       <div
-        className="absolute inset-0 bg-no-repeat opacity-40"
-        style={{
-          backgroundImage: "url('/diamond-watermark.svg')",
-          backgroundSize: "42%",
-          backgroundPosition: "78% 42%",
-        }}
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('/hero-wide.png')" }}
       />
-      {/* Lueur bleu ciel en haut à droite */}
-      <div className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full bg-gold/10 blur-3xl" />
 
-      {/* Voile dégradé pour la lisibilité du texte à gauche */}
-      <div className="absolute inset-0 bg-gradient-to-r from-sapphire-dark/95 via-sapphire-dark/60 to-transparent" />
+      {/* Dark gradient overlay on left side for text readability */}
+      <div className="absolute inset-0 bg-gradient-to-r from-sapphire-dark/90 via-sapphire-dark/50 to-transparent" />
 
       <div className="relative z-10 w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-20">
         {/* LEFT SIDE: Text content */}

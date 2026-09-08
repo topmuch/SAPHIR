@@ -69,12 +69,12 @@ export function DashboardSidebar({
         {/* Header / Logo */}
         <div className="flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-lg bg-white shadow-md flex items-center justify-center p-1">
+            <div className="w-12 h-12 rounded-lg bg-white shadow-md flex items-center justify-center p-1">
               <Image
                 src="/images/logo-mark.png"
                 alt="EMERAUDE COM"
-                width={48}
-                height={48}
+                width={56}
+                height={56}
                 className="w-full h-full object-contain"
               />
             </div>

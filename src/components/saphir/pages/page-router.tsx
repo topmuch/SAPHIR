@@ -101,12 +101,12 @@ function Navbar({
             onClick={() => navigate("accueil")}
             className="flex items-center gap-3"
           >
-            <div className="w-10 h-10 rounded-lg bg-white shadow-sm dark:shadow-md dark:shadow-black/20 flex items-center justify-center p-1">
+            <div className="w-12 h-12 md:w-14 md:h-14 rounded-lg bg-white shadow-sm dark:shadow-md dark:shadow-black/20 flex items-center justify-center p-1">
               <Image
                 src="/images/logo-mark.png"
                 alt="EMERAUDE COM"
-                width={48}
-                height={48}
+                width={64}
+                height={64}
                 className="w-full h-full object-contain"
               />
             </div>
@@ -217,12 +217,12 @@ function SiteFooter({
               onClick={() => onNavigate("accueil")}
               className="flex items-center gap-3 mb-4"
             >
-              <div className="w-12 h-12 rounded-xl bg-white shadow-md flex items-center justify-center p-1">
+              <div className="w-16 h-16 rounded-xl bg-white shadow-md flex items-center justify-center p-1">
                 <Image
                   src="/images/logo-mark.png"
                   alt="EMERAUDE COM"
-                  width={56}
-                  height={56}
+                  width={80}
+                  height={80}
                   className="w-full h-full object-contain"
                 />
               </div>
