@@ -65,7 +65,9 @@ toutes persistées en base SQLite.
 
 ## Déploiement sur Coolify
 
-Le projet est prêt pour Coolify via un **Dockerfile** (build pack Docker), déjà présent à la racine du repo. L'image finale est basée sur `oven/bun:1`, exécute le serveur Next.js standalone en utilisateur non-root, initialise la base SQLite au démarrage et expose un healthcheck sur `/api`.
+Le projet est prêt pour Coolify via un **Dockerfile** (build pack Docker), déjà présent à la racine du repo. Le build est **multi-étapes** : l'étape de construction (clone du dépôt, `bun install`, `next build`) n'est pas exportée, ce qui garde l'image finale légère (~400-500 Mo au lieu de ~1,5-2 Go) et réduit fortement la pression disque du serveur au moment de l'export. L'image finale est basée sur `node:20-alpine`, exécute le serveur Next.js standalone en utilisateur non-root (`node`), applique le schéma SQLite au démarrage via `prisma db push` et expose un healthcheck sur `/api`.
+
+> **Si le déploiement échoue pendant « exporting to image »** : c'est presque toujours un manque d'espace disque sur le serveur Coolify (images des déploiements précédents accumulées). Nettoyez avec `docker system prune -af` (ou via le terminal du serveur dans Coolify), puis relancez **Deploy**.
 
 ### 1. Pousser le repo sur GitHub
 
