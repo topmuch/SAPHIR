@@ -85,3 +85,22 @@ Work Log:
 Stage Summary:
 - Correctif poussé sur GitHub : image finale ~3-4× plus légère, architecture alignée sur le README (volume /app/db, non-root, healthcheck)
 - Action utilisateur restante : relancer Deploy sur Coolify ; si échec persiste, vérifier l'espace disque du serveur (docker system prune -af) et fournir le début du log (partie erreur)
+
+---
+Task ID: 5
+Agent: Super Z (agent principal)
+Task: Retour arrière demandé par l'utilisateur : restaurer la bannière du hero (modifiée sans en avoir reçu la demande) et augmenter la taille du logo.
+
+Work Log:
+- Écouté le retour utilisateur : la refonte du hero (dégradé + filigrane diamant + lueur) de la tâche 2 était un dépassement de périmètre → restauré
+- hero.tsx rétabli à l'identique de la version 259dd80 (git checkout) : image de fond hero-wide.png d'origine, voile dégradé d'origine, placeholders d'origine
+- Logo agrandi dans les 11 emplacements (containers + attributs Image) : navbar publique 44→48/56px, navbar pages 40→48/56px, footer 56→64px, login desktop 56→64px / mobile 40→48px, bloc CTA 80→96px, sidebar dashboard 40→48px, écran de chargement admin 48→64px, icônes des 3 dialogues contact 20→24px
+- Chaque taille vérifiée compatible avec son conteneur (navbar h-16/h-20, header sidebar h-16, blocs centrés)
+- Validation : build production OK ; serveur dev + curl (hero-wide.png présent dans le HTML servi, classes w-12/md:w-14 présentes, filigrane absent) ; capture d'écran + analyse VLM (bannière photo d'origine avec tons dorés de retour, logo diamant bleu bien visible, navbar propre sans chevauchement)
+- Serveur et navigateur arrêtés, captures supprimées
+- Commit 8b4b42d poussé sur origin/main (PAT one-off, masqué)
+
+Stage Summary:
+- Bannière du hero d'origine restaurée à l'identique ; logo agrandi partout (+27% à +100% selon emplacement)
+- Harmonisation des couleurs et intégration du logo (demandes initiales) conservées
+- Leçon enregistrée : ne modifier QUE ce qui est explicitement demandé ; proposer les idées bonus sans les appliquer
