@@ -48,3 +48,21 @@ Stage Summary:
 - Palette entièrement harmonisée aux bleus du diamant ; plus aucune teinte dorée/ambre
 - Les noms de tokens sapphire/gold sont conservés (compatibilité) mais rendent désormais les bleus du logo
 - Push GitHub toujours en attente de credentials (token PAT) — commit local prêt
+
+---
+Task ID: 3
+Agent: Super Z (agent principal)
+Task: Pousser le code local (tâche logo + harmonisation des couleurs) vers GitHub (https://github.com/topmuch/SAPHIR).
+
+Work Log:
+- Vérifié l'état : branche main en avance de 4 commits sur origin/main (259dd80), arbre propre, contenu des commits audité (aucun secret, pas de .env)
+- Tentative de push sans credential : refusé par GitHub (authentification HTTPS requise ; ni SSH, ni gh CLI, ni credential helper configurés)
+- Nettoyage d'historique amorcé (reformulation des 2 commits checkpoint UUID) mais abandonné : l'environnement rebascule automatiquement la branche — push effectué tel quel, sans réécriture
+- Push effectué avec le PAT fourni par l'utilisateur, via URL one-off en ligne de commande (token jamais écrit sur disque ni dans un fichier, masqué dans les sorties)
+- Résultat : fast-forward 259dd80 → 86dad58 publié sur origin/main (4 commits : source du logo, branding 8e131ae, worklog 1ca08cc, scripts 86dad58)
+- Vérification post-push : fetch + statut → local et origin/main parfaitement synchronisés (0/0)
+- Branches temporaires clean-main et backup-main supprimées
+
+Stage Summary:
+- Code intégralement poussé : logo EMERAUDE + palette harmonisée désormais visibles sur GitHub (origin/main = 86dad58)
+- Token PAT utilisé en one-off, non persisté ; recommandation de révocation communiquée à l'utilisateur (exposé dans le chat)
