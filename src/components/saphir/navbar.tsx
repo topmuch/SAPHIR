@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Gem, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import {
@@ -38,9 +39,16 @@ export function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
-          <a href="#hero" className="flex items-center gap-2 group">
-            <div className="w-9 h-9 rounded-lg bg-gold/20 flex items-center justify-center group-hover:bg-gold/30 transition-colors">
-              <Gem className="w-5 h-5 text-gold" />
+          <a href="#hero" className="flex items-center gap-3 group">
+            <div className="w-11 h-11 rounded-xl bg-white shadow-md shadow-black/20 flex items-center justify-center p-1.5 group-hover:shadow-lg group-hover:scale-105 transition-all duration-300">
+              <Image
+                src="/images/logo-mark.png"
+                alt="EMERAUDE COM"
+                width={64}
+                height={64}
+                className="w-full h-full object-contain"
+                priority
+              />
             </div>
             <span className="text-xl font-bold tracking-tight">
               <span className="text-white">EMERAUDE</span>{" "}
@@ -69,7 +77,13 @@ export function Navbar() {
               <DialogContent className="sm:max-w-md">
                 <DialogHeader>
                   <DialogTitle className="text-sapphire dark:text-gold-light flex items-center gap-2">
-                    <Gem className="w-5 h-5 text-gold" /> Contactez-nous
+                    <Image
+                      src="/images/logo-mark.png"
+                      alt="EMERAUDE"
+                      width={20}
+                      height={20}
+                      className="w-5 h-5 object-contain"
+                    />{" "}Contactez-nous
                   </DialogTitle>
                 </DialogHeader>
                 <ContactForm />
@@ -119,7 +133,13 @@ export function Navbar() {
                 <DialogContent className="sm:max-w-md">
                   <DialogHeader>
                     <DialogTitle className="text-sapphire flex items-center gap-2">
-                      <Gem className="w-5 h-5 text-gold" /> Contactez-nous
+                      <Image
+                        src="/images/logo-mark.png"
+                        alt="EMERAUDE"
+                        width={20}
+                        height={20}
+                        className="w-5 h-5 object-contain"
+                      />{" "}Contactez-nous
                     </DialogTitle>
                   </DialogHeader>
                   <ContactForm />

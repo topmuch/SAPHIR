@@ -41,12 +41,16 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --color-sapphire: #0F2557;
-  --color-sapphire-light: #1A3A7A;
-  --color-sapphire-dark: #081433;
-  --color-gold: #C9A84C;
-  --color-gold-light: #E2C97D;
-  --color-gold-dark: #A68A3A;
+  /* Palette harmonisée avec le logo EMERAUDE (diamant bleu) :
+     sapphire = bleu royal, sapphire-light = bleu vif, sapphire-dark = indigo profond,
+     gold = bleu ciel (accent), gold-light = lavande clair, gold-dark = cobalt.
+     Noms historiques conservés pour compatibilité. */
+  --color-sapphire: #002798;
+  --color-sapphire-light: #0031b3;
+  --color-sapphire-dark: #000f69;
+  --color-gold: #5091ce;
+  --color-gold-light: #8fa6d6;
+  --color-gold-dark: #0042cc;
 }
 
 :root {
@@ -57,7 +61,7 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: #0F2557;
+  --primary: #002798;
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
@@ -68,7 +72,7 @@
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
-  --ring: #0F2557;
+  --ring: #002798;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -76,7 +80,7 @@
   --chart-5: oklch(0.769 0.188 70.08);
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: #0F2557;
+  --sidebar-primary: #002798;
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.97 0 0);
   --sidebar-accent-foreground: oklch(0.205 0 0);
@@ -85,38 +89,38 @@
 }
 
 .dark {
-  /* Thème sombre aux couleurs de la marque : bleu nuit profond + or */
-  --background: #071228;
-  --foreground: #F5F7FA;
-  --card: #0C1E42;
-  --card-foreground: #F5F7FA;
-  --popover: #0C1E42;
-  --popover-foreground: #F5F7FA;
-  --primary: #C9A84C;
-  --primary-foreground: #081433;
-  --secondary: #12294F;
-  --secondary-foreground: #F5F7FA;
-  --muted: #12294F;
-  --muted-foreground: #A5B4CB;
-  --accent: #1A3A7A;
+  /* Thème sombre harmonisé avec le logo : indigo nuit profond + bleu ciel */
+  --background: #000031;
+  --foreground: #F0F5FD;
+  --card: #0a1233;
+  --card-foreground: #F0F5FD;
+  --popover: #0a1233;
+  --popover-foreground: #F0F5FD;
+  --primary: #5091ce;
+  --primary-foreground: #000031;
+  --secondary: #0d1d52;
+  --secondary-foreground: #EAF0FB;
+  --muted: #0d1d52;
+  --muted-foreground: #9fb2dd;
+  --accent: #1a2d73;
   --accent-foreground: #FFFFFF;
   --destructive: oklch(0.704 0.191 22.216);
   --border: rgba(255, 255, 255, 0.12);
   --input: rgba(255, 255, 255, 0.16);
-  --ring: #C9A84C;
-  --chart-1: #C9A84C;
-  --chart-2: #5B8DEF;
-  --chart-3: #E2C97D;
-  --chart-4: #1A3A7A;
-  --chart-5: #8FB3FF;
-  --sidebar: #0F2557;
-  --sidebar-foreground: #F5F7FA;
-  --sidebar-primary: #C9A84C;
-  --sidebar-primary-foreground: #081433;
-  --sidebar-accent: #1A3A7A;
-  --sidebar-accent-foreground: #F5F7FA;
+  --ring: #5091ce;
+  --chart-1: #5091ce;
+  --chart-2: #0042cc;
+  --chart-3: #8fa6d6;
+  --chart-4: #002798;
+  --chart-5: #adc4ec;
+  --sidebar: #000f69;
+  --sidebar-foreground: #F0F5FD;
+  --sidebar-primary: #5091ce;
+  --sidebar-primary-foreground: #000031;
+  --sidebar-accent: #1a2d73;
+  --sidebar-accent-foreground: #F0F5FD;
   --sidebar-border: rgba(255, 255, 255, 0.12);
-  --sidebar-ring: #C9A84C;
+  --sidebar-ring: #5091ce;
 }
 
 @layer base {
@@ -128,45 +132,52 @@
   }
 }
 
-/* EMERAUDE COM Custom Styles */
+/* EMERAUDE COM Custom Styles — palette harmonisée avec le logo (bleus du diamant) */
 @layer utilities {
   .text-gradient-gold {
-    background: linear-gradient(135deg, #C9A84C 0%, #E2C97D 50%, #C9A84C 100%);
+    background: linear-gradient(135deg, #0042cc 0%, #5091ce 50%, #0042cc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .dark .text-gradient-gold {
+    background: linear-gradient(135deg, #5091ce 0%, #8fa6d6 50%, #5091ce 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .bg-sapphire-gradient {
-    background: linear-gradient(135deg, #081433 0%, #0F2557 40%, #1A3A7A 100%);
+    background: linear-gradient(135deg, #000f69 0%, #002798 40%, #0031b3 100%);
   }
 
   .bg-sapphire-radial {
-    background: radial-gradient(ellipse at 30% 20%, #1A3A7A 0%, #0F2557 50%, #081433 100%);
+    background: radial-gradient(ellipse at 30% 20%, #0031b3 0%, #002798 50%, #000f69 100%);
   }
 
   .glass-card {
-    background: rgba(15, 37, 87, 0.15);
+    background: rgba(0, 39, 152, 0.12);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(201, 168, 76, 0.15);
+    border: 1px solid rgba(80, 145, 206, 0.25);
   }
 
   .glass-card-dark {
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(201, 168, 76, 0.2);
+    border: 1px solid rgba(143, 166, 214, 0.25);
   }
 
   .gold-border {
-    border: 1px solid rgba(201, 168, 76, 0.3);
+    border: 1px solid rgba(80, 145, 206, 0.35);
   }
 
   .gold-glow {
-    box-shadow: 0 0 30px rgba(201, 168, 76, 0.15);
+    box-shadow: 0 0 30px rgba(80, 145, 206, 0.2);
   }
 
   .sapphire-shadow {
-    box-shadow: 0 10px 40px rgba(8, 20, 51, 0.15);
+    box-shadow: 0 10px 40px rgba(0, 15, 105, 0.18);
   }
 
   .animate-float {
@@ -199,10 +210,10 @@ html {
 }
 
 .sapphire-section::-webkit-scrollbar-track {
-  background: #081433;
+  background: #000f69;
 }
 
 .sapphire-section::-webkit-scrollbar-thumb {
-  background: #C9A84C;
+  background: #5091ce;
   border-radius: 3px;
 }

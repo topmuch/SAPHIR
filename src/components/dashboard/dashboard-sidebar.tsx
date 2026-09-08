@@ -7,11 +7,11 @@ import {
   UserCircle,
   Settings,
   X,
-  Gem,
   HelpCircle,
   Globe,
   Inbox,
 } from 'lucide-react';
+import Image from 'next/image';
 
 export interface DashboardSidebarProps {
   isOpen: boolean;
@@ -69,7 +69,15 @@ export function DashboardSidebar({
         {/* Header / Logo */}
         <div className="flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-2.5">
-            <Gem className="h-7 w-7 text-gold" />
+            <div className="w-10 h-10 rounded-lg bg-white shadow-md flex items-center justify-center p-1">
+              <Image
+                src="/images/logo-mark.png"
+                alt="EMERAUDE COM"
+                width={48}
+                height={48}
+                className="w-full h-full object-contain"
+              />
+            </div>
             <span className="text-lg font-bold tracking-wide text-white">
               EMERAUDE{' '}
               <span className="text-gradient-gold">COM</span>

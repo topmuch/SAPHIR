@@ -1,6 +1,7 @@
 "use client";
 
-import { Gem, Mail, Phone, MapPin } from "lucide-react";
+import Image from "next/image";
+import { Mail, Phone, MapPin } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
 const FOOTER_SERVICES = [
@@ -23,9 +24,15 @@ export function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <a href="#hero" className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-gold/20 flex items-center justify-center">
-                <Gem className="w-4 h-4 text-gold" />
+            <a href="#hero" className="flex items-center gap-3 mb-4">
+              <div className="w-14 h-14 rounded-xl bg-white shadow-md flex items-center justify-center p-1.5">
+                <Image
+                  src="/images/logo-mark.png"
+                  alt="EMERAUDE COM"
+                  width={64}
+                  height={64}
+                  className="w-full h-full object-contain"
+                />
               </div>
               <span className="text-lg font-bold tracking-tight">
                 <span className="text-white">EMERAUDE</span>{" "}

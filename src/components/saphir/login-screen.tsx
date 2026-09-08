@@ -2,7 +2,8 @@
 
 import { useState, FormEvent } from "react";
 import { motion } from "framer-motion";
-import { Gem, Eye, EyeOff, Lock, Mail, AlertCircle } from "lucide-react";
+import Image from "next/image";
+import { Eye, EyeOff, Lock, Mail, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -62,8 +63,15 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
         <div className="absolute -bottom-32 -left-16 w-96 h-96 rounded-full bg-white/5 blur-3xl" />
 
         <div className="relative flex items-center gap-3">
-          <div className="w-11 h-11 rounded-xl bg-gold/20 flex items-center justify-center border border-gold/30">
-            <Gem className="w-5 h-5 text-gold" />
+          <div className="w-14 h-14 rounded-xl bg-white shadow-lg flex items-center justify-center p-1.5">
+            <Image
+              src="/images/logo-mark.png"
+              alt="EMERAUDE COM"
+              width={72}
+              height={72}
+              className="w-full h-full object-contain"
+              priority
+            />
           </div>
           <span className="text-xl font-bold tracking-tight text-white">
             EMERAUDE <span className="text-gradient-gold">COM</span>
@@ -104,9 +112,15 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
           transition={{ duration: 0.4 }}
           className="w-full max-w-sm"
         >
-          <div className="flex lg:hidden items-center gap-2 mb-8 justify-center">
-            <div className="w-9 h-9 rounded-lg bg-sapphire/10 flex items-center justify-center border border-sapphire/20">
-              <Gem className="w-4 h-4 text-gold" />
+          <div className="flex lg:hidden items-center gap-2.5 mb-8 justify-center">
+            <div className="w-10 h-10 rounded-lg bg-white shadow-sm flex items-center justify-center p-1 dark:shadow-md dark:shadow-black/20">
+              <Image
+                src="/images/logo-mark.png"
+                alt="EMERAUDE COM"
+                width={48}
+                height={48}
+                className="w-full h-full object-contain"
+              />
             </div>
             <span className="text-lg font-bold tracking-tight">
               <span className="text-sapphire-dark">EMERAUDE</span>{" "}

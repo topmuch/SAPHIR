@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
-import { Gem } from "lucide-react";
+import Image from "next/image";
 import { DashboardSidebar } from "@/components/dashboard/dashboard-sidebar";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { OverviewView } from "@/components/dashboard/overview";
@@ -107,8 +107,14 @@ export default function AdminPage() {
   if (authStatus === "loading") {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-background gap-4">
-        <div className="w-12 h-12 rounded-xl bg-sapphire/10 flex items-center justify-center border border-sapphire/20">
-          <Gem className="w-5 h-5 text-gold animate-pulse" />
+        <div className="w-12 h-12 rounded-xl bg-white shadow-md flex items-center justify-center p-1">
+          <Image
+            src="/images/logo-mark.png"
+            alt="EMERAUDE COM"
+            width={56}
+            height={56}
+            className="w-full h-full object-contain animate-pulse"
+          />
         </div>
         <div className="h-6 w-6 animate-spin rounded-full border-2 border-sapphire/20 border-t-sapphire" />
       </div>

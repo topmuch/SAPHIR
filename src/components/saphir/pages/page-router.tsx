@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { Gem, Menu, X, Mail, Phone, MapPin, Lock } from "lucide-react";
+import { Menu, X, Mail, Phone, MapPin, Lock } from "lucide-react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -98,10 +99,16 @@ function Navbar({
           {/* Logo */}
           <button
             onClick={() => navigate("accueil")}
-            className="flex items-center gap-2"
+            className="flex items-center gap-3"
           >
-            <div className="w-9 h-9 rounded-lg bg-sapphire/10 flex items-center justify-center border border-sapphire/20">
-              <Gem className="w-4 h-4 text-gold" />
+            <div className="w-10 h-10 rounded-lg bg-white shadow-sm dark:shadow-md dark:shadow-black/20 flex items-center justify-center p-1">
+              <Image
+                src="/images/logo-mark.png"
+                alt="EMERAUDE COM"
+                width={48}
+                height={48}
+                className="w-full h-full object-contain"
+              />
             </div>
             <span className="text-lg font-bold tracking-tight">
               <span className="text-sapphire-dark dark:text-white">EMERAUDE</span>{" "}
@@ -208,10 +215,16 @@ function SiteFooter({
           <div className="sm:col-span-2 lg:col-span-1">
             <button
               onClick={() => onNavigate("accueil")}
-              className="flex items-center gap-2 mb-4"
+              className="flex items-center gap-3 mb-4"
             >
-              <div className="w-8 h-8 rounded-lg bg-gold/20 flex items-center justify-center">
-                <Gem className="w-4 h-4 text-gold" />
+              <div className="w-12 h-12 rounded-xl bg-white shadow-md flex items-center justify-center p-1">
+                <Image
+                  src="/images/logo-mark.png"
+                  alt="EMERAUDE COM"
+                  width={56}
+                  height={56}
+                  className="w-full h-full object-contain"
+                />
               </div>
               <span className="text-lg font-bold tracking-tight">
                 <span className="text-white">EMERAUDE</span>{" "}

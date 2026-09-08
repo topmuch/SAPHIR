@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <linearGradient id="wm-stroke" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8fa6d6" stop-opacity="0.9"/>
+      <stop offset="50%" stop-color="#5091ce" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#0042cc" stop-opacity="0.3"/>
+    </linearGradient>
+    <radialGradient id="wm-fill" cx="0.5" cy="0.35" r="0.75">
+      <stop offset="0%" stop-color="#5091ce" stop-opacity="0.25"/>
+      <stop offset="60%" stop-color="#002798" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#001c83" stop-opacity="0.05"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Grand diamant filigrane -->
+  <g transform="translate(200 190)">
+    <path d="M-85 -80 L85 -80 L120 0 L0 160 L-120 0 Z" fill="url(#wm-fill)" stroke="url(#wm-stroke)" stroke-width="2.5"/>
+    <path d="M-85 -80 L0 -20 L85 -80" fill="none" stroke="url(#wm-stroke)" stroke-width="2"/>
+    <path d="M-120 0 L120 0" fill="none" stroke="url(#wm-stroke)" stroke-width="2"/>
+    <path d="M-120 0 L0 160 L120 0" fill="none" stroke="url(#wm-stroke)" stroke-width="2"/>
+    <path d="M-60 0 L0 160 L60 0" fill="none" stroke="url(#wm-stroke)" stroke-width="1.4" opacity="0.7"/>
+    <path d="M0 -20 L-38 0 M0 -20 L38 0" fill="none" stroke="url(#wm-stroke)" stroke-width="1.4" opacity="0.6"/>
+    <!-- étincelle -->
+    <path d="M95 -100 L99 -89 L110 -85 L99 -81 L95 -70 L91 -81 L80 -85 L91 -89 Z" fill="#8fa6d6" opacity="0.8"/>
+  </g>
+</svg>

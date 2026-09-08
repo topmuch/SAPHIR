@@ -33,7 +33,10 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "EMERAUDE COM" }],
   icons: {
-    icon: "/logo.svg",
+    icon: [
+      { url: "/logo.svg", type: "image/svg+xml" },
+      { url: "/images/logo-mark-64.png", type: "image/png", sizes: "64x64" },
+    ],
   },
   openGraph: {
     title: "EMERAUDE COM — Votre partenaire en communication 360°",

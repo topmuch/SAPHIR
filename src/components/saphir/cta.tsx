@@ -1,6 +1,7 @@
 "use client";
 
-import { Gem, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -20,7 +21,15 @@ export function CTASection() {
 
       <div className="relative max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <FadeIn>
-          <Gem className="w-12 h-12 text-gold mx-auto mb-6" />
+          <div className="w-20 h-20 rounded-2xl bg-white shadow-xl mx-auto mb-6 flex items-center justify-center p-1.5 animate-float">
+            <Image
+              src="/images/logo-mark.png"
+              alt="EMERAUDE COM"
+              width={96}
+              height={96}
+              className="w-full h-full object-contain"
+            />
+          </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
             EMERAUDE COM
           </h2>
@@ -42,7 +51,13 @@ export function CTASection() {
               <DialogContent className="sm:max-w-md">
                 <DialogHeader>
                   <DialogTitle className="text-sapphire dark:text-gold-light flex items-center gap-2">
-                    <Gem className="w-5 h-5 text-gold" /> Contactez-nous
+                    <Image
+                      src="/images/logo-mark.png"
+                      alt="EMERAUDE"
+                      width={20}
+                      height={20}
+                      className="w-5 h-5 object-contain"
+                    />{" "}Contactez-nous
                   </DialogTitle>
                 </DialogHeader>
                 <ContactForm />
