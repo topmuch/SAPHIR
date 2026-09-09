@@ -183,3 +183,4 @@ Stage Summary:
 - Hero : nouvelle photo d'équipe d'agence 100% noire (2 hommes, 2 femmes), composition identique au layout (texte gauche sur zone dégagée, équipe droite) — voile et code hero inchangés
 - Footer : logo EMERAUDE seul (texte redondant supprimé), demandé explicitement
 - Ancien hero récupérable via git (0332af7) ; source PNG v3 conservée pour ajustements futurs
+- Incident parallèle (2e occurrence, cf. tâche 7) : commit local automatique externe « 994f180 (UUID) » a ajouté 11 captures de validation non suivies (verif_*.png, 1,9 Mo) à 11h38 — supprimé par rebase avant push (`git rebase --onto 0d6eba0 994f180 main`), dépôt GitHub propre ; phénomène à surveiller : vérifier `git log` avant chaque commit/push et dropper les commits UUID
