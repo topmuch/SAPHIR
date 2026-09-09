@@ -126,3 +126,21 @@ Stage Summary:
 - Logo : texte « EMERAUDE COM » supprimé dans les navbar, logo agrandi 56/64px, accessible
 - Pages des onglets substantiellement enrichies : Services (+méthode+points forts), FAQ (12 questions+CTA), À propos (+6 départements+CTA), références géographiques harmonisées Sénégal
 - Périmètre strictement limité aux 3 demandes ; données de démo du dashboard (Maroc Telecom etc.) volontairement non touchées
+
+---
+Task ID: 7
+Agent: Super Z (agent principal)
+Task: Changer l'image du hero (demande utilisateur : « change l'image du hero »).
+
+Work Log:
+- 3 candidates générées par IA (1344x768, z-ai image) : 1) scène d'équipe d'agence lumineuse (visages dans le tiers gauche → refusée : le texte les recouvrirait) ; 2) diamant saphir abstrait très lumineux (153/255 — écartée : image d'identité déjà portée par le logo, composition centrée recouverte par le formulaire) ; 3) scène d'agence avec composition guidée (équipe à DROITE, moitié gauche dégagée : fenêtre + mur + plante)
+- Candidate 3 retenue : 150/255 de luminosité (vs 116 pour l'ancienne), aucune personne dans la zone texte, aucun artefact IA (mains/proportions vérifiés par VLM)
+- Installation : public/hero-wide.png remplacé (JPEG q88 dans la convention .png, 147 Ko) ; source conservée dans scripts/hero-candidates/hero-source-v2.png pour d'éventuels ajustements sans régénérer (une régénération IA produirait une image différente)
+- Voile ajusté pour l'image plus lumineuse : sapphire-dark 60/20 → 70/30 (lisibilité du texte blanc sur zone fenêtre claire)
+- Validations VLM desktop : « image très lumineuse, moderne et professionnelle », « titre très contrasté, paragraphe parfaitement lisible », « carte formulaire bien intégrée » ; mobile : « texte lisible, aucun chevauchement »
+- Incident parallèle traité : upload/WhatsApp Image…jpeg (logo source du client) trouvé écrasé par une version redimensionnée 190x121 (même logo, poids 10 Ko) à 11h12 — cause non identifiée, aucune de mes commandes n'écrit dans upload/ ; version git originale 900x577 restaurée par git checkout ; le site n'utilise pas ce fichier (variantes public/images/)
+
+Stage Summary:
+- Nouveau hero : photo IA d'équipe d'agence collaborative, très lumineuse, composition adaptée au layout (texte à gauche sur zone dégagée, équipe à droite) — remplace l'ancienne photo dorée
+- Prompt de génération documenté dans le worklog pour reproductibilité ; source PNG conservée
+- Ancienne bannière récupérable via l'historique git (commit 2f51bc3) si retour arrière souhaité
