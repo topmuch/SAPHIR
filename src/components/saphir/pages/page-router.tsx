@@ -212,7 +212,7 @@ function SiteFooter({
           <div className="sm:col-span-2 lg:col-span-1">
             <button
               onClick={() => onNavigate("accueil")}
-              className="flex items-center gap-3 mb-4"
+              className="flex items-center mb-4"
             >
               <div className="w-[100px] h-16 rounded-xl bg-white shadow-md flex items-center justify-center overflow-hidden">
                 <Image
@@ -223,10 +223,6 @@ function SiteFooter({
                   className="w-full h-full object-contain"
                 />
               </div>
-              <span className="text-lg font-bold tracking-tight">
-                <span className="text-white">EMERAUDE</span>{" "}
-                <span className="text-gradient-gold">COM</span>
-              </span>
             </button>
             <p className="text-sm leading-relaxed text-white/50">
               L&rsquo;agence qui réinvente la relation entre les marques et leurs

@@ -24,20 +24,16 @@ export function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <a href="#hero" className="flex items-center gap-3 mb-4">
-              <div className="w-16 h-16 rounded-xl bg-white shadow-md flex items-center justify-center p-1.5">
+            <a href="#hero" className="flex items-center mb-4">
+              <div className="w-[100px] h-16 rounded-xl bg-white shadow-md flex items-center justify-center overflow-hidden">
                 <Image
-                  src="/images/logo-mark.png"
+                  src="/images/logo-emeraude.png"
                   alt="EMERAUDE COM"
-                  width={80}
-                  height={80}
+                  width={900}
+                  height={577}
                   className="w-full h-full object-contain"
                 />
               </div>
-              <span className="text-lg font-bold tracking-tight">
-                <span className="text-white">EMERAUDE</span>{" "}
-                <span className="text-gradient-gold">COM</span>
-              </span>
             </a>
             <p className="text-sm leading-relaxed text-white/50">
               L'agence qui réinvente la relation entre les marques et leurs

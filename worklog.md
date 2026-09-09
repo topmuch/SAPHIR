@@ -165,3 +165,21 @@ Stage Summary:
 - Navbar desktop 133px de haut (vs 80 avant) pour loger le logo à cette taille — offset du contenu ajusté au pixel près
 - 6 fichiers modifiés + 1 nouvel asset ; logo-mark.png (diamant) conservé pour les micro-usages (<50px) et la favicon
 - Anciennes variantes non supprimées (logo-full*, logo-mark*) : aucune n'était référencée par le code
+
+---
+Task ID: 9
+Agent: Super Z (agent principal)
+Task: Régénérer l'image du hero avec des hommes et femmes noirs + retirer le texte « EMERAUDE COM » à côté du logo dans le footer.
+
+Work Log:
+- 3 candidats générés par IA (z-ai image, 1344x768) avec équipe 100% noire (agence sénégalaise) et composition guidée (groupe à DROITE, moitié gauche dégagée) : A refusé (personnes réparties sur toute la largeur), C refusé (personnages centrés), B retenu
+- Candidat B : 2 hommes + 2 femmes noirs, groupe à droite, moitié gauche libre, luminosité 150/255 (zone texte 156 — voile 70/30 existant conservé inchangé)
+- Inspection VLM approfondie : mains et doigts naturels, visages nets, aucun texte résiduel/watermark, décor cohérent
+- Installation : public/hero-wide.png remplacé (JPEG q88 dans la convention .png, 136 Ko) ; source conservée dans scripts/hero-candidates/hero-source-v3.png ; candidats non retenus supprimés
+- Footer : span « EMERAUDE COM » (blanc + dégradé or) retiré à côté de la boîte logo dans page-router.tsx (footer actif) et footer.tsx (code mort synchronisé) ; boîte logo 100x64 inchangée
+- Validations : lint OK ; build production OK ; VLM desktop (professionnels noirs à droite, titre parfaitement lisible, carte formulaire bien intégrée, aucun artefact) ; mobile 375px (texte lisible, navbar propre) ; footer (logo seul, aucun texte à côté)
+
+Stage Summary:
+- Hero : nouvelle photo d'équipe d'agence 100% noire (2 hommes, 2 femmes), composition identique au layout (texte gauche sur zone dégagée, équipe droite) — voile et code hero inchangés
+- Footer : logo EMERAUDE seul (texte redondant supprimé), demandé explicitement
+- Ancien hero récupérable via git (0332af7) ; source PNG v3 conservée pour ajustements futurs
