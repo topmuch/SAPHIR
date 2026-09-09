@@ -117,8 +117,8 @@ export function Hero() {
         style={{ backgroundImage: "url('/hero-wide.png')" }}
       />
 
-      {/* Dark gradient overlay on left side for text readability */}
-      <div className="absolute inset-0 bg-gradient-to-r from-sapphire-dark/90 via-sapphire-dark/50 to-transparent" />
+      {/* Soft gradient overlay on left side for text readability */}
+      <div className="absolute inset-0 bg-gradient-to-r from-sapphire-dark/60 via-sapphire-dark/20 to-transparent" />
 
       <div className="relative z-10 w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-20">
         {/* LEFT SIDE: Text content */}

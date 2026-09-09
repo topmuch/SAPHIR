@@ -99,21 +99,18 @@ function Navbar({
           {/* Logo */}
           <button
             onClick={() => navigate("accueil")}
-            className="flex items-center gap-3"
+            className="flex items-center"
+            aria-label="EMERAUDE COM — Accueil"
           >
-            <div className="w-12 h-12 md:w-14 md:h-14 rounded-lg bg-white shadow-sm dark:shadow-md dark:shadow-black/20 flex items-center justify-center p-1">
+            <div className="w-14 h-14 md:w-16 md:h-16 rounded-lg bg-white shadow-sm dark:shadow-md dark:shadow-black/20 flex items-center justify-center p-1">
               <Image
                 src="/images/logo-mark.png"
                 alt="EMERAUDE COM"
-                width={64}
-                height={64}
+                width={96}
+                height={96}
                 className="w-full h-full object-contain"
               />
             </div>
-            <span className="text-lg font-bold tracking-tight">
-              <span className="text-sapphire-dark dark:text-white">EMERAUDE</span>{" "}
-              <span className="text-gold">COM</span>
-            </span>
           </button>
 
           {/* Desktop Links */}
@@ -362,7 +359,7 @@ export function SiteRouter({
           </>
         );
       case "a-propos":
-        return <AProposPage />;
+        return <AProposPage onNavigate={navigate} />;
       case "services":
         return <ServicesPage onServiceClick={handleServiceClick} />;
       case "faq":

@@ -39,21 +39,17 @@ export function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
-          <a href="#hero" className="flex items-center gap-3 group">
-            <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-white shadow-md shadow-black/20 flex items-center justify-center p-1.5 group-hover:shadow-lg group-hover:scale-105 transition-all duration-300">
+          <a href="#hero" className="flex items-center group" aria-label="EMERAUDE COM — Accueil">
+            <div className="w-14 h-14 md:w-16 md:h-16 rounded-xl bg-white shadow-md shadow-black/20 flex items-center justify-center p-1 group-hover:shadow-lg group-hover:scale-105 transition-all duration-300">
               <Image
                 src="/images/logo-mark.png"
                 alt="EMERAUDE COM"
-                width={80}
-                height={80}
+                width={96}
+                height={96}
                 className="w-full h-full object-contain"
                 priority
               />
             </div>
-            <span className="text-xl font-bold tracking-tight">
-              <span className="text-white">EMERAUDE</span>{" "}
-              <span className="text-gradient-gold">COM</span>
-            </span>
           </a>
 
           <div className="hidden md:flex items-center gap-1">

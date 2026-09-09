@@ -1,5 +1,7 @@
 "use client";
 
+import { Mail, MessageCircle, Phone } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { FadeIn } from "@/components/saphir/animations";
 import {
   Accordion,
@@ -22,12 +24,12 @@ const FAQ_ITEMS = [
   {
     question: "Quels sont vos tarifs ?",
     answer:
-      "Nos tarifs sont établis sur devis, selon la complexité et l'ampleur du projet. Nous proposons des solutions adaptées à tous les budgets, du startup au grand compte. N'hésitez pas à nous contacter pour obtenir un devis personnalisé et détaillé sans engagement.",
+      "Nos tarifs sont établis sur devis, selon la complexité et l'ampleur du projet. Nous proposons des solutions adaptées à tous les budgets, de la PME au grand compte. N'hésitez pas à nous contacter pour obtenir un devis personnalisé et détaillé sans engagement.",
   },
   {
     question: "Travaillez-vous avec des entreprises internationales ?",
     answer:
-      "Oui, nous accompagnons aussi bien des entreprises marocaines qu'internationales. Notre équipe maîtrise plusieurs langues et comprend les enjeux de communication interculturels. Nous avons déjà collaboré avec des clients en Europe, en Afrique et au Moyen-Orient.",
+      "Oui, nous accompagnons aussi bien des entreprises sénégalaises qu'internationales. Notre équipe maîtrise plusieurs langues et comprend les enjeux de communication interculturels. Nous avons collaboré avec des clients à Dakar, dans la sous-région ouest-africaine et en Europe.",
   },
   {
     question: "Quel est le délai moyen de réalisation ?",
@@ -48,6 +50,26 @@ const FAQ_ITEMS = [
     question: "Quels secteurs d'activité couvrez-vous ?",
     answer:
       "Nous intervenons dans de nombreux secteurs : télécommunications, banque et finance, immobilier, retail et grande distribution, luxe et cosmétique, industrie, éducation, santé, tourisme et hôtellerie, ainsi que les administrations publiques. Notre expérience transversale nous permet d'apporter un regard frais et innovant à chaque secteur.",
+  },
+  {
+    question: "Pouvez-vous gérer l'ensemble de ma communication ?",
+    answer:
+      "Absolument. C'est même notre cœur de métier : en tant qu'agence 360°, nous pouvons prendre en charge l'intégralité de votre communication — stratégie, création, production, digital et événementiel — comme une seule prestation coordonnée. Vous gagnez un interlocuteur unique, une cohérence totale entre les canaux et une efficacité budgétaire optimisée. Nous proposons également des formules d'externalisation partielle si vous préférez conserver certains pans en interne.",
+  },
+  {
+    question: "Intervenez-vous en dehors de Dakar ?",
+    answer:
+      "Oui. Basés à Dakar, nous intervenons dans tout le Sénégal — Thiès, Saint-Louis, Saly, Ziguinchor — ainsi que dans la sous-région ouest-africaine (Côte d'Ivoire, Mali, Guinée, Gambie…). Pour les projets hors de Dakar, nous organisons des déplacements sur site et un suivi à distance fluide grâce à nos outils collaboratifs. Les productions numériques (sites web, campagnes digitales, contenus) se pilotent sans contrainte géographique.",
+  },
+  {
+    question: "Comment mesurez-vous les résultats des campagnes digitales ?",
+    answer:
+      "Chaque campagne digitale est pilotée par la donnée : nous définissons des indicateurs clés dès le brief (portée, engagement, clics, conversions, coût par lead…), nous mettons en place les outils de suivi (Google Analytics, pixels publicitaires, tableaux de bord), et nous vous remettons un rapport régulier lisible, avec des recommandations concrètes. À la fin de chaque campagne, un bilan complet mesure le retour sur investissement et les enseignements pour la suite.",
+  },
+  {
+    question: "Qui possède les droits sur les créations réalisées ?",
+    answer:
+      "Une fois le projet entièrement réglé, les droits d'exploitation des créations vous sont cédés : vous êtes pleinement propriétaire de votre logo, de vos visuels, de vos contenus et de votre site web. Nous vous remettons l'ensemble des fichiers sources exploitables et une documentation vous permettant de faire évoluer vos supports sereinement, avec nous ou avec d'autres partenaires.",
   },
 ];
 
@@ -99,6 +121,45 @@ export function FaqPage() {
                 </AccordionItem>
               ))}
             </Accordion>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* CTA — une autre question ? */}
+      <section className="bg-slate-50 dark:bg-sapphire py-16 md:py-20">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6">
+          <FadeIn className="text-center">
+            <div className="w-16 h-16 rounded-2xl bg-gold/10 flex items-center justify-center mx-auto mb-6">
+              <MessageCircle className="w-8 h-8 text-gold-dark dark:text-gold-light" />
+            </div>
+            <h2 className="text-2xl md:text-3xl font-bold text-sapphire dark:text-white mb-3">
+              Vous ne trouvez pas la réponse à votre question ?
+            </h2>
+            <p className="text-muted-foreground max-w-xl mx-auto mb-8">
+              Notre équipe vous répond personnellement sous 24 h ouvrées.
+              Posez votre question, nous nous chargeons du reste.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <a href="mailto:contact@zaphircomsen.com" className="w-full sm:w-auto">
+                <Button
+                  size="lg"
+                  className="bg-gold hover:bg-gold-light text-sapphire-dark font-semibold px-8 w-full sm:w-auto"
+                >
+                  <Mail className="w-4 h-4 mr-2" />
+                  contact@zaphircomsen.com
+                </Button>
+              </a>
+              <a href="tel:+221703167676" className="w-full sm:w-auto">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-sapphire/20 text-sapphire dark:text-gold-light dark:border-gold/30 hover:bg-sapphire hover:text-white dark:hover:bg-gold dark:hover:text-sapphire-dark px-8 w-full sm:w-auto"
+                >
+                  <Phone className="w-4 h-4 mr-2" />
+                  +221 70 316 76 76
+                </Button>
+              </a>
+            </div>
           </FadeIn>
         </div>
       </section>

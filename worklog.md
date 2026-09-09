@@ -104,3 +104,25 @@ Stage Summary:
 - Bannière du hero d'origine restaurée à l'identique ; logo agrandi partout (+27% à +100% selon emplacement)
 - Harmonisation des couleurs et intégration du logo (demandes initiales) conservées
 - Leçon enregistrée : ne modifier QUE ce qui est explicitement demandé ; proposer les idées bonus sans les appliquer
+
+---
+Task ID: 6
+Agent: Super Z (agent principal)
+Task: Trois demandes utilisateur : 1) hero jugé trop sombre, 2) retirer le texte « EMERAUDE COM » à côté du logo et agrandir le logo, 3) développer les pages des onglets de la page d'accueil.
+
+Work Log:
+- HERO : analysé l'image (luminosité 93/255 + voile sapphire-dark/90→50) → pas de nouvelle image à générer (la bannière restaurée en tâche 5 devait être conservée) : éclaircissement par script PIL (gamma 0.75 + luminosité ×1.08 + contraste ×1.04 → 115.8/255) via scripts/brighten_hero.py ; fichier conservé en JPEG-dans-.png comme l'original (171 Ko au lieu de 1,15 Mo en vrai PNG — anomalie de poids détectée et corrigée) ; voile allégé en deux passes (90/50 → 75/35 → 60/20) avec validation VLM intermédiaire
+- LOGO : texte « EMERAUDE COM » retiré à côté du logo et conteneur agrandi 48/56px → 56/64px (p-1.5 → p-1) dans la navbar active (page-router.tsx) + navbar.tsx (composant inutilisé, cohérence conservée) ; aria-label « EMERAUDE COM — Accueil » ajouté pour l'accessibilité
+- PAGES DES ONGLETS :
+  * Services : 3 points forts (coches) par service + section « Notre méthode » (5 cartes 01-05 : écoute, stratégie, création, production, suivi)
+  * FAQ : 8 → 12 questions (régie complète, interventions hors Dakar, mesure des résultats, droits sur les créations) + bloc CTA « Une autre question ? » avec liens mailto/tel
+  * À propos : section « Six départements, un seul partenaire » (6 cartes avec descriptions des équipes) + CTA final « Envie de travailler ensemble ? » naviguant vers Contact (prop onNavigate ajoutée)
+  * Cohérence de contenu : 8 références « Maroc » corrigées en Sénégal (faq-page, service-detail-page — le site étant positionné agence dakaroise)
+- VALIDATIONS : lint OK ; serveur dev HTTP 200 ; navigation agent-browser sur les 4 onglets (DOM vérifié : 12 questions FAQ, 5 étapes méthode, 6 départements, CTA fonctionnels) ; captures VLM : hero « clair et lumineux, texte lisible », navbar « uniquement le logo, sans texte, aucune erreur », méthode « 5 cartes numérotées », mobile « sans chevauchement » ; aucune erreur console ni dev.log (EADDRINUSE = doublon de lancement, serveur actif sain)
+- Captures de contrôle supprimées ; scripts/vlm-check.cjs (mauvaise API) supprimé, scripts/brighten_hero.py conservé et documenté
+
+Stage Summary:
+- Hero : bannière d'origine conservée mais éclaircie (+24% luminosité) + voile allégé — pas d'image régénérée
+- Logo : texte « EMERAUDE COM » supprimé dans les navbar, logo agrandi 56/64px, accessible
+- Pages des onglets substantiellement enrichies : Services (+méthode+points forts), FAQ (12 questions+CTA), À propos (+6 départements+CTA), références géographiques harmonisées Sénégal
+- Périmètre strictement limité aux 3 demandes ; données de démo du dashboard (Maroc Telecom etc.) volontairement non touchées

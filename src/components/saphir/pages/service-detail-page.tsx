@@ -38,12 +38,12 @@ const SERVICE_DETAILS: Record<ServiceSlug, ServiceDetail> = {
     ],
     projects: [
       {
-        title: "Refonte de l'identité visuelle d'une banque marocaine",
-        desc: "Création d'une identité moderne et rassurante, reflet de l'innovation et de la fiabilité bancaire, déployée sur plus de 200 agences à travers le Maroc.",
+        title: "Refonte de l'identité visuelle d'une banque sénégalaise",
+        desc: "Création d'une identité moderne et rassurante, reflet de l'innovation et de la fiabilité bancaire, déployée sur plus de 100 agences à travers le Sénégal.",
       },
       {
         title: "Création de marque pour startup tech",
-        desc: "Positionnement disruptif et identité visuelle dynamique pour une startup marocaine spécialisée dans la fintech, avec un univers graphique 100% digital.",
+        desc: "Positionnement disruptif et identité visuelle dynamique pour une startup sénégalaise spécialisée dans la fintech, avec un univers graphique 100% digital.",
       },
       {
         title: "Branding luxe pour maison de mode",
@@ -91,7 +91,7 @@ const SERVICE_DETAILS: Record<ServiceSlug, ServiceDetail> = {
     projects: [
       {
         title: "Lancement d'un nouveau produit de grande consommation",
-        desc: "Campagne 360° intégrant TV, digital, affichage et événementiel pour le lancement d'une nouvelle gamme de produits au Maroc.",
+        desc: "Campagne 360° intégrant TV, digital, affichage et événementiel pour le lancement d'une nouvelle gamme de produits au Sénégal.",
       },
       {
         title: "Stratégie marketing B2B pour un groupe immobilier",
@@ -125,7 +125,7 @@ const SERVICE_DETAILS: Record<ServiceSlug, ServiceDetail> = {
       },
       {
         title: "Infographies pour un rapport de développement durable",
-        desc: "Conception d'un ensemble d'infographies percutantes pour vulgariser les données RSE d'un grand groupe industriel marocain.",
+        desc: "Conception d'un ensemble d'infographies percutantes pour vulgariser les données RSE d'un grand groupe industriel sénégalais.",
       },
     ],
   },
@@ -143,7 +143,7 @@ const SERVICE_DETAILS: Record<ServiceSlug, ServiceDetail> = {
     projects: [
       {
         title: "Film institutionnel pour un groupe bancaire",
-        desc: "Réalisation d'un film de 5 minutes mettant en valeur l'histoire, les valeurs et l'impact social du groupe, avec tournages au Maroc et à l'international.",
+        desc: "Réalisation d'un film de 5 minutes mettant en valeur l'histoire, les valeurs et l'impact social du groupe, avec tournages au Sénégal et à l'international.",
       },
       {
         title: "Série de spots publicitaires TV",
@@ -194,7 +194,7 @@ const SERVICE_DETAILS: Record<ServiceSlug, ServiceDetail> = {
     ],
     projects: [
       {
-        title: "Site e-commerce pour une marque de mode marocaine",
+        title: "Site e-commerce pour une marque de mode sénégalaise",
         desc: "Plateforme e-commerce performante avec +500 références, paiement intégralisé multi-devises et un taux de conversion optimisé à 4.2%.",
       },
       {

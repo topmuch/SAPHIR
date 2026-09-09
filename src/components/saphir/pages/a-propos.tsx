@@ -9,11 +9,47 @@ import {
   Globe,
   Languages,
   Compass,
+  ArrowRight,
+  MessageCircle,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { FadeIn } from "@/components/saphir/animations";
 import { Counter } from "@/components/saphir/counter";
+
+const DEPARTEMENTS = [
+  {
+    image: "/images/home/dept-creation.jpg",
+    name: "Création graphique",
+    desc: "Nos directeurs artistiques et designers donnent corps à vos idées : identités visuelles, campagnes d'affichage, supports print et déclinaisons digitales. Chaque création est pensée pour marquer les esprits et servir vos objectifs.",
+  },
+  {
+    image: "/images/home/dept-audiovisuel.jpg",
+    name: "Production audiovisuelle",
+    desc: "Une équipe de réalisation complète : cadreur·ses, monteur·ses, motion designers et ingénieur·es son. Du spot publicitaire au film institutionnel, nous maîtrisons toute la chaîne, du tournage à la post-production.",
+  },
+  {
+    image: "/images/home/dept-planning.jpg",
+    name: "Planning stratégique",
+    desc: "Nos planneurs analysent votre marché, vos publics et vos concurrents pour construire des stratégies pertinentes et mesurables. Ils traduisent vos ambitions commerciales en plans de communication concrets et opérationnels.",
+  },
+  {
+    image: "/images/home/dept-commercial.jpg",
+    name: "Commercial",
+    desc: "Vos interlocuteur·rices de proximité : conseil, devis, suivi de projet et relation client au quotidien. Ils garantissent une réponse rapide, claire et adaptée à vos besoins comme à vos contraintes budgétaires.",
+  },
+  {
+    image: "/images/home/dept-infosono.jpg",
+    name: "Informatique & Sonorisation",
+    desc: "Développeurs, intégrateurs et techniciens son équipent vos événements, vos espaces et vos plateformes digitales. Sonorisation, diffusion, applications et sites web fonctionnent sans accroc.",
+  },
+  {
+    image: "/images/home/dept-evenementiel.jpg",
+    name: "Événementiel",
+    desc: "Chef·fes de projet, régie et logistique : salons, lancements, cérémonies et conférences sont orchestrés au millimètre. Plannings, prestataires et imprévus sont gérés pour que vous viviez votre événement sereinement.",
+  },
+];
 
 const VALUES = [
   {
@@ -61,7 +97,11 @@ const ANCRAGE = [
   },
 ];
 
-export function AProposPage() {
+interface AProposPageProps {
+  onNavigate?: (page: string) => void;
+}
+
+export function AProposPage({ onNavigate }: AProposPageProps) {
   return (
     <main>
       {/* Hero */}
@@ -178,6 +218,49 @@ export function AProposPage() {
         </div>
       </section>
 
+      {/* Nos départements */}
+      <section className="bg-slate-50 dark:bg-sapphire py-20 md:py-28">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
+          <FadeIn className="text-center mb-14">
+            <Badge className="bg-gold/15 text-gold-dark border-0 text-xs mb-4">
+              Nos équipes
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold text-sapphire dark:text-white">
+              Six départements, <span className="text-gradient-gold">un seul partenaire</span>
+            </h2>
+            <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
+              Nos experts travaillent en synergie au sein de départements
+              complémentaires, pour des solutions complètes et innovantes
+              sur chaque projet.
+            </p>
+          </FadeIn>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {DEPARTEMENTS.map((dept, i) => (
+              <FadeIn key={dept.name} delay={i * 0.06} className="h-full">
+                <div className="bg-white/70 dark:bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden group hover:shadow-xl hover:shadow-sapphire/10 border border-slate-200/50 dark:border-white/10 hover:border-gold/30 transition-all duration-300 h-full flex flex-col">
+                  <div className="h-44 overflow-hidden">
+                    <img
+                      src={dept.image}
+                      alt={dept.name}
+                      loading="lazy"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <h3 className="font-semibold text-sapphire dark:text-white text-lg mb-2.5 text-center">
+                      {dept.name}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed text-sm text-center">
+                      {dept.desc}
+                    </p>
+                  </div>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Nos valeurs */}
       <section className="bg-white dark:bg-sapphire-dark py-20 md:py-28">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -229,6 +312,33 @@ export function AProposPage() {
             <Counter value={350} suffix="+" label="Projets" />
             <Counter value={10} suffix="+" label="Années" />
           </div>
+        </div>
+      </section>
+
+      {/* CTA final */}
+      <section className="bg-white dark:bg-sapphire-dark py-16 md:py-20">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6">
+          <FadeIn className="text-center">
+            <div className="w-16 h-16 rounded-2xl bg-gold/10 flex items-center justify-center mx-auto mb-6">
+              <MessageCircle className="w-8 h-8 text-gold-dark dark:text-gold-light" />
+            </div>
+            <h2 className="text-2xl md:text-3xl font-bold text-sapphire dark:text-white mb-3">
+              Envie de travailler ensemble ?
+            </h2>
+            <p className="text-muted-foreground max-w-xl mx-auto mb-8">
+              Discutons de votre projet autour d'un café, à Dakar ou en
+              visioconférence. Nous vous proposons une première analyse
+              gratuite et sans engagement.
+            </p>
+            <Button
+              size="lg"
+              className="bg-gold hover:bg-gold-light text-sapphire-dark font-semibold px-8"
+              onClick={() => onNavigate?.("contact")}
+            >
+              Contactez-nous
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </Button>
+          </FadeIn>
         </div>
       </section>
     </main>
