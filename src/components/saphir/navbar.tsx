@@ -38,14 +38,14 @@ export function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="flex items-center justify-between h-20 md:h-[133px]">
           <a href="#hero" className="flex items-center group" aria-label="EMERAUDE COM — Accueil">
-            <div className="w-14 h-14 md:w-16 md:h-16 rounded-xl bg-white shadow-md shadow-black/20 flex items-center justify-center p-1 group-hover:shadow-lg group-hover:scale-105 transition-all duration-300">
+            <div className="w-[110px] h-[70px] md:w-[190px] md:h-[121px] rounded-xl bg-white shadow-md shadow-black/20 flex items-center justify-center overflow-hidden group-hover:shadow-lg group-hover:scale-105 transition-all duration-300">
               <Image
-                src="/images/logo-mark.png"
+                src="/images/logo-emeraude.png"
                 alt="EMERAUDE COM"
-                width={96}
-                height={96}
+                width={900}
+                height={577}
                 className="w-full h-full object-contain"
                 priority
               />

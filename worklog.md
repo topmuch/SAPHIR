@@ -144,3 +144,24 @@ Stage Summary:
 - Nouveau hero : photo IA d'équipe d'agence collaborative, très lumineuse, composition adaptée au layout (texte à gauche sur zone dégagée, équipe à droite) — remplace l'ancienne photo dorée
 - Prompt de génération documenté dans le worklog pour reproductibilité ; source PNG conservée
 - Ancienne bannière récupérable via l'historique git (commit 2f51bc3) si retour arrière souhaité
+
+---
+Task ID: 8
+Agent: Super Z (agent principal)
+Task: Intégrer le logo fourni par le client (« INTEGRE CE LOGO AVEC CETTE TAILLE » — upload 190x121, diamant saphir + texte EMERAUDE).
+
+Work Log:
+- Upload analysé : JPEG 190x121 (diamant bleu facetté + « EMERAUDE » + soulignement, fond blanc) ; bbox contenu mesuré (diamant ~68% hauteur, texte ~24%)
+- Source haute résolution retrouvée : git show HEAD:upload/… = même logo en 900x577 (75,6 Ko) — l'upload 190x121 du client sert de référence de TAILLE, la version 900x577 de source ; vérifié identique par VLM ; copiée dans scripts/logo-source-hires.jpeg (précédent hero-source-v2.png)
+- Asset généré par scripts/integrate_logo.py : public/images/logo-emeraude.png (900x577 PNG, conversion directe sans upscale — net sur écrans retina)
+- Navbar active (page-router.tsx) : logo intégré À LA TAILLE DEMANDÉE — desktop 190x121 px exactement (« cette taille »), mobile 110x70 (proportionnel) ; hauteur navbar h-16→h-20 mobile / h-20→h-[133px] desktop ; offset contenu pt-16→pt-20 / pt-20→pt-[133px] ; mesuré en navigateur : navbar 133px, hero démarre exactement à y=133 (aucun chevauchement)
+- Autres emplacements intégrés proportionnellement au ratio 1,57 : footer page-router 100x64 (+ texte EMERAUDE COM conservé), CTA 150x96, panneau marque login desktop 126x80, écran de chargement admin 100x64 ; navbar.tsx (code mort) synchronisé comme en tâche 6
+- Petites icônes de dialogues (24px, cta.tsx/navbar.tsx) et lockups icône+wordmark (login mobile 48px, sidebar dashboard 48px) : ancien logo-mark.png (diamant seul) volontairement conservé — le texte du logo complet serait illisible à ces tailles
+- Validations : bun run lint OK ; build production OK ; VLM desktop (logo net, aucun chevauchement, navbar propre), mobile 375px (logo entier visible, pas de chevauchement avec le bouton menu), footer/CTA/login (logos entiers, non déformés, texte lisible), navbar scrollée OK ; tailles rendues mesurées : 190x121 / 150x97 / 100x65
+- Scripts de capture jetables supprimés après validation (lint resté propre) ; captures de contrôle conservées localement dans scripts/ (non commitées)
+
+Stage Summary:
+- Nouveau logo client intégré : navbar desktop affichée à exactement 190x121 px (taille de l'image fournie), source asset 900x577 haute résolution
+- Navbar desktop 133px de haut (vs 80 avant) pour loger le logo à cette taille — offset du contenu ajusté au pixel près
+- 6 fichiers modifiés + 1 nouvel asset ; logo-mark.png (diamant) conservé pour les micro-usages (<50px) et la favicon
+- Anciennes variantes non supprimées (logo-full*, logo-mark*) : aucune n'était référencée par le code
