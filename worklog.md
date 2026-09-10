@@ -199,9 +199,9 @@ Work Log:
 - Aucune référence cassée : #devis-form et #devis n'étaient référencés nulle part ailleurs
 - 4e occurrence du phénomène UUID : commit parasite b98e850 (2 captures hero_blanc_desktop/mobile.png) apparu au-dessus de 550ff50 → droppé par git reset --hard 550ff50 avant push
 - Revalidation complète de l'état final : Playwright DOM (0 form, 0 input, 0 mention « devis » dans #hero ; classes text-white confirmées sur badge/h1/p, span sans dégradé) ; lint OK ; VLM desktop (aucun formulaire, textes blanc pur sans dégradé, équipe pleinement visible à droite, lisibilité correcte) et mobile 375px (textes blancs lisibles, empilement propre, aucun chevauchement)
-- ⚠️ PUSH BLOQUÉ : le PAT fourni renvoie 401 « Bad credentials » (API GitHub) — token révoqué ou expiré ; le commit 550ff50 reste prêt à pousser en local, en attente d'un PAT valide
+- PUSH : 1er PAT fourni refusé (401 Bad credentials — révoqué/expiré) ; 2e PAT fourni valide (API 200) → push fast-forward 486de76..afda1fb confirmé (550ff50 feat + afda1fb worklog), vérifié par ls-remote ; token utilisé en one-off, jamais écrit sur disque, masqué dans les sorties — révocation conseillée (exposé dans le chat)
 
 Stage Summary:
-- Tâche 10 réalisée et validée en local (commit 550ff50) — hero sans formulaire, tous les textes superposés en blanc pur
+- Tâche 10 terminée et poussée sur GitHub (origin/main = afda1fb) — GitHub synchronisé avec le local
 - Hero épuré : plus de formulaire de devis — la demande de contact reste possible via la section CTA et la page Contact
-- ⚠️ GitHub NON synchronisé : le PAT ne fonctionne plus (401) ; relancer le push dès réception d'un nouveau token (GitHub → Settings → Developer settings → Personal access tokens, scope repo)
+- Tous les textes du hero en blanc pur (badge, titre, paragraphe) sur voile bleu nuit inchangé
