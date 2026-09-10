@@ -95,14 +95,14 @@ function Navbar({
       }`}
     >
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20 md:h-[133px]">
+        <div className="flex items-center justify-between h-16 md:h-[108px]">
           {/* Logo */}
           <button
             onClick={() => navigate("accueil")}
             className="flex items-center"
             aria-label="EMERAUDE COM — Accueil"
           >
-            <div className="w-[110px] h-[70px] md:w-[190px] md:h-[121px] rounded-lg bg-white shadow-sm dark:shadow-md dark:shadow-black/20 flex items-center justify-center overflow-hidden">
+            <div className="w-[88px] h-[56px] md:w-[150px] md:h-[96px] rounded-lg bg-white shadow-sm dark:shadow-md dark:shadow-black/20 flex items-center justify-center overflow-hidden">
               <Image
                 src="/images/logo-emeraude.png"
                 alt="EMERAUDE COM"
@@ -374,7 +374,7 @@ export function SiteRouter({
         onNavigate={navigate}
         onBackToDashboard={onBackToDashboard}
       />
-      <div className="flex-1 pt-20 md:pt-[133px]">{renderPage()}</div>
+      <div className="flex-1 pt-16 md:pt-[108px]">{renderPage()}</div>
       <SiteFooter onNavigate={navigate} />
     </div>
   );

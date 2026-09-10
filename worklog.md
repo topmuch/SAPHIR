@@ -225,3 +225,20 @@ Stage Summary:
 - Nouveau logo client intégré partout où le logo complet s'affiche, aux tailles EXACTEMENT identiques (aucune modification CSS)
 - Ancien logo récupérable via git (commit 39fc197) ; source du nouveau conservée dans scripts/logo-source-v2.jpeg
 - Favicon et micro-icônes diamant inchangés (décision documentée, périmètre strict)
+
+---
+Task ID: 12
+Agent: Super Z (agent principal)
+Task: Réduire la taille du logo (« DIMINUE LA TAILLE DU LOGO »).
+
+Work Log:
+- Cible : logo de la navbar (l'emplacement dominant — 190x121 desktop depuis la tâche 8) ; autres emplacements (footer 100x64, CTA 150x96, login 126x80, admin 100x64) volontairement non touchés (non demandé)
+- Réduction ~20 % : desktop 190x121 → 150x96 ; mobile 110x70 → 88x56
+- Cohérence navbar ajustée dans page-router.tsx (navbar active) + navbar.tsx (code mort synchronisé, convention établie) : hauteur navbar h-20/h-[133px] → h-16/h-[108px], offset contenu pt-20/pt-[133px] → pt-16/pt-[108px] (marges logo conservées : 6px desktop, 4-5px mobile)
+- Vérifié en navigateur (Playwright) : logo desktop 150x96, navbar 108px, hero démarre exactement à y=108 (aucun chevauchement ni écart) ; mobile logo 88x56, navbar 64px
+- VLM desktop : navbar équilibrée, logo proportionné aux liens, entier/net, transition navbar-hero propre ; mobile : logo entier, bien séparé du bouton menu, responsive correct
+- Nettoyage captures + script .cjs ; lint final OK ; aucun commit UUID parasite
+
+Stage Summary:
+- Logo navbar réduit de ~20 % (150x96 desktop / 88x56 mobile) avec navbar et offset de contenu ajustés au pixel près
+- Taille précédente (190x121) récupérable via git (commit 5d1aeba) si retour arrière souhaité ; ajustement fin possible sur simple demande
