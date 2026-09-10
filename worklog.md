@@ -197,8 +197,11 @@ Work Log:
 - Grille lg:grid-cols-2 conservée avec colonne droite vide → texte reste sur la moitié gauche, équipe de l'image pleinement visible à droite (plus de carte qui la recouvre)
 - Validation #devis-form/#hero form absent du DOM (Playwright) ; lint OK ; build production OK ; VLM desktop (formulaire disparu, textes 100% blancs, équipe visible, lisibilité parfaite) et mobile (textes blancs et lisibles, empilement vertical normal)
 - Aucune référence cassée : #devis-form et #devis n'étaient référencés nulle part ailleurs
+- 4e occurrence du phénomène UUID : commit parasite b98e850 (2 captures hero_blanc_desktop/mobile.png) apparu au-dessus de 550ff50 → droppé par git reset --hard 550ff50 avant push
+- Revalidation complète de l'état final : Playwright DOM (0 form, 0 input, 0 mention « devis » dans #hero ; classes text-white confirmées sur badge/h1/p, span sans dégradé) ; lint OK ; VLM desktop (aucun formulaire, textes blanc pur sans dégradé, équipe pleinement visible à droite, lisibilité correcte) et mobile 375px (textes blancs lisibles, empilement propre, aucun chevauchement)
+- ⚠️ PUSH BLOQUÉ : le PAT fourni renvoie 401 « Bad credentials » (API GitHub) — token révoqué ou expiré ; le commit 550ff50 reste prêt à pousser en local, en attente d'un PAT valide
 
 Stage Summary:
-- GitHub synchronisé avec le local (commit parasite UUID droppé avant push)
+- Tâche 10 réalisée et validée en local (commit 550ff50) — hero sans formulaire, tous les textes superposés en blanc pur
 - Hero épuré : plus de formulaire de devis — la demande de contact reste possible via la section CTA et la page Contact
-- Tous les textes du hero en blanc pur (badge, titre, paragraphe) sur voile bleu nuit inchangé
+- ⚠️ GitHub NON synchronisé : le PAT ne fonctionne plus (401) ; relancer le push dès réception d'un nouveau token (GitHub → Settings → Developer settings → Personal access tokens, scope repo)
