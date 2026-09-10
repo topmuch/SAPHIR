@@ -184,3 +184,21 @@ Stage Summary:
 - Footer : logo EMERAUDE seul (texte redondant supprimé), demandé explicitement
 - Ancien hero récupérable via git (0332af7) ; source PNG v3 conservée pour ajustements futurs
 - Incident parallèle (2e occurrence, cf. tâche 7) : commit local automatique externe « 994f180 (UUID) » a ajouté 11 captures de validation non suivies (verif_*.png, 1,9 Mo) à 11h38 — supprimé par rebase avant push (`git rebase --onto 0d6eba0 994f180 main`), dépôt GitHub propre ; phénomène à surveiller : vérifier `git log` avant chaque commit/push et dropper les commits UUID
+
+---
+Task ID: 10
+Agent: Super Z (agent principal)
+Task: Synchroniser GitHub avec le local + retirer le formulaire de devis du hero + passer tous les textes superposés du hero en blanc.
+
+Work Log:
+- Synchronisation : commit UUID parasite local 4ef3dab (4 captures de validation, 3e occurrence du phénomène) supprimé par git reset --hard 486de76 ; local = GitHub = 486de76 avant les modifications
+- Formulaire de devis supprimé du hero (hero.tsx) : carte glassmorphism entière (colonne droite) + tout le code mort associé (états form/errors/loading/sent/serverError, handlers set/validate/handleSubmit, imports Input/Textarea/Label/Select/Loader2/Send/CheckCircle2/AlertCircle/SERVICES) — hero.tsx réécrit de 348 à 113 lignes, composant purement présentatif
+- Textes superposés passés en blanc : badge « Agence de communication 360° » (or → blanc : border-white/40 text-white bg-white/10), span du titre « communication 360° » (dégradé or → blanc), paragraphe (text-white/70 → text-white) ; boutons et indicateur scroll inchangés (non demandé)
+- Grille lg:grid-cols-2 conservée avec colonne droite vide → texte reste sur la moitié gauche, équipe de l'image pleinement visible à droite (plus de carte qui la recouvre)
+- Validation #devis-form/#hero form absent du DOM (Playwright) ; lint OK ; build production OK ; VLM desktop (formulaire disparu, textes 100% blancs, équipe visible, lisibilité parfaite) et mobile (textes blancs et lisibles, empilement vertical normal)
+- Aucune référence cassée : #devis-form et #devis n'étaient référencés nulle part ailleurs
+
+Stage Summary:
+- GitHub synchronisé avec le local (commit parasite UUID droppé avant push)
+- Hero épuré : plus de formulaire de devis — la demande de contact reste possible via la section CTA et la page Contact
+- Tous les textes du hero en blanc pur (badge, titre, paragraphe) sur voile bleu nuit inchangé
