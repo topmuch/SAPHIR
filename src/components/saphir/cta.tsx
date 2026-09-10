@@ -26,7 +26,7 @@ export function CTASection() {
               src="/images/logo-emeraude.png"
               alt="EMERAUDE COM"
               width={900}
-              height={577}
+              height={570}
               className="w-full h-full object-contain"
             />
           </div>

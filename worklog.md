@@ -205,3 +205,23 @@ Stage Summary:
 - Tâche 10 terminée et poussée sur GitHub (origin/main = afda1fb) — GitHub synchronisé avec le local
 - Hero épuré : plus de formulaire de devis — la demande de contact reste possible via la section CTA et la page Contact
 - Tous les textes du hero en blanc pur (badge, titre, paragraphe) sur voile bleu nuit inchangé
+
+---
+Task ID: 11
+Agent: Super Z (agent principal)
+Task: Remplacer le logo par le nouveau fourni par le client (« CHANGE LE LOGO EN GARDANT LA TAILLE » — upload WhatsApp 150x95).
+
+Work Log:
+- Nouveau logo analysé (VLM + mesure PIL) : design différent de l'ancien — diamant compact à facettes simplifiées, texte « EMERAUDE » plus fin, deux traits de soulignement sous le texte, fond blanc ; source 150x95 (7,3 Ko JPEG)
+- Marges comparées : contenu = 87,3% largeur / 93,7% hauteur (nouveau) vs 86,3% / 91,2% (ancien) → conversion DIRECTE sans recadrage : même présence visuelle dans les boîtes d'affichage
+- Asset généré par scripts/integrate_logo_v2.py : upscale x6 LANCZOS (150x95 → 900x570) + accentuation légère (UnsharpMask 2/65/2) pour compenser le JPEG WhatsApp, PNG RGB fond blanc (même convention que l'ancien) ; source sauvegardée dans scripts/logo-source-v2.jpeg (protection anti-écrasement d'upload) ; ratio 1,579 vs boîtes ~1,56-1,58 (écart <1%, imperceptible, l'ancien était à 1,559)
+- Métadonnées intrinsèques alignées sur le nouveau fichier : height={577} → height={570} sur les 7 sites (navbar.tsx, cta.tsx, login-screen.tsx, page-router.tsx ×2, footer.tsx, admin/page.tsx) — AUCUNE taille d'affichage modifiée (toutes en CSS : object-contain dans boîtes fixes)
+- TAILLES VÉRIFIÉES EN NAVIGATEUR (Playwright, inchangées) : navbar desktop 190x121, navbar mobile 110x70, footer 100x64, login admin 126x80
+- Validations VLM : navbar desktop (nouveau logo entier, net, non déformé, aucun chevauchement), navbar mobile 375px (logo entier, bien séparé du bouton menu), footer (nouveau design dans sa boîte blanche, logo seul), CTA (logo flottant entier, section propre), écran login admin (logo net, split-screen cohérent)
+- Nettoyage des captures + script .cjs de validation ; lint final OK ; aucun commit UUID parasite avant commit
+- Micro-usages <50px (favicon, dialogs, login mobile, sidebar dashboard) : logo-mark.png (ancien diamant seul) conservé volontairement — même décision qu'en tâche 8, le texte du logo complet serait illisible à ces tailles ; à changer seulement si demandé explicitement
+
+Stage Summary:
+- Nouveau logo client intégré partout où le logo complet s'affiche, aux tailles EXACTEMENT identiques (aucune modification CSS)
+- Ancien logo récupérable via git (commit 39fc197) ; source du nouveau conservée dans scripts/logo-source-v2.jpeg
+- Favicon et micro-icônes diamant inchangés (décision documentée, périmètre strict)
